@@ -1,0 +1,174 @@
+<section class="content-header">
+
+    <h1>
+        Clients
+        <small>Gestion des clients</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="javascript:void(0)"><i class="fa fa-users"></i> Paramètres</a></li>
+        <li class="active">Clients</li>
+    </ol>
+
+</section>
+
+<!-- Content Header (Page header) -->
+
+<!-- Main content -->
+<section class="content">
+
+    <div class="row">
+        <div class="col-lg-6 col-xs-12">
+            <div class="box box-info box-list-clients">
+
+                <div class="box-body no-padding">
+
+                    <!-- search form -->
+                    <form action="#" method="get" class="search-form-allin">
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="inputFilterClient" ng-model-options="{ debounce: 300 }" placeholder="Filtrer" />
+                            <span class="input-group-btn">
+                          <button type='submit' name='search' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
+                        </span>
+                        </div>
+                    </form>
+
+                    <table ng-table="tableParams" show-filter="false" class="table table-condensed table-striped ng-table-no-header ng-table-client">
+                        <tr ng-repeat="client in $data | filter:inputFilterClienttableParams">
+                            <td data-title="'Clients'" filter="{nom: 'text'}" sortable="'nom'" style="padding-left:10px;width:100%;cursor: pointer;" ng-click="onClickEdit(client)">
+                                <span ng-bind="client.nom"></span>
+                            </td>
+                            <td>
+                                <div class="divButton" style="width:40px;padding-right:5px;">
+                                    <button style="margin-right:6px;" class="btn btn-default btn-sm" ng-click="onClickEdit(client)"><span class="glyphicon glyphicon-pencil"></span></button>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="divButton" style="width:40px;padding-right:5px;">
+                                    <button class="btn btn-danger btn-sm" ng-confirm-click="Voulez-vous supprimer ce client ?" confirmed-click="onClickDelete(client)" ng-show="isDeletable(client)"><span class="glyphicon glyphicon-trash"></span></button>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+                <!-- /.box-body -->
+
+                <div class="loadingHidden overlay">
+                    <i class="fa fa-refresh fa-spin"></i>
+                </div>
+
+            </div>
+            <!-- /.box -->
+        </div>
+        <!-- /.col -->
+
+
+        <div class="col-lg-6 col-xs-12">
+
+
+            <div class="box box-info form-client">
+
+                <div class="box-header with-border">
+                    <h3 class="box-title" ng-hide="editionMode">
+                        <i class="fa fa-plus"></i>&nbsp;
+                        <span ng-bind="titreAjout"></span>
+                    </h3>
+                    <h3 class="box-title" ng-show="editionMode">
+                        <i class="fa fa-reorder"></i>&nbsp;
+                        <span ng-bind="titreEdit"></span>
+                    </h3>
+
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+
+                <form class="form-horizontal" ng-submit="onClickSave()">
+
+                    <div class="box-body">
+
+                        <div class="box callout callout-danger" ng-show="clientFormError">
+                            <h4><i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;Enregistrement annulé</h4>
+                            <p ng-bind="clientFormErrorMessage"></p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputNom" class="col-md-3 control-label">Nom*</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="inputNom" ng-model="currentClient.nom" placeholder="Nom du client">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputRue" class="col-md-3 control-label">Rue</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="inputRue" ng-model="currentClient.rue" empty-to-null>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputNumero" class="col-md-3 control-label">N°</label>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" id="inputNumero" ng-model="currentClient.numero" empty-to-null>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputCP" class="col-md-3 control-label">Code postal</label>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" id="inputCP" ng-model="currentClient.cp" empty-to-null>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputLoc" class="col-md-3 control-label">Localité</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="inputLoc" ng-model="currentClient.localite" empty-to-null>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputTel" class="col-md-3 control-label">Téléphone</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="inputTel" ng-model="currentClient.tel" empty-to-null>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputMail" class="col-md-3 control-label">E-mail</label>
+                            <div class="col-md-9">
+                                <input type="email" class="form-control" id="inputMail" ng-model="currentClient.email" empty-to-null>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- /.box-body -->
+
+
+                    <div class="box-footer clearfix">
+                        <input type="button" id="btnCancel" value="Annuler" ng-click="onClickCancel()" class="btn pull-left" />
+                        <input type="submit" id="btnAjouter" value="Sauvegarder" class="btn btn-info pull-right" />
+                    </div>
+                    <!-- /.box-footer -->
+
+                </form>
+
+                <div class="loadingHidden overlay">
+                    <i class="fa fa-refresh fa-spin"></i>
+                </div>
+
+            </div>
+
+
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+
+
+
+</section>
+<!-- /.content -->
