@@ -1,4 +1,4 @@
-angular.module('intranetApp').directive('ngConfirmClick', [
+angular.module('elevageApp').directive('ngConfirmClick', [
     function() {
         return {
             link: function(scope, element, attr) {

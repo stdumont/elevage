@@ -1,4 +1,4 @@
-angular.module('intranetApp').controller('mainController', ['$scope', '$http', '$timeout', '$interval', 'applicationFactory', function($scope, $http, $timeout, $interval, applicationFactory) {
+angular.module('elevageApp').controller('mainController', ['$scope', '$http', '$timeout', '$interval', 'applicationFactory', function($scope, $http, $timeout, $interval, applicationFactory) {
 
     $scope.applicationName = null;
     $scope.applicationVersion = null;

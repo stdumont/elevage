@@ -1,4 +1,4 @@
-angular.module('intranetApp').directive('uppercased', function() {
+angular.module('elevageApp').directive('uppercased', function() {
     return {
         restrict: 'A',
         require: 'ngModel',

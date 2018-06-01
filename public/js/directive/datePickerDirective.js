@@ -24,7 +24,7 @@ $.fn.datepicker.dates['fr'] = {
     monthsShort: ["Jan", "Fév", "Mar", "Avr", "Mai", "Jui", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
     today: "Ajd"
 };
-angular.module('intranetApp').directive('componentDatepicker', function() {
+angular.module('elevageApp').directive('componentDatepicker', function() {
 
     return {
 

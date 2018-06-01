@@ -1,4 +1,4 @@
-angular.module('intranetApp').controller('clientController', ['$scope', '$route', '$http', 'clientFactory', 'documentFactory', 'NgTableParams', '$sce', function($scope, $route, $http, clientFactory, documentFactory, NgTableParams, $sce) {
+angular.module('elevageApp').controller('clientController', ['$scope', '$route', '$http', 'clientFactory', 'documentFactory', 'NgTableParams', '$sce', function($scope, $route, $http, clientFactory, documentFactory, NgTableParams, $sce) {
 
     // Mettre à jour le menu de navigation avec le lien courant.
     refreshCurrentLink($route.current.activeTab);
@@ -145,7 +145,7 @@ angular.module('intranetApp').controller('clientController', ['$scope', '$route'
 
     //--------------------------------------------------------------------------
     // Méthodes de manipulation et d'initialisation de formulaire
-    //--------------------------------------------------------------------------    
+    //--------------------------------------------------------------------------
     $scope.initCurrentClient = function() {
         // Remettre le bean à 0 pour qu'il puisse se mettre en mode ajout
         $scope.currentClient = {
@@ -179,7 +179,7 @@ angular.module('intranetApp').controller('clientController', ['$scope', '$route'
     // initialisation de la table des clients
     $scope.initTableClients = function(clients) {
         $scope.tableParams = new NgTableParams({
-            // PARAMETRES   
+            // PARAMETRES
             sorting: { nom: "asc" }, // initialiser le tri sur le numero ascendant
             count: 15 // nbre d elements affiches par defaut
         }, {
@@ -196,7 +196,7 @@ angular.module('intranetApp').controller('clientController', ['$scope', '$route'
         setLoading('.box-list-clients', loading);
     };
 
-    //--------------------------------------------------------------------------    
+    //--------------------------------------------------------------------------
 
 
     //--------------------------------------------------------------------------

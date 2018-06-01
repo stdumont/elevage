@@ -1,4 +1,4 @@
-angular.module('intranetApp').directive('emptyToNull', function() {
+angular.module('elevageApp').directive('emptyToNull', function() {
     return {
         restrict: 'A',
         require: 'ngModel',

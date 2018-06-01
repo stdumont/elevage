@@ -1,4 +1,4 @@
-angular.module('intranetApp').controller('documentController', ['$scope', '$window', 'FileUploader', '$route', '$http', 'documentFactory', 'typeDocumentFactory', 'clientFactory', 'fournisseurFactory', 'NgTableParams', '$sce',
+angular.module('elevageApp').controller('documentController', ['$scope', '$window', 'FileUploader', '$route', '$http', 'documentFactory', 'typeDocumentFactory', 'clientFactory', 'fournisseurFactory', 'NgTableParams', '$sce',
     function($scope, $window, FileUploader, $route, $http, documentFactory, typeDocumentFactory, clientFactory, fournisseurFactory, NgTableParams, $sce) {
 
         // File upload provenant de https://github.com/nervgh/angular-file-upload

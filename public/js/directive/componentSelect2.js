@@ -1,5 +1,5 @@
 
-angular.module('intranetApp').directive('componentSelect2', ['$compile', function($compile) {
+angular.module('elevageApp').directive('componentSelect2', ['$compile', function($compile) {
 
     return {
 

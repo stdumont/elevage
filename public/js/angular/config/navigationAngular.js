@@ -1,4 +1,4 @@
-angular.module('intranetApp').config(['$routeProvider', function($routeProvider) {
+angular.module('elevageApp').config(['$routeProvider', function($routeProvider) {
 
     $routeProvider
     // page : home

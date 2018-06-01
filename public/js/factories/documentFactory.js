@@ -1,4 +1,4 @@
-angular.module('intranetApp')
+angular.module('elevageApp')
     .factory('documentFactory', ['$http', function($http) {
 
         var urlBase = '/api/document/';

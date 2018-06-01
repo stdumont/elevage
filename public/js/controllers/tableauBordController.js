@@ -1,4 +1,4 @@
-angular.module('intranetApp').controller('tableauBordController', ['$scope', '$route', '$http', '$timeout', '$interval', 'tableauBordFactory', function($scope, $route, $http, $timeout, $interval, tableauBordFactory) {
+angular.module('elevageApp').controller('tableauBordController', ['$scope', '$route', '$http', '$timeout', '$interval', 'tableauBordFactory', function($scope, $route, $http, $timeout, $interval, tableauBordFactory) {
 
     // Mettre à jour le menu de navigation avec le lien courant.
     refreshCurrentLink($route.current.activeTab);

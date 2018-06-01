@@ -1,4 +1,4 @@
-angular.module('intranetApp')
+angular.module('elevageApp')
     .factory('fournisseurFactory', ['$http', function($http) {
 
     var urlBase = '/api/fournisseur/';

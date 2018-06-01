@@ -1,4 +1,4 @@
-angular.module('intranetApp')
+angular.module('elevageApp')
     .factory('tableauBordFactory', ['$http', function($http) {
 
         var tableauBordFactory = {};

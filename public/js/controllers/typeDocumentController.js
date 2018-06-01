@@ -1,4 +1,4 @@
-angular.module('intranetApp').controller('typeDocumentController', ['$scope', '$route', '$http', 'typeDocumentFactory', 'documentFactory', 'NgTableParams', '$sce', function($scope, $route, $http, typeDocumentFactory, documentFactory, NgTableParams, $sce) {
+angular.module('elevageApp').controller('typeDocumentController', ['$scope', '$route', '$http', 'typeDocumentFactory', 'documentFactory', 'NgTableParams', '$sce', function($scope, $route, $http, typeDocumentFactory, documentFactory, NgTableParams, $sce) {
 
     // Mettre à jour le menu de navigation avec le lien courant.
     refreshCurrentLink($route.current.activeTab);

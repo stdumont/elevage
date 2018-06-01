@@ -1,4 +1,4 @@
-var intranetApp = angular.module('intranetApp', ['ngRoute', 'ngTable', 'angularFileUpload']);
-intranetApp.config(['$locationProvider', function($locationProvider) {
+var elevageApp = angular.module('elevageApp', ['ngRoute', 'ngTable', 'angularFileUpload']);
+elevageApp.config(['$locationProvider', function($locationProvider) {
     $locationProvider.hashPrefix('');
 }]);
