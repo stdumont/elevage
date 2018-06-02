@@ -68,15 +68,18 @@ $container['validator'] = function($container) {
 $container['HomeController'] = function($container) {
     return new \App\Controllers\HomeController($container);
 };
+$container['AuthController'] = function($container) {
+    return new \App\Controllers\AuthController($container);
+};
+$container['ParameterController'] = function($container) {
+    return new \App\Controllers\ParameterController($container);
+};
 /*
 $container['UserController'] = function($container) {
     return new \App\Controllers\UserController($container);
 };
 $container['ParameterController'] = function($container) {
     return new \App\Controllers\ParameterController($container);
-};
-$container['AuthController'] = function($container) {
-    return new \App\Controllers\AuthController($container);
 };
 $container['TypedocController'] = function($container) {
     return new \App\Controllers\TypedocController($container);
