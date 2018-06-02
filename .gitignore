@@ -1,4 +1,5 @@
 vendor
 tests
 logs/app.log
+.gitignore
 .env*
