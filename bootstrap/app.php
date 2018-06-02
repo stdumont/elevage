@@ -9,7 +9,7 @@ $dotenv->load();
 
 $app = new \Slim\App([
     'settings' => [
-        'displayErrorDetails' => true,
+        'displayErrorDetails' => getenv('DISPLAY_ERROR_DETAILS'),
         'db' => [
             'driver' => getenv('DB_DRIVER'),
             'host' => getenv('DB_HOST'),
