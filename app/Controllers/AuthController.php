@@ -3,7 +3,7 @@
 /**
  * Classe controleur pour les actions de login/logout
  * 
- * @author Stéphane Dumont <dumont.stephane@email.com>
+ * @author Stéphane Dumont <dumont.stephane@gmail.com>
  */
 
 namespace App\Controllers;
