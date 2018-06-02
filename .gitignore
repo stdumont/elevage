@@ -1,0 +1,4 @@
+vendor
+tests
+logs/app.log
+.env*
