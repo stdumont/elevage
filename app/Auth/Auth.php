@@ -2,6 +2,7 @@
 
 /**
  * Classe chargée de vérifier l'authentification d'un utilisateur
+ * 
  * @author Stéphane Dumont <dumont.stephane@gmail.com>
  */
 
@@ -13,6 +14,11 @@ class Auth {
     
     /**
      * Vérifie l'identifiant et le mot de passe
+     * 
+     * Le mot de passe introduit en clair ($password) est vérifié avec l'instruction PHP password_verify() par rapport au mot de passe
+     * hashé stocké en base de données ($user->password).
+     * 
+     * Le hashage peut être effectué avec l'instruction PHP password_hash('xxxxxx', PASSWORD_DEFAULT). 
      * 
      * @param : $email - l'adresse mail
      * @param : $password - le mot de passe en clair tel que'introduit dans le formulaire de login
