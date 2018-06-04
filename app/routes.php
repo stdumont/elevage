@@ -29,7 +29,9 @@ $app->post('/api/client/insert', 'ClientController:insert');
 $app->post('/api/client/update', 'ClientController:update');
 $app->delete('/api/client/delete/{id}', 'ClientController:delete');
 
-// Routes vers les documents & pièces jointes
+/**
+ * Routes vers les documents & pièces jointes
+ */ 
 $app->get('/api/document/get-all', 'DocumentController:getAll');
 $app->get('/api/document/get-count', 'DocumentController:getCount');
 $app->get('/api/document/get-count-by-typedoc/{id}', 'DocumentController:getCountByTypedoc');
