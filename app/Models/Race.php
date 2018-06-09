@@ -5,18 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Modèle des paramètres
+ * Modèle des races
  * @author Stéphane Dumont <dumont.stephane@gmail.com>
  * @package Models
  */
-class Parameter extends Model
+class Race extends Model
 {
     /**
      * nom de la table
      *
      * @var string
      */
-    protected $table = 'parameters';
+    protected $table = 'races';
 
     /**
      * tableau de champs modifiables
@@ -24,8 +24,16 @@ class Parameter extends Model
      * @var array
      */
     protected $fillable = [
-        'nom',
-        'valeur'
+        'nom'
     ];
+
+    /**
+     * définit la relation 1:N entre race et robe
+     *
+     * @return void
+     */
+    public function robes() {
+        return $this->hasMany('App\Models\Robe');
+    }
 
 }

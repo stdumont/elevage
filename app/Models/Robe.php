@@ -3,20 +3,21 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Race;
 
 /**
- * Modèle des paramètres
+ * Modèle des robes
  * @author Stéphane Dumont <dumont.stephane@gmail.com>
  * @package Models
  */
-class Parameter extends Model
+class Robe extends Model
 {
     /**
      * nom de la table
      *
      * @var string
      */
-    protected $table = 'parameters';
+    protected $table = 'robes';
 
     /**
      * tableau de champs modifiables
@@ -24,8 +25,17 @@ class Parameter extends Model
      * @var array
      */
     protected $fillable = [
-        'nom',
-        'valeur'
+        'race_id',
+        'nom'
     ];
+
+    /**
+     * définit la relation inverse 1:N entre race et robe
+     *
+     * @return void
+     */
+    public function race() {
+        return $this->belongsTo('App\Models\Race');
+    }
 
 }
