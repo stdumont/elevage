@@ -3,21 +3,21 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Robe;
+use App\Models\Pays;
 
 /**
- * Modèle des races
+ * Modèle des localités
  * @author Stéphane Dumont <dumont.stephane@gmail.com>
  * @package Models
  */
-class Race extends Model
+class Localite extends Model
 {
     /**
      * nom de la table
      *
      * @var string
      */
-    protected $table = 'races';
+    protected $table = 'localites';
 
     /**
      * tableau de champs modifiables
@@ -25,16 +25,18 @@ class Race extends Model
      * @var array
      */
     protected $fillable = [
-        'nom'
+        'code_postal',
+        'nom',
+        'pays_id'
     ];
 
     /**
-     * définit la relation 1:N entre race et robe
+     * définit la relation inverse 1:N entre pays et localite
      *
      * @return void
      */
-    public function robes() {
-        return $this->hasMany('App\Models\Robe');
+    public function pays() {
+        return $this->belongsTo('App\Models\Pays');
     }
 
 }
