@@ -28,22 +28,3 @@ $app->get('/api/client/find/{id}', 'ClientController:find');
 $app->post('/api/client/insert', 'ClientController:insert');
 $app->post('/api/client/update', 'ClientController:update');
 $app->delete('/api/client/delete/{id}', 'ClientController:delete');
-
-/**
- * Routes vers les documents & pièces jointes
- */ 
-$app->get('/api/document/get-all', 'DocumentController:getAll');
-$app->get('/api/document/get-count', 'DocumentController:getCount');
-$app->get('/api/document/get-count-by-typedoc/{id}', 'DocumentController:getCountByTypedoc');
-$app->get('/api/document/get-count-by-fournisseur/{id}', 'DocumentController:getCountByFournisseur');
-$app->get('/api/document/get-count-by-client/{id}', 'DocumentController:getCountByClient');
-$app->get('/api/document/get-by-criterias', 'DocumentController:getByCriterias');
-$app->get('/api/document/find/{id}', 'DocumentController:find');
-$app->post('/api/document/insert', 'DocumentController:insert');
-$app->post('/api/document/update', 'DocumentController:update');
-$app->delete('/api/document/delete/{id}', 'DocumentController:delete');
-$app->post('/api/document/insertPiece', 'PieceController:insert');
-$app->post('/api/document/uploadPiece', 'FichierController:upload');
-$app->get('/api/document/get-fichier-by-piece/{id}', 'FichierController:getByPiece');
-$app->get('/api/document/get-fichier-by-id/{id}', 'FichierController:getById');
-$app->delete('/api/document/deletePiece/{id}', 'PieceController:delete');

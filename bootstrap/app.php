@@ -74,29 +74,9 @@ $container['AuthController'] = function($container) {
 $container['ParameterController'] = function($container) {
     return new \App\Controllers\ParameterController($container);
 };
-/*
-$container['UserController'] = function($container) {
-    return new \App\Controllers\UserController($container);
-};
-$container['TypedocController'] = function($container) {
-    return new \App\Controllers\TypedocController($container);
-};
-$container['FournisseurController'] = function($container) {
-    return new \App\Controllers\FournisseurController($container);
-};
 $container['ClientController'] = function($container) {
     return new \App\Controllers\ClientController($container);
 };
-$container['DocumentController'] = function($container) {
-    return new \App\Controllers\DocumentController($container);
-};
-$container['PieceController'] = function($container) {
-    return new \App\Controllers\PieceController($container);
-};
-$container['FichierController'] = function($container) {
-    return new \App\Controllers\FichierController($container);
-};
-*/
 
 $container['auth'] = function($container){
     return new \App\Auth\Auth;

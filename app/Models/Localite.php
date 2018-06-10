@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Pays;
+use App\Models\Pays as pays;
 
 /**
  * Modèle des localités
@@ -29,6 +29,8 @@ class Localite extends Model
         'nom',
         'pays_id'
     ];
+
+    protected $with = ['pays'];
 
     /**
      * définit la relation inverse 1:N entre pays et localite
