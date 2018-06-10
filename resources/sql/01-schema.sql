@@ -7,7 +7,6 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 -- -----------------------------------------------------
 -- Schema elevage
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `elevage` ;
 
 -- -----------------------------------------------------
 -- Schema elevage
@@ -3446,7 +3445,7 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `elevage`;
-INSERT INTO `elevage`.`elevages` (`id`, `nom`, `affixe`, `responsable`, `rue`, `numero`, `localite_id`, `tva`, `tel`, `email`, `created_at`, `updated_at`) VALUES (1, 'Les Cavaliers King Charles des Rubis de Lady C', 'des Rubis de Lady C', 'Stéphane & Catherine Dumont-Delange', 'Rue Favauche', '1', NULL, 'BE.0690.365.232', '+32(81)446868', 'info@lesrubis.com', NULL, NULL);
+INSERT INTO `elevage`.`elevages` (`id`, `nom`, `affixe`, `responsable`, `rue`, `numero`, `localite_id`, `tva`, `tel`, `email`, `created_at`, `updated_at`) VALUES (1, 'Les Cavaliers King Charles des Rubis de Lady C', 'des Rubis de Lady C', 'Stéphane & Catherine Dumont-Delange', 'Rue Favauche', '1', 763, 'BE.0690.365.232', '+32(81)446868', 'info@lesrubis.com', NULL, NULL);
 
 COMMIT;
 
