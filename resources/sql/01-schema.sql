@@ -155,7 +155,7 @@ DROP TABLE IF EXISTS `elevage`.`clients` ;
 CREATE TABLE IF NOT EXISTS `elevage`.`clients` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nom` VARCHAR(255) NOT NULL,
-  `prenom` VARCHAR(255) NOT NULL,
+  `prenom` VARCHAR(255) NULL,
   `rue` VARCHAR(255) NULL,
   `numero` VARCHAR(255) NULL,
   `localite_id` INT NULL,
@@ -307,52 +307,3 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
--- -----------------------------------------------------
--- Data for table `elevage`.`users`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `elevage`;
-INSERT INTO `elevage`.`users` (`id`, `name`, `email`, `password`, `created_at`, `updated_at`) VALUES (1, 'Stéphane', 'dumont.stephane@gmail.com', '$2y$10$EunfkQSE6wjJkG4WIUi7Xejyzq8U8eaorBZ.cGFhUN2yCAH2dVn1m', NULL, NULL);
-INSERT INTO `elevage`.`users` (`id`, `name`, `email`, `password`, `created_at`, `updated_at`) VALUES (2, 'Catherine', 'catherine.delange@skynet.be', '$2y$10$jX9w0MXYHBbcex6VMkSMhOMVQ6iNQ2c5MLZdjUyrRBUZoDc66aEO2', NULL, NULL);
-
-COMMIT;
-
-
--- -----------------------------------------------------
--- Data for table `elevage`.`parameters`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `elevage`;
-INSERT INTO `elevage`.`parameters` (`id`, `nom`, `valeur`, `created_at`, `updated_at`) VALUES (1, 'APP_NAME', 'Elevage canin', NULL, NULL);
-INSERT INTO `elevage`.`parameters` (`id`, `nom`, `valeur`, `created_at`, `updated_at`) VALUES (2, 'APP_VERSION', '0.1', NULL, NULL);
-INSERT INTO `elevage`.`parameters` (`id`, `nom`, `valeur`, `created_at`, `updated_at`) VALUES (3, 'APP_CREATION_YEAR', '2018', NULL, NULL);
-INSERT INTO `elevage`.`parameters` (`id`, `nom`, `valeur`, `created_at`, `updated_at`) VALUES (4, 'APP_AUTHOR', 'Stéphane Dumont', NULL, NULL);
-INSERT INTO `elevage`.`parameters` (`id`, `nom`, `valeur`, `created_at`, `updated_at`) VALUES (5, 'APP_AUTHOR_MAIL', 'dumont.stephane@gmail.com', NULL, NULL);
-
-COMMIT;
-
-
--- -----------------------------------------------------
--- Data for table `elevage`.`races`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `elevage`;
-INSERT INTO `elevage`.`races` (`id`, `nom`, `created_at`, `updated_at`) VALUES (1, 'Cavalier King Charles', NULL, NULL);
-INSERT INTO `elevage`.`races` (`id`, `nom`, `created_at`, `updated_at`) VALUES (2, 'Chihuahua', NULL, NULL);
-
-COMMIT;
-
-
--- -----------------------------------------------------
--- Data for table `elevage`.`robes`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `elevage`;
-INSERT INTO `elevage`.`robes` (`id`, `race_id`, `nom`, `created_at`, `updated_at`) VALUES (1, 1, 'Blenheïm', NULL, NULL);
-INSERT INTO `elevage`.`robes` (`id`, `race_id`, `nom`, `created_at`, `updated_at`) VALUES (2, 1, 'Tricolore', NULL, NULL);
-INSERT INTO `elevage`.`robes` (`id`, `race_id`, `nom`, `created_at`, `updated_at`) VALUES (3, 1, 'Noir-Feu', NULL, NULL);
-INSERT INTO `elevage`.`robes` (`id`, `race_id`, `nom`, `created_at`, `updated_at`) VALUES (4, 1, 'Rubis', NULL, NULL);
-
-COMMIT;
-

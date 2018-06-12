@@ -28,3 +28,11 @@ $app->get('/api/client/find/{id}', 'ClientController:find');
 $app->post('/api/client/insert', 'ClientController:insert');
 $app->post('/api/client/update', 'ClientController:update');
 $app->delete('/api/client/delete/{id}', 'ClientController:delete');
+
+/**
+ * Routes vers les pays
+ */ 
+$app->get('/api/pays/get-all', 'PaysController:getAll');
+$app->get('/api/pays/get-count', 'PaysController:getCount');
+$app->get('/api/pays/get-containing', 'PaysController:getContaining');
+$app->get('/api/pays/find/{id}', 'PaysController:find');

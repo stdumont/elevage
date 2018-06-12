@@ -77,6 +77,9 @@ $container['ParameterController'] = function($container) {
 $container['ClientController'] = function($container) {
     return new \App\Controllers\ClientController($container);
 };
+$container['PaysController'] = function($container) {
+    return new \App\Controllers\PaysController($container);
+};
 
 $container['auth'] = function($container){
     return new \App\Auth\Auth;
