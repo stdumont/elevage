@@ -35,4 +35,7 @@ $app->delete('/api/client/delete/{id}', 'ClientController:delete');
 $app->get('/api/pays/get-all', 'PaysController:getAll');
 $app->get('/api/pays/get-count', 'PaysController:getCount');
 $app->get('/api/pays/get-containing', 'PaysController:getContaining');
+$app->get('/api/pays/get-reference-count/{id}', 'PaysController:getReferenceInLocaliteCount');
 $app->get('/api/pays/find/{id}', 'PaysController:find');
+$app->post('/api/pays/insert', 'PaysController:insert');
+$app->post('/api/pays/update', 'PaysController:update');
