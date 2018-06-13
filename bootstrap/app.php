@@ -80,6 +80,9 @@ $container['ClientController'] = function($container) {
 $container['PaysController'] = function($container) {
     return new \App\Controllers\PaysController($container);
 };
+$container['LocaliteController'] = function($container) {
+    return new \App\Controllers\LocaliteController($container);
+};
 
 $container['auth'] = function($container){
     return new \App\Auth\Auth;

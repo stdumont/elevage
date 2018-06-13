@@ -39,3 +39,13 @@ $app->get('/api/pays/get-reference-count/{id}', 'PaysController:getReferenceInLo
 $app->get('/api/pays/find/{id}', 'PaysController:find');
 $app->post('/api/pays/insert', 'PaysController:insert');
 $app->post('/api/pays/update', 'PaysController:update');
+
+/**
+ * Routes vers les localités
+ */ 
+$app->get('/api/localite/get-count', 'LocaliteController:getCount');
+$app->get('/api/localite/get-containing', 'LocaliteController:getContaining');
+$app->get('/api/localite/get-reference-count/{id}', 'LocaliteController:getReferenceInLocaliteCount');
+$app->get('/api/localite/find/{id}', 'LocaliteController:find');
+$app->post('/api/localite/insert', 'LocaliteController:insert');
+$app->post('/api/localite/update', 'LocaliteController:update');
