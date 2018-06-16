@@ -74,6 +74,9 @@ $container['AuthController'] = function($container) {
 $container['ParameterController'] = function($container) {
     return new \App\Controllers\ParameterController($container);
 };
+$container['ChienController'] = function($container) {
+    return new \App\Controllers\ChienController($container);
+};
 $container['ClientController'] = function($container) {
     return new \App\Controllers\ClientController($container);
 };

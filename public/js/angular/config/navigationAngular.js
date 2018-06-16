@@ -22,32 +22,18 @@ angular.module('elevageApp').config(['$routeProvider', function($routeProvider) 
         activeTab: 'page-agenda'
     })
 
-    // page : types de documents
-    .when('/page-type-documents', {
-        templateUrl: 'pages/typeDocument.html',
-        controller: 'typeDocumentController',
-        activeTab: 'page-type-documents'
-    })
-
-    // page : fournisseurs
-    .when('/page-fournisseurs', {
-        templateUrl: 'pages/fournisseur.html',
-        controller: 'fournisseurController',
-        activeTab: 'page-fournisseurs'
-    })
-
-    // page : documents
-    .when('/page-documents', {
-        templateUrl: 'pages/document.html',
-        controller: 'documentController',
-        activeTab: 'page-documents'
-    })
-
     // page : clients
     .when('/page-clients', {
         templateUrl: 'pages/client.html',
         controller: 'clientController',
         activeTab: 'page-clients'
+    })
+
+    // page : outils : calculs sur les dates
+    .when('/page-outils-calcul-dates', {
+        templateUrl: 'pages/outils/calcul-dates.html',
+        controller: 'calculDatesController',
+        activeTab: 'page-outils-calcul-dates'
     })
 
     ;

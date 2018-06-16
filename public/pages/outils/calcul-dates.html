@@ -1,0 +1,126 @@
+<section class="content-header">
+
+    <h1>
+        Calculs sur les dates
+        <small></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li>
+            <a href="javascript:void(0);">
+                <i class="fa fa-wrench"></i> Outils</a>
+        </li>
+        <li class="active">Dates</li>
+    </ol>
+
+</section>
+
+
+<!-- Main content -->
+<section class="content" style="min-height:800px;">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="box box-info" id="box-calcul-1">
+                <div class="box-header with-border">
+                    <h3 class="box-title">
+                        <i class="fa fa-calculator"></i> Ajouter ou retirer des jours</h3>
+
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body" style="padding-top:0px;">
+                    <!-- DATE DU DEPART -->
+                    <div class="row" style="margin-bottom:8px;margin-top:5px;">
+                        <div class="form-group">
+                            <label for="input1DateDepart" class="col-md-4 control-label">Date de départ</label>
+                            <div class="col-md-6">
+                                <component-datepicker ng-model="calcul_1_date_depart" style="width:100%;" />
+                            </div>
+                        </div>
+                    </div>
+                    <!-- NOMBRE DE JOURS -->
+                    <div class="row" style="margin-bottom:8px;margin-top:5px;">
+                        <div class="form-group">
+                            <label for="input1Nombre" class="col-md-4 control-label">Nombre de jours</label>
+                            <div class="col-md-4">
+                                <input type="number" class="form-control" ng-model="calcul_1_nombre">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- DATE RESULTAT -->
+                    <div class="row" style="margin-bottom:8px;margin-top:5px;">
+                        <div class="form-group">
+                            <label for="input1DateResultat" class="col-md-4 control-label">Résultat</label>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control text-bold text-center" ng-model="calcul_1_date_resultat" readonly="readonly" style="width:100%;" />
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer">
+                    <div class="pull-right">
+                        <button class="btn btn-info" ng-click="calcul1()">Calculer</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="box box-info" id="box-calcul-1">
+                <div class="box-header with-border">
+                    <h3 class="box-title">
+                        <i class="fa fa-calculator"></i> Calculer la différence de jours</h3>
+
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body" style="padding-top:0px;">
+                    <!-- DATE DEBUT -->
+                    <div class="row" style="margin-bottom:8px;margin-top:5px;">
+                        <div class="form-group">
+                            <label for="input2DateDebut" class="col-md-4 control-label">Date début</label>
+                            <div class="col-md-6">
+                                <component-datepicker ng-model="calcul_2_date_debut" style="width:100%;" />
+                            </div>
+                        </div>
+                    </div>
+                    <!-- DATE FIN -->
+                    <div class="row" style="margin-bottom:8px;margin-top:5px;">
+                        <div class="form-group">
+                            <label for="input2DateFin" class="col-md-4 control-label">Date fin</label>
+                            <div class="col-md-6">
+                                <component-datepicker ng-model="calcul_2_date_fin" style="width:100%;" />
+                            </div>
+                        </div>
+                    </div>
+                    <!-- NOMBRE RESULTAT -->
+                    <div class="row" style="margin-bottom:8px;margin-top:5px;">
+                        <div class="form-group">
+                            <label for="input2NombreResultat" class="col-md-4 control-label">Résultat</label>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control text-bold text-center" ng-model="calcul_2_nombre_resultat" readonly="readonly" style="width:100%;" />
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer">
+                    <div class="pull-right">
+                        <button class="btn btn-info" ng-click="calcul2()">Calculer</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>

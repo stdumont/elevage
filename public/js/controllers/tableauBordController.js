@@ -3,21 +3,8 @@ angular.module('elevageApp').controller('tableauBordController', ['$scope', '$ro
     // Mettre à jour le menu de navigation avec le lien courant.
     refreshCurrentLink($route.current.activeTab);
 
-    $scope.nombreDocuments = 0;
-    $scope.nombreEvenements = 0;
     $scope.nombreClients = 0;
     $scope.nombreChiens = 0;
-    $scope.nombreFournisseurs = 0;
-
-    $scope.countFournisseur = function() {
-        tableauBordFactory.getFournisseurCount()
-            .then(function success(response) {
-                    $scope.nombreFournisseurs = response.data;
-                },
-                function error(error) {
-                    console.log("Erreur lors du chargement du nombre de fournisseurs");
-                });
-    };
 
     $scope.countClient = function() {
         tableauBordFactory.getClientCount()
@@ -29,20 +16,19 @@ angular.module('elevageApp').controller('tableauBordController', ['$scope', '$ro
                 });
     };
 
-    $scope.countDocument = function() {
-        tableauBordFactory.getDocumentCount()
+    $scope.countChien = function() {
+        tableauBordFactory.getChienCount()
             .then(function success(response) {
-                    $scope.nombreDocuments = response.data;
+                    $scope.nombreChiens = response.data;
                 },
                 function error(error) {
-                    console.log("Erreur lors du chargement du nombre de documents");
+                    console.log("Erreur lors du chargement du nombre de chiens");
                 });
     };
 
     // MAIN
 
-    $scope.countFournisseur();
     $scope.countClient();
-    $scope.countDocument();
+    $scope.countChien();
 
 }]);

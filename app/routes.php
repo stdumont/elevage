@@ -20,6 +20,11 @@ $app->get('/api/parameter/get-application-creator-name', 'ParameterController:ge
 $app->get('/api/parameter/get-application-creator-mail', 'ParameterController:getApplicationCreatorMail');
 
 /**
+ * Routes vers les chiens
+ */ 
+$app->get('/api/chien/get-count', 'ChienController:getCount');
+
+/**
  * Routes vers les clients
  */ 
 $app->get('/api/client/get-all', 'ClientController:getAll');
