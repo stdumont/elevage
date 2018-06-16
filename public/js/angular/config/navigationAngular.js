@@ -29,6 +29,13 @@ angular.module('elevageApp').config(['$routeProvider', function($routeProvider) 
         activeTab: 'page-clients'
     })
 
+    // page : paramètres : élevage
+    .when('/page-parametres-elevage', {
+        templateUrl: 'pages/parametres/elevage.html',
+        controller: 'elevageController',
+        activeTab: 'page-parametres-elevage'
+    })
+
     // page : outils : calculs sur les dates
     .when('/page-outils-calcul-dates', {
         templateUrl: 'pages/outils/calcul-dates.html',

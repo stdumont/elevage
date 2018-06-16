@@ -54,3 +54,9 @@ $app->get('/api/localite/get-reference-count/{id}', 'LocaliteController:getRefer
 $app->get('/api/localite/find/{id}', 'LocaliteController:find');
 $app->post('/api/localite/insert', 'LocaliteController:insert');
 $app->post('/api/localite/update', 'LocaliteController:update');
+
+/**
+ * Routes vers l'élevage'
+ */ 
+$app->get('/api/elevage/first', 'ElevageController:first');
+$app->post('/api/elevage/update', 'ElevageController:update');

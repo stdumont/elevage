@@ -74,10 +74,17 @@ angular.module('elevageApp').controller('mainController', ['$scope', '$http', '$
                 });
     };
 
+    $scope.isUserAdministrator = function() {
+        if ($scope.currentUser == null) {
+            $scope.getCurrentUser();
+        };
+        return $scope.currentUser.isAdmin === '1';
+    };
+
     // MAIN
+    $scope.getCurrentUser();
     $scope.getApplicationCreatorMail();
     $scope.getApplicationCreatorName();
-    $scope.getCurrentUser();
     $scope.getApplicationName();
     $scope.getApplicationVersion();
     $scope.getApplicationCopyright();

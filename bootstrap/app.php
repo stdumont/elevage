@@ -86,6 +86,9 @@ $container['PaysController'] = function($container) {
 $container['LocaliteController'] = function($container) {
     return new \App\Controllers\LocaliteController($container);
 };
+$container['ElevageController'] = function($container) {
+    return new \App\Controllers\ElevageController($container);
+};
 
 $container['auth'] = function($container){
     return new \App\Auth\Auth;

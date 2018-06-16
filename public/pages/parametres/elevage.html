@@ -1,0 +1,75 @@
+<section class="content-header">
+
+    <h1>
+        Elevage
+        <small>Données de l'élevage</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li>
+            <a href="javascript:void(0);">
+                <i class="fa fa-cog"></i> Paramètres</a>
+        </li>
+        <li class="active">Elevage</li>
+    </ol>
+
+</section>
+
+
+<!-- Main content -->
+<section class="content" style="min-height:800px;">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+
+            <div class="box box-info form-elevage">
+
+                <div class="box-header with-border">
+                    <h3 class="box-title">
+                        <i class="fa fa-reorder"></i>&nbsp; Mise à jour de l'élevage</span>
+                    </h3>
+
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+
+                <form class="form-horizontal" ng-submit="onClickSave()">
+
+                    <div class="box-body">
+
+                        <div class="box callout callout-danger" ng-show="elevageFormError">
+                            <h4>
+                                <i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;Enregistrement annulé</h4>
+                            <p ng-bind="elevageFormErrorMessage"></p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputNom" class="col-md-3 control-label">Nom*</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="inputNom" ng-model="currentElevage.nom" empty-to-null>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+
+
+                    <div class="box-footer clearfix">
+                        <input type="submit" id="btnAjouter" value="Sauvegarder" class="btn btn-info pull-right" />
+                    </div>
+                    <!-- /.box-footer -->
+
+                </form>
+
+                <div class="loadingHidden overlay">
+                    <i class="fa fa-refresh fa-spin"></i>
+                </div>
+
+            </div>
+
+
+        </div>
+        <!-- /.col -->
+    </div>
+</section>

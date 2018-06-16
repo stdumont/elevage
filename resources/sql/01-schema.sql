@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS `elevage`.`users` (
   `name` VARCHAR(255) NOT NULL,
   `email` VARCHAR(255) NOT NULL,
   `password` VARCHAR(255) NOT NULL,
+  `isAdmin` VARCHAR(1) NOT NULL DEFAULT 0,
   `created_at` TIMESTAMP NULL DEFAULT NULL,
   `updated_at` TIMESTAMP NULL DEFAULT NULL,
   PRIMARY KEY (`id`))
@@ -142,7 +143,7 @@ CREATE TABLE IF NOT EXISTS `elevage`.`robes` (
   CONSTRAINT `fk_robe_race`
     FOREIGN KEY (`race_id`)
     REFERENCES `elevage`.`races` (`id`)
-    ON DELETE CASCADE
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
