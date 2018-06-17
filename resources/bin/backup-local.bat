@@ -1,0 +1,1 @@
+D:\Tools\Xampp\mysql\bin\mysqldump.exe -u root --password="" elevage >D:\Projets\Sources\elevage\resources\database-data\elevage-local.sql

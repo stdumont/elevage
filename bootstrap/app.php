@@ -5,6 +5,9 @@ session_start();
 require __DIR__ . '/../vendor/autoload.php';
 
 $dotenv = new Dotenv\Dotenv(__DIR__ . '/../');
+if (array_key_exists('MODE', $_SERVER) && $_SERVER['MODE'] == 'test') {
+    $dotenv = new Dotenv\Dotenv(__DIR__ . '/../', '.env-test');
+}
 $dotenv->load();
 
 $app = new \Slim\App([
@@ -18,10 +21,10 @@ $app = new \Slim\App([
             'password' => getenv('DB_USER_PASS'),
             'charset' => getenv('DB_CHARSET'),
             'collation' => getenv('DB_COLLATION'),
-            'prefix' => ''
-        ]
-    ]
-        ]);
+            'prefix' => '',
+        ],
+    ],
+]);
 
 $container = $app->getContainer();
 
@@ -30,22 +33,22 @@ $capsule->addConnection($container['settings']['db']);
 $capsule->setAsGlobal();
 $capsule->bootEloquent();
 
-$container['db'] = function($container) use ($capsule) {
+$container['db'] = function ($container) use ($capsule) {
     return $capsule;
 };
 
-$container['flash'] = function($container){
+$container['flash'] = function ($container) {
     return new \Slim\Flash\Messages;
 };
 
-$container['view'] = function($container) {
+$container['view'] = function ($container) {
     $view = new \Slim\Views\Twig(
-            __DIR__ . '/../resources/views', [
-        'cache' => false
-            ]
+        __DIR__ . '/../resources/views', [
+            'cache' => false,
+        ]
     );
     $view->addExtension(
-            new \Slim\Views\TwigExtension($container->router, $container->request->getUri())
+        new \Slim\Views\TwigExtension($container->router, $container->request->getUri())
     );
 
     $view->getEnvironment()->addGlobal('flash', $container->flash);
@@ -61,36 +64,36 @@ $container['logger'] = function ($container) {
     return $logger;
 };
 
-$container['validator'] = function($container) {
+$container['validator'] = function ($container) {
     return new App\Validation\Validator();
 };
 
-$container['HomeController'] = function($container) {
+$container['HomeController'] = function ($container) {
     return new \App\Controllers\HomeController($container);
 };
-$container['AuthController'] = function($container) {
+$container['AuthController'] = function ($container) {
     return new \App\Controllers\AuthController($container);
 };
-$container['ParameterController'] = function($container) {
+$container['ParameterController'] = function ($container) {
     return new \App\Controllers\ParameterController($container);
 };
-$container['ChienController'] = function($container) {
+$container['ChienController'] = function ($container) {
     return new \App\Controllers\ChienController($container);
 };
-$container['ClientController'] = function($container) {
+$container['ClientController'] = function ($container) {
     return new \App\Controllers\ClientController($container);
 };
-$container['PaysController'] = function($container) {
+$container['PaysController'] = function ($container) {
     return new \App\Controllers\PaysController($container);
 };
-$container['LocaliteController'] = function($container) {
+$container['LocaliteController'] = function ($container) {
     return new \App\Controllers\LocaliteController($container);
 };
-$container['ElevageController'] = function($container) {
+$container['ElevageController'] = function ($container) {
     return new \App\Controllers\ElevageController($container);
 };
 
-$container['auth'] = function($container){
+$container['auth'] = function ($container) {
     return new \App\Auth\Auth;
 };
 

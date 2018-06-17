@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Localite as localite;
 
 /**
  * Modèle des élevages
@@ -30,17 +29,12 @@ class Elevage extends Model
         'responsable',
         'rue',
         'numero',
-        'localite_id',
+        'code_postal',
+        'localite',
+        'pays',
         'tel',
         'email',
         'tva',
     ];
-
-    protected $with = ['localite'];
-
-    public function localite() {
-        return $this->belongsTo('App\Models\Localite');
-    }
-
 
 }

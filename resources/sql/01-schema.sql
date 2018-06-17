@@ -50,42 +50,6 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `elevage`.`pays`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `elevage`.`pays` ;
-
-CREATE TABLE IF NOT EXISTS `elevage`.`pays` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `nom` VARCHAR(255) NOT NULL,
-  `created_at` TIMESTAMP NULL,
-  `updated_at` TIMESTAMP NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `elevage`.`localites`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `elevage`.`localites` ;
-
-CREATE TABLE IF NOT EXISTS `elevage`.`localites` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `code_postal` VARCHAR(255) NOT NULL,
-  `nom` VARCHAR(255) NOT NULL,
-  `pays_id` INT NOT NULL,
-  `created_at` TIMESTAMP NULL,
-  `updated_at` TIMESTAMP NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_loc_pays_idx` (`pays_id` ASC),
-  CONSTRAINT `fk_loc_pays`
-    FOREIGN KEY (`pays_id`)
-    REFERENCES `elevage`.`pays` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `elevage`.`elevages`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `elevage`.`elevages` ;
@@ -93,23 +57,19 @@ DROP TABLE IF EXISTS `elevage`.`elevages` ;
 CREATE TABLE IF NOT EXISTS `elevage`.`elevages` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nom` VARCHAR(255) NOT NULL,
-  `affixe` VARCHAR(255) NOT NULL,
-  `responsable` VARCHAR(255) NOT NULL,
-  `rue` VARCHAR(255) NOT NULL,
-  `numero` VARCHAR(255) NOT NULL,
-  `localite_id` INT NULL,
-  `tva` VARCHAR(255) NOT NULL,
-  `tel` VARCHAR(255) NOT NULL,
-  `email` VARCHAR(255) NOT NULL,
+  `affixe` VARCHAR(255) NULL,
+  `responsable` VARCHAR(255) NULL,
+  `rue` VARCHAR(255) NULL,
+  `numero` VARCHAR(255) NULL,
+  `code_postal` VARCHAR(5) NULL,
+  `localite` VARCHAR(255) NULL,
+  `pays` VARCHAR(255) NULL,
+  `tva` VARCHAR(255) NULL,
+  `tel` VARCHAR(255) NULL,
+  `email` VARCHAR(255) NULL,
   `created_at` TIMESTAMP NULL,
   `updated_at` TIMESTAMP NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_elevage_loc_idx` (`localite_id` ASC),
-  CONSTRAINT `fk_elevage_loc`
-    FOREIGN KEY (`localite_id`)
-    REFERENCES `elevage`.`localites` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 
@@ -159,19 +119,15 @@ CREATE TABLE IF NOT EXISTS `elevage`.`clients` (
   `prenom` VARCHAR(255) NULL,
   `rue` VARCHAR(255) NULL,
   `numero` VARCHAR(255) NULL,
-  `localite_id` INT NULL,
+  `code_postal` VARCHAR(5) NULL,
+  `localite` VARCHAR(255) NULL,
+  `pays` VARCHAR(255) NULL,
   `tel` VARCHAR(255) NULL,
   `email` VARCHAR(255) NULL,
   `remarques` VARCHAR(255) NULL,
   `created_at` TIMESTAMP NULL,
   `updated_at` TIMESTAMP NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_client_loc_idx` (`localite_id` ASC),
-  CONSTRAINT `fk_client_loc`
-    FOREIGN KEY (`localite_id`)
-    REFERENCES `elevage`.`localites` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 

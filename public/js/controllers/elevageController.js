@@ -18,6 +18,11 @@ angular.module('elevageApp').controller('elevageController', ['$scope', '$route'
     //--------------------------------------------------------------------------
     // Evénements de la couche UI
     //--------------------------------------------------------------------------
+    // [buttonCancel:onClick] : clic sur le bouton annuler
+    $scope.onClickCancel = function() {
+        $scope.elevageFormError = false;
+        $scope.firstElevage();
+    };
     // [buttonSave:onClick] : clic ou validation du bouton sauvegarder
     $scope.onClickSave = function() {
         $scope.saveElevage();

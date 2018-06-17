@@ -45,17 +45,85 @@
                             <p ng-bind="elevageFormErrorMessage"></p>
                         </div>
 
+                        <!--
+                        Nom
+                        -->
                         <div class="form-group">
                             <label for="inputNom" class="col-md-3 control-label">Nom*</label>
                             <div class="col-md-9">
                                 <input type="text" class="form-control" id="inputNom" ng-model="currentElevage.nom" empty-to-null>
                             </div>
                         </div>
+
+                        <!--
+                        Affixe
+                        -->
+                        <div class="form-group">
+                            <label for="inputAffixe" class="col-md-3 control-label">Affixe</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="inputAffixe" ng-model="currentElevage.affixe" empty-to-null>
+                            </div>
+                        </div>
+
+                        <!--
+                        Responsable
+                        -->
+                        <div class="form-group">
+                            <label for="inputResponsable" class="col-md-3 control-label">Responsable</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="inputResponsable" ng-model="currentElevage.responsable" empty-to-null>
+                            </div>
+                        </div>
+
+                        <!--
+                        Rue et numéro
+                        -->
+                        <div class="form-group">
+                            <label for="inputRue" class="col-md-3 control-label">Rue, n°</label>
+                            <div class="col-md-7">
+                                <input type="text" class="form-control" id="inputRue" ng-model="currentElevage.rue" empty-to-null>
+                            </div>
+                            <div class="col-md-2">
+                                <input type="text" class="form-control" id="inputNumero" ng-model="currentElevage.numero" empty-to-null>
+                            </div>
+                        </div>
+
+                        <!--
+                        TVA
+                        -->
+                        <div class="form-group">
+                            <label for="inputTva" class="col-md-3 control-label">TVA</label>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" id="inputTva" ng-model="currentElevage.tva" empty-to-null>
+                            </div>
+                        </div>
+
+                        <!--
+                        Téléphone
+                        -->
+                        <div class="form-group">
+                            <label for="inputTel" class="col-md-3 control-label">Téléphone</label>
+                            <div class="col-md-3">
+                                <input type="tel" class="form-control" id="inputTel" ng-model="currentElevage.tel" empty-to-null>
+                            </div>
+                        </div>
+
+                        <!--
+                        Email
+                        -->
+                        <div class="form-group">
+                            <label for="inputEmail" class="col-md-3 control-label">E-mail</label>
+                            <div class="col-md-9">
+                                <input type="email" class="form-control" id="inputTel" ng-model="currentElevage.email" empty-to-null>
+                            </div>
+                        </div>
+
                     </div>
                     <!-- /.box-body -->
 
 
                     <div class="box-footer clearfix">
+                        <input type="button" id="btnCancel" value="Annuler" ng-click="onClickCancel()" class="btn pull-left" />
                         <input type="submit" id="btnAjouter" value="Sauvegarder" class="btn btn-info pull-right" />
                     </div>
                     <!-- /.box-footer -->

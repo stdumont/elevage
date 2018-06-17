@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Localite as localite;
 
 /**
  * Modèle des clients
@@ -29,17 +28,12 @@ class Client extends Model
         'prenom',
         'rue',
         'numero',
-        'localite_id',
+        'code_postal',
+        'localite',
+        'pays',
         'tel',
         'email',
         'remarques',
     ];
-
-    protected $with = ['localite'];
-
-    public function localite() {
-        return $this->belongsTo('App\Models\Localite');
-    }
-
 
 }
