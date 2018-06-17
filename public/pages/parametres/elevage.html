@@ -89,6 +89,29 @@
                         </div>
 
                         <!--
+                        Code postal et localité
+                        -->
+                        <div class="form-group">
+                            <label for="inputCP" class="col-md-3 control-label">Code postal, localité</label>
+                            <div class="col-md-2">
+                                <input type="text" class="form-control" id="inputCP" ng-model="currentElevage.code_postal" empty-to-null>
+                            </div>
+                            <div class="col-md-7">
+                                <input type="text" class="form-control" id="inputLocalite" ng-model="currentElevage.localite" empty-to-null>
+                            </div>
+                        </div>
+
+                        <!--
+                        Pays
+                        -->
+                        <div class="form-group">
+                            <label for="inputPays" class="col-md-3 control-label">Pays</label>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" id="inputPays" ng-model="currentElevage.pays" empty-to-null>
+                            </div>
+                        </div>
+
+                        <!--
                         TVA
                         -->
                         <div class="form-group">
