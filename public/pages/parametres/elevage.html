@@ -41,8 +41,15 @@
 
                         <div class="box callout callout-danger" ng-show="elevageFormError">
                             <h4>
-                                <i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;Enregistrement annulé</h4>
+                                <i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;Enregistrement annulé
+                            </h4>
                             <p ng-bind="elevageFormErrorMessage"></p>
+                        </div>
+
+                        <div class="box callout callout-success" ng-show="elevageFormSuccess">
+                            <h4>
+                                <i class="fa fa-check"></i>&nbsp;&nbsp;Opération terminée avec succès
+                            </h4>
                         </div>
 
                         <!--

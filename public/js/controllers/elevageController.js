@@ -12,6 +12,8 @@ angular.module('elevageApp').controller('elevageController', ['$scope', '$route'
     $scope.elevageFormErrorMessage = '';
     // Bool qui indique si il y a une erreur dans la validation du formulaire
     $scope.elevageFormError = false;
+    // Bool qui indique si le formulaire a été enregistré avec succes
+    $scope.elevageFormSuccess = false;
     //--------------------------------------------------------------------------
 
 
@@ -21,6 +23,7 @@ angular.module('elevageApp').controller('elevageController', ['$scope', '$route'
     // [buttonCancel:onClick] : clic sur le bouton annuler
     $scope.onClickCancel = function() {
         $scope.elevageFormError = false;
+        $scope.elevageFormSuccess = false;
         $scope.firstElevage();
     };
     // [buttonSave:onClick] : clic ou validation du bouton sauvegarder
@@ -45,10 +48,21 @@ angular.module('elevageApp').controller('elevageController', ['$scope', '$route'
     };
     // ->Elevages : Appel REST vers Factory : mettre à jour un elevage
     $scope.saveElevage = function() {
+        $scope.elevageFormError = false;
+        $scope.elevageFormSuccess = false;
         if ($scope.isFillingValid()) {
-            elevageFactory.update($scope.currentElevage).success(function() {}).error(function(err) {
-                showMessageInfo("Erreur", "La mise à jour n'a pas fonctionné correctement.");
-            });
+            elevageFactory.update($scope.currentElevage)
+                .success(function() {
+                    $scope.elevageFormSuccess = true;
+                    $('.callout-success').fadeIn();
+                    setTimeout(function() {
+                        $('.callout-success').fadeOut();
+                        $scope.elevageFormSuccess = false;
+                    }, 3000);
+                })
+                .error(function(err) {
+                    showMessageInfo("Erreur", "La mise à jour n'a pas fonctionné correctement.");
+                });
         }
     };
     //--------------------------------------------------------------------------
@@ -76,6 +90,8 @@ angular.module('elevageApp').controller('elevageController', ['$scope', '$route'
     // MAIN
     //--------------------------------------------------------------------------
     $scope.firstElevage();
+    $scope.elevageFormError = false;
+    $scope.elevageFormSuccess = false;
     //--------------------------------------------------------------------------
 
 
