@@ -23,6 +23,7 @@ $app->get('/api/parameter/get-application-creator-mail', 'ParameterController:ge
  * Routes vers les chiens
  */ 
 $app->get('/api/chien/get-count', 'ChienController:getCount');
+$app->get('/api/chien/get-count-by-race/{race_id}', 'ChienController:getCountByRace');
 
 /**
  * Routes vers les clients
@@ -39,3 +40,25 @@ $app->delete('/api/client/delete/{id}', 'ClientController:delete');
  */ 
 $app->get('/api/elevage/first', 'ElevageController:first');
 $app->post('/api/elevage/update', 'ElevageController:update');
+
+/**
+ * Routes vers les races
+ */ 
+$app->get('/api/race/get-all', 'RaceController:getAll');
+$app->get('/api/race/get-count', 'RaceController:getCount');
+$app->get('/api/race/find/{id}', 'RaceController:find');
+$app->post('/api/race/insert', 'RaceController:insert');
+$app->post('/api/race/update', 'RaceController:update');
+$app->delete('/api/race/delete/{id}', 'RaceController:delete');
+
+/**
+ * Routes vers les robes
+ */ 
+$app->get('/api/robe/get-all', 'RobeController:getAll');
+$app->get('/api/robe/get-count', 'RobeController:getCount');
+$app->get('/api/robe/get-count-by-race/{race_id}', 'RobeController:getCountByRace');
+$app->get('/api/robe/find/{id}', 'RobeController:find');
+$app->get('/api/robe/referenced/{id}', 'RobeController:referenced');
+$app->post('/api/robe/insert', 'RobeController:insert');
+$app->post('/api/robe/update', 'RobeController:update');
+$app->delete('/api/robe/delete/{id}', 'RobeController:delete');

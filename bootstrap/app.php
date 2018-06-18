@@ -92,6 +92,12 @@ $container['LocaliteController'] = function ($container) {
 $container['ElevageController'] = function ($container) {
     return new \App\Controllers\ElevageController($container);
 };
+$container['RaceController'] = function ($container) {
+    return new \App\Controllers\RaceController($container);
+};
+$container['RobeController'] = function ($container) {
+    return new \App\Controllers\RobeController($container);
+};
 
 $container['auth'] = function ($container) {
     return new \App\Auth\Auth;
