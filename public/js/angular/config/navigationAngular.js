@@ -39,7 +39,7 @@ angular.module('elevageApp').config(['$routeProvider', function($routeProvider) 
     // page : paramètres : races
     .when('/page-parametres-races', {
         templateUrl: 'pages/parametres/races.html',
-        controller: 'racesController',
+        controller: 'raceController',
         activeTab: 'page-parametres-races'
     })
 

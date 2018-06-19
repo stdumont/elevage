@@ -14,6 +14,11 @@ angular.module('elevageApp')
             return $http.get(urlBase + 'get-count');
         };
 
+        // renvoi le nombre de robes pour une race
+        robeFactory.countByRace = function(race_id) {
+            return $http.get(urlBase + 'get-count-by-race' + '/' + race_id);
+        };
+
         // renvoi d'une robe sur base de son id
         robeFactory.find = function(id) {
             return $http.get(urlBase + 'find' + '/' + id);

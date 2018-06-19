@@ -58,7 +58,6 @@ $app->get('/api/robe/get-all', 'RobeController:getAll');
 $app->get('/api/robe/get-count', 'RobeController:getCount');
 $app->get('/api/robe/get-count-by-race/{race_id}', 'RobeController:getCountByRace');
 $app->get('/api/robe/find/{id}', 'RobeController:find');
-$app->get('/api/robe/referenced/{id}', 'RobeController:referenced');
 $app->post('/api/robe/insert', 'RobeController:insert');
 $app->post('/api/robe/update', 'RobeController:update');
 $app->delete('/api/robe/delete/{id}', 'RobeController:delete');
