@@ -261,6 +261,29 @@ CREATE TABLE IF NOT EXISTS `elevage`.`chiots` (
 ENGINE = InnoDB;
 
 
+-- -----------------------------------------------------
+-- Table `elevage`.`agenda`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `elevage`.`agenda` ;
+
+CREATE TABLE IF NOT EXISTS `elevage`.`agenda` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(255) NOT NULL,
+  `description` VARCHAR(255) NULL DEFAULT NULL,
+  `allDay` VARCHAR(1) NOT NULL,
+  `start` DATETIME NOT NULL,
+  `end` DATETIME NULL DEFAULT NULL,
+  `generated` VARCHAR(1) NOT NULL,
+  `editable` VARCHAR(1) NOT NULL,
+  `color` VARCHAR(255) NULL DEFAULT NULL,
+  `created_at` TIMESTAMP NULL DEFAULT NULL,
+  `updated_at` TIMESTAMP NULL DEFAULT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 1
+DEFAULT CHARACTER SET = utf8;
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

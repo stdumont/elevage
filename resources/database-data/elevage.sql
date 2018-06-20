@@ -16,6 +16,38 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `agenda`
+--
+
+DROP TABLE IF EXISTS `agenda`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `agenda` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `allDay` varchar(1) NOT NULL,
+  `start` datetime NOT NULL,
+  `end` datetime DEFAULT NULL,
+  `generated` varchar(1) NOT NULL,
+  `editable` varchar(1) NOT NULL,
+  `color` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `agenda`
+--
+
+LOCK TABLES `agenda` WRITE;
+/*!40000 ALTER TABLE `agenda` DISABLE KEYS */;
+/*!40000 ALTER TABLE `agenda` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `chiens`
 --
 
@@ -119,7 +151,7 @@ CREATE TABLE `clients` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -128,7 +160,6 @@ CREATE TABLE `clients` (
 
 LOCK TABLES `clients` WRITE;
 /*!40000 ALTER TABLE `clients` DISABLE KEYS */;
-INSERT INTO `clients` VALUES (1,'Dumont','Stéphane','Rue Favauche','10','5151','Flo','Belgium','00 32 81 44 68 69','info@lesrubis.be','','2018-06-17 22:33:33','2018-06-17 22:36:30');
 /*!40000 ALTER TABLE `clients` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -164,7 +195,7 @@ CREATE TABLE `elevages` (
 
 LOCK TABLES `elevages` WRITE;
 /*!40000 ALTER TABLE `elevages` DISABLE KEYS */;
-INSERT INTO `elevages` VALUES (1,'Elevage canin des Rubis de Lady C','des Rubis de Lady C','Stéphane-Catherine Dumont-Delange','Rue Favauche','1','5150','Floriffoux','Belgique','BE 0690.365.232','+32 81 44 68 68','info@lesrubis.com',NULL,'2018-06-17 22:46:27');
+INSERT INTO `elevages` VALUES (1,'Elevage canin des Rubis de Lady C','des Rubis de Lady C','Stéphane-Catherine Dumont-Delange','Rue Favauche','1','5150','Floriffoux','Belgique','BE 0690.365.232','+32 81 44 68 68','info@lesrubis.com',NULL,NULL);
 /*!40000 ALTER TABLE `elevages` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -325,4 +356,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-06-18  0:51:17
+-- Dump completed on 2018-06-21  1:40:34

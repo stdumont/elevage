@@ -11,13 +11,41 @@ angular.module('elevageApp').controller('agendaController', ['$scope', '$route',
             header: {
                 left: 'prev,next today',
                 center: 'title',
-                right: 'month,agendaWeek,agendaDay,list'
+                right: 'month,basicWeek,basicDay,listMonth'
             },
-            editable: true,
-            droppable: true,
+            navLinks: true,
             selectable: true,
-            selectHelper: true,
             eventLimit: true,
+            eventClick: function(calEvent, jsEvent, view) {
+                console.log('eventClick');
+                console.log(calEvent);
+                console.log(jsEvent);
+                console.log(view);
+            },
+            eventDrop: function(event, delta, revertFunc, jsEvent, ui, view) {
+                console.log('eventDrop');
+                console.log(event);
+                console.log(delta);
+                console.log(delta._days);
+                console.log(revertFunc);
+                console.log(jsEvent);
+                console.log(ui);
+                console.log(view);
+            },
+            eventRender: function(event, element) {
+                element.qtip({
+                    content: event.description
+                });
+            },
+            eventResize: function(event, delta, revertFunc, jsEvent, ui, view) {
+                console.log('eventResize');
+                console.log(event);
+                console.log(delta);
+                console.log(revertFunc);
+                console.log(jsEvent);
+                console.log(ui);
+                console.log(view);
+            },
             select: function(start, end, event, view, resource) {
                 console.log('select');
                 console.log(start);
@@ -26,32 +54,21 @@ angular.module('elevageApp').controller('agendaController', ['$scope', '$route',
                 console.log(view);
                 console.log(resource);
             },
-            eventDrop: function(event, delta, revertFunc) {
-                console.log('eventDrop');
-                console.log(event);
-                console.log(delta);
-                console.log(revertFunc);
-            },
-            eventClick: function(calEvent, jsEvent, view) {
-                console.log('eventClick');
-                console.log(calEvent);
-                console.log(jsEvent);
-                console.log(view);
-            },
             events: [{
                     id: 1,
-                    title: 'Event1',
-                    start: '2018-04-04'
+                    title: 'Follow Me : 6 ans',
+                    start: '2018-06-14',
+                    editable: false,
+                    color: '#00ff00',
                 },
                 {
                     id: 2,
-                    title: 'Event2',
-                    start: '2018-05-05'
-                }
-                // etc...
+                    title: 'Mme Leroy',
+                    start: '2018-06-20T16:00:00',
+                    editable: true,
+                    description: 'Mâle noir-feu'
+                },
             ],
-            color: 'yellow', // an option!
-            textColor: 'black' // an option!
 
         });
 
