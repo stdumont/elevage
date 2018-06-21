@@ -98,6 +98,9 @@ $container['RaceController'] = function ($container) {
 $container['RobeController'] = function ($container) {
     return new \App\Controllers\RobeController($container);
 };
+$container['AgendaController'] = function ($container) {
+    return new \App\Controllers\AgendaController($container);
+};
 
 $container['auth'] = function ($container) {
     return new \App\Auth\Auth;
