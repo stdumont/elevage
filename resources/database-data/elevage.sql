@@ -26,11 +26,11 @@ CREATE TABLE `agenda` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
   `description` varchar(255) DEFAULT NULL,
-  `allDay` varchar(1) NOT NULL,
+  `allDay` varchar(5) NOT NULL,
   `start` datetime NOT NULL,
   `end` datetime DEFAULT NULL,
-  `generated` varchar(1) NOT NULL,
-  `editable` varchar(1) NOT NULL,
+  `generated` varchar(5) NOT NULL,
+  `editable` varchar(5) NOT NULL,
   `color` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -356,4 +356,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-06-21  1:40:34
+-- Dump completed on 2018-06-21  2:40:06

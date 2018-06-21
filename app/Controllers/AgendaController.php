@@ -15,22 +15,15 @@ class AgendaController extends Controller
     {
         $start = $this->container->request->getParam('start');
         $end = $this->container->request->getParam('end');
-        var_dump('start=' . $start);
-        var_dump('end=' . $end);
-        die();
-        $nombre = Agenda::count();
-        return json_encode($nombre, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-    }
-
-    /**
-     * Retourne le nombre de chiens pour une race
-     * @return json le nombre de chiens
-     */
-    public function getCountByRace($request, $response, $args)
-    {
-        $race_id = $args['race_id'];
-        $nombre = Agenda::where('race_id', $race_id)->count();
-        return json_encode($nombre, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        $this->container['logger']->info('Agenda start : ' . $start);
+        $this->container['logger']->info('Agenda end   : ' . $end);
+        $evenements = Agenda::whereDate('start', '>=', "$start")
+            ->where(function ($query) use ($end) {
+                $query->whereDate('end', '<', "$end")
+                      ->orWhereNull('end');
+            })
+            ->get();
+        return json_encode($evenements, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     }
 
 }
