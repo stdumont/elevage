@@ -66,3 +66,6 @@ $app->delete('/api/robe/delete/{id}', 'RobeController:delete');
  * Routes vers l'agenda'
  */ 
 $app->get('/api/agenda/retrieve', 'AgendaController:retrieve');
+$app->post('/api/agenda/insert', 'AgendaController:insert');
+$app->post('/api/agenda/update', 'AgendaController:update');
+$app->delete('/api/agenda/delete/{id}', 'AgendaController:delete');

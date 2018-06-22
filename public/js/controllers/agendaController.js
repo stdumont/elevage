@@ -3,6 +3,44 @@ angular.module('elevageApp').controller('agendaController', ['$scope', '$route',
     // Mettre à jour le menu de navigation avec le lien courant.
     refreshCurrentLink($route.current.activeTab);
 
+    // Variables
+    $scope.calendarEvent = null;
+    $scope.calendarStart = null;
+    $scope.calendarEnd = null;
+    $scope.dataEvent = null;
+
+    //
+    // Gestion du click sur un événement
+    //
+    $scope.onEventClick = function(event) {
+        console.log('eventClick');
+        console.log(event);
+        $scope.calendarEvent = event;
+        $scope.calendarStart = event.start;
+        $scope.calendarEnd = event.end;
+        console.log($scope.calendarEvent);
+        console.log($scope.calendarStart);
+        console.log($scope.calendarEnd);
+        // $('#modalTitle').html(event.title);
+        // $('#modalBody').html(event.description);
+        // $('#fullCalModal').modal();
+    };
+
+    //
+    // Gestion du click sur une journée/heure
+    //
+    $scope.onSelect = function(start, end) {
+        console.log('select');
+        console.log(start);
+        console.log(end);
+        $scope.calendarEvent = null;
+        $scope.calendarStart = start;
+        $scope.calendarEnd = end;
+        console.log($scope.calendarEvent);
+        console.log($scope.calendarStart);
+        console.log($scope.calendarEnd);
+    };
+
     // MAIN
     $(document).ready(function() {
 
@@ -15,45 +53,24 @@ angular.module('elevageApp').controller('agendaController', ['$scope', '$route',
             },
             navLinks: true,
             selectable: true,
-            eventLimit: true,
+            eventLimit: true, // permet d'avoir '+plus' si trop d'événement sur une journée
+            // clic sur un événement
             eventClick: function(calEvent, jsEvent, view) {
-                console.log('eventClick');
-                console.log(calEvent);
-                console.log(jsEvent);
-                console.log(view);
+                $scope.onEventClick(calEvent);
             },
-            eventDrop: function(event, delta, revertFunc, jsEvent, ui, view) {
-                console.log('eventDrop');
-                console.log(event);
-                console.log(delta);
-                console.log(delta._days);
-                console.log(revertFunc);
-                console.log(jsEvent);
-                console.log(ui);
-                console.log(view);
-            },
+            // modification des données avant le rendu
             eventRender: function(event, element) {
-                element.qtip({
-                    content: event.description
-                });
+                if (event.description) {
+                    element.qtip({
+                        content: event.description
+                    });
+                }
             },
-            eventResize: function(event, delta, revertFunc, jsEvent, ui, view) {
-                console.log('eventResize');
-                console.log(event);
-                console.log(delta);
-                console.log(revertFunc);
-                console.log(jsEvent);
-                console.log(ui);
-                console.log(view);
-            },
+            // clic sur une journée; typiquement pour ajouter un événement
             select: function(start, end, event, view, resource) {
-                console.log('select');
-                console.log(start);
-                console.log(end);
-                console.log(event);
-                console.log(view);
-                console.log(resource);
+                $scope.onSelect(start, end);
             },
+            // source des événement affichés par accès à l'api
             events: '/api/agenda/retrieve',
 
         });

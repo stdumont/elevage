@@ -26,16 +26,16 @@ CREATE TABLE `agenda` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
   `description` varchar(255) DEFAULT NULL,
-  `allDay` varchar(5) NOT NULL,
-  `start` datetime NOT NULL,
-  `end` datetime DEFAULT NULL,
-  `generated` varchar(5) NOT NULL,
-  `editable` varchar(5) NOT NULL,
+  `allDay` tinyint(1) NOT NULL DEFAULT '0',
+  `start` varchar(255) NOT NULL,
+  `end` varchar(255) DEFAULT NULL,
+  `generated` tinyint(1) NOT NULL DEFAULT '0',
+  `editable` tinyint(1) DEFAULT '0',
   `color` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,6 +44,7 @@ CREATE TABLE `agenda` (
 
 LOCK TABLES `agenda` WRITE;
 /*!40000 ALTER TABLE `agenda` DISABLE KEYS */;
+INSERT INTO `agenda` VALUES (1,'Follow - 7 ans',NULL,1,'2018-06-22',NULL,1,0,'#5574AD',NULL,NULL);
 /*!40000 ALTER TABLE `agenda` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -186,7 +187,7 @@ CREATE TABLE `elevages` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -195,7 +196,6 @@ CREATE TABLE `elevages` (
 
 LOCK TABLES `elevages` WRITE;
 /*!40000 ALTER TABLE `elevages` DISABLE KEYS */;
-INSERT INTO `elevages` VALUES (1,'Elevage canin des Rubis de Lady C','des Rubis de Lady C','Stéphane-Catherine Dumont-Delange','Rue Favauche','1','5150','Floriffoux','Belgique','BE 0690.365.232','+32 81 44 68 68','info@lesrubis.com',NULL,NULL);
 /*!40000 ALTER TABLE `elevages` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -213,7 +213,7 @@ CREATE TABLE `parameters` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -222,7 +222,6 @@ CREATE TABLE `parameters` (
 
 LOCK TABLES `parameters` WRITE;
 /*!40000 ALTER TABLE `parameters` DISABLE KEYS */;
-INSERT INTO `parameters` VALUES (1,'APP_NAME','Elevage canin',NULL,NULL),(2,'APP_VERSION','0.1',NULL,NULL),(3,'APP_CREATION_YEAR','2018',NULL,NULL),(4,'APP_AUTHOR','Stéphane Dumont',NULL,NULL),(5,'APP_AUTHOR_MAIL','dumont.stephane@gmail.com',NULL,NULL);
 /*!40000 ALTER TABLE `parameters` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -276,7 +275,7 @@ CREATE TABLE `races` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -285,7 +284,6 @@ CREATE TABLE `races` (
 
 LOCK TABLES `races` WRITE;
 /*!40000 ALTER TABLE `races` DISABLE KEYS */;
-INSERT INTO `races` VALUES (1,'Cavalier King Charles',NULL,NULL),(2,'Chihuahua',NULL,NULL);
 /*!40000 ALTER TABLE `races` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -305,7 +303,7 @@ CREATE TABLE `robes` (
   PRIMARY KEY (`id`),
   KEY `fk_robe_race_idx` (`race_id`),
   CONSTRAINT `fk_robe_race` FOREIGN KEY (`race_id`) REFERENCES `races` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -314,7 +312,6 @@ CREATE TABLE `robes` (
 
 LOCK TABLES `robes` WRITE;
 /*!40000 ALTER TABLE `robes` DISABLE KEYS */;
-INSERT INTO `robes` VALUES (1,1,'Blenheïm',NULL,NULL),(2,1,'Tricolore',NULL,NULL),(3,1,'Noir-Feu',NULL,NULL),(4,1,'Rubis',NULL,NULL);
 /*!40000 ALTER TABLE `robes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -334,7 +331,7 @@ CREATE TABLE `users` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -343,7 +340,6 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Stéphane','dumont.stephane@gmail.com','$2y$10$EunfkQSE6wjJkG4WIUi7Xejyzq8U8eaorBZ.cGFhUN2yCAH2dVn1m','1',NULL,NULL),(2,'Catherine','catherine.delange@skynet.be','$2y$10$jX9w0MXYHBbcex6VMkSMhOMVQ6iNQ2c5MLZdjUyrRBUZoDc66aEO2','0',NULL,NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -356,4 +352,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-06-21  2:40:06
+-- Dump completed on 2018-06-22  2:18:28

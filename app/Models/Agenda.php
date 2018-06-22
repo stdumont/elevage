@@ -34,4 +34,10 @@ class Agenda extends Model
         'color',
     ];
 
+    protected $casts = [
+        'allDay' => 'boolean',
+        'generated' => 'boolean',
+        'editable' => 'boolean',
+    ];
+
 }
