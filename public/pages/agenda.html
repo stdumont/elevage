@@ -5,31 +5,108 @@
         <small>Calendrier des événements</small>
     </h1>
     <ol class="breadcrumb">
-        <li><a href="javascript:void(0);"><i class="fa fa-users"></i> Accueil</a></li>
+        <li>
+            <a href="javascript:void(0);">
+                <i class="fa fa-users"></i> Accueil</a>
+        </li>
         <li class="active">Agenda</li>
     </ol>
 
 </section>
 
 <!-- Main content -->
-<section class="content" style="min-height:900px;">
+<section class="content">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-7">
             <div id="agenda"></div>
         </div>
-    </div>
+        <div class="col-md-5">
+            <div class="box box-info form-calendar">
+                <div class="box-header with-border">
+                    <h3 class="box-title">
+                        <i class="fa fa-plus"></i>&nbsp;
+                        <span ng-bind="titleAdd"></span>
+                    </h3>
 
-    <div id="fullCalendarModal" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content loadable">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel" ng-bind="modalTitle"></h4>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+
                 </div>
-                <div id="modalBody" class="modal-body">
+
+                <form class="form-horizontal" ng-submit="onClickSave()">
+
+                    <div class="box-body">
+
+                        <div class="box callout callout-danger" ng-show="evenementFormError">
+                            <h4>
+                                <i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;Enregistrement annulé</h4>
+                            <p ng-bind="evenementFormErrorMessage"></p>
+                        </div>
+
+                        <!-- Titre -->
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Titre *</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" ng-model="newEvent.title">
+                            </div>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Description</label>
+                            <div class="col-md-9">
+                                <textarea class="form-control" cols="3" ng-model="newEvent.description" id="inputDescription" empty-to-null></textarea>
+                            </div>
+                        </div>
+
+                        <!-- AllDay -->
+                        <div class="form-group">
+                            <label class="col-md-3 control-label"></label>
+                            <div class="col-md-9">
+                                <input type="checkbox" class="minimal" ng-model="newEvent.allDay" />&nbsp;&nbsp;&nbsp;Journée entière ?
+                                <pre>{{newEvent.allDay}}</pre>
+                            </div>
+                        </div>
+
+                        <!-- Début -->
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Début</label>
+                            <div class="col-md-5">
+                                <component-datepicker ng-model="newEvent.start" style="width:100%;" />
+                            </div>
+                            <div class="col-md-4">
+                                <component-timepicker bind-with="newEvent.description" mask="HH:MM" />
+                            </div>
+                        </div>
+
+                        <!-- Couleur -->
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Couleur</label>
+                            <div class="col-md-9">
+                                <component-colorpicker ng-model="newEvent.color" style="width:100%;" />
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- /.box-body -->
+
+
+                    <div class="box-footer clearfix">
+                        <input type="button" id="btnCancel" value="Annuler" ng-click="onClickCancel()" class="btn pull-left" />
+                        <input type="submit" id="btnAjouter" value="Sauvegarder" class="btn btn-info pull-right" />
+                    </div>
+                    <!-- /.box-footer -->
+
+                </form>
+
+                <div class="loadingHidden overlay">
+                    <i class="fa fa-refresh fa-spin"></i>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" id="modalCancelButton" class="btn btn-default pull-left" data-dismiss="modal">Annuler</button>
-                    <button type="button" id="modalCloseButton" class="btn btn-primary pull-right" data-dismiss="modal">Fermer</button>
+                <div class="box-footer">
+
                 </div>
             </div>
         </div>
