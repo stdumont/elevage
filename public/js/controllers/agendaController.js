@@ -6,9 +6,6 @@ angular.module('elevageApp').controller('agendaController', ['$scope', '$route',
     //--------------------------------------------------------------------------
     // Variables
     //--------------------------------------------------------------------------
-    $scope.calendarEvent;
-    $scope.calendarStart;
-    $scope.calendarEnd;
     $scope.dataEvent;
     $scope.titleAdd = "Ajouter un événement";
     $scope.newEvent = null;
@@ -104,23 +101,14 @@ angular.module('elevageApp').controller('agendaController', ['$scope', '$route',
     // Gestion du click sur un événement
     //
     $scope.onEventClick = function(event) {
-        // console.log('eventClick');
-        // console.log(event);
         $scope.calendarEvent = event;
         $scope.calendarStart = event.start;
         $scope.calendarEnd = event.end;
-        // $scope.modalTitle = $scope.modalTitleUpdate;
-        // console.log($scope.calendarEvent);
-        // console.log($scope.calendarStart);
-        // console.log($scope.calendarEnd);
-        // $('#modalTitle').html(event.title);
-        // $('#modalBody').html(event.description);
         if ($scope.calendarEvent.generated) {
             $scope.action = "View";
         } else {
             $scope.action = "Update";
         };
-        // $('#fullCalendarModal').modal();
     };
 
     //
