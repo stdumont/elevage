@@ -29,6 +29,9 @@ class Robe extends Model
         'nom'
     ];
 
+    // Renvoyer la race
+    protected $with = ['race'];
+
     /**
      * définit la relation inverse 1:N entre race et robe
      *

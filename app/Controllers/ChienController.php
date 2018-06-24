@@ -28,4 +28,15 @@ class ChienController extends Controller
         return json_encode($nombre, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     }
 
+    /**
+     * Retourne le nombre de chiens pour une robe
+     * @return json le nombre de chiens
+     */
+    public function getCountByRobe($request, $response, $args)
+    {
+        $robe_id = $args['robe_id'];
+        $nombre = Chien::where('robe_id', $robe_id)->count();
+        return json_encode($nombre, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    }
+
 }

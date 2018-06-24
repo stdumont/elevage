@@ -43,6 +43,13 @@ angular.module('elevageApp').config(['$routeProvider', function($routeProvider) 
         activeTab: 'page-parametres-races'
     })
 
+    // page : paramètres : robes
+    .when('/page-parametres-robes', {
+        templateUrl: 'pages/parametres/robes.html',
+        controller: 'robeController',
+        activeTab: 'page-parametres-robes'
+    })
+
     // page : outils : calculs sur les dates
     .when('/page-outils-calcul-dates', {
         templateUrl: 'pages/outils/calcul-dates.html',
