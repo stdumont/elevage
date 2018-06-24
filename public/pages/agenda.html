@@ -17,10 +17,13 @@
 <!-- Main content -->
 <section class="content">
     <div class="row">
-        <div class="col-md-7">
+        <div class="col-md-10" id="agendaDiv">
             <div id="agenda"></div>
         </div>
-        <div class="col-md-5">
+        <div class="col-md-2" ng-hide="addProcessing" id="startAddDiv">
+            <button class="btn btn-primary" ng-click="beginAdd()" style="width: 100%;"><i class="fa fa-plus"></i> Ajouter</button>
+        </div>
+        <div class="col-md-5" ng-show="addProcessing" id="addDiv">
             <div class="box box-info form-calendar">
                 <div class="box-header with-border">
                     <h3 class="box-title">
@@ -50,7 +53,7 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label">Titre *</label>
                             <div class="col-md-9">
-                                <input type="text" class="form-control" ng-model="newEvent.title">
+                                <input type="text" class="form-control" ng-model="newEvent.title" empty-to-null>
                             </div>
                         </div>
 
@@ -58,7 +61,7 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label">Description</label>
                             <div class="col-md-9">
-                                <textarea class="form-control" cols="3" ng-model="newEvent.description" id="inputDescription" empty-to-null></textarea>
+                                <textarea class="form-control" cols="3" ng-model="newEvent.description" empty-to-null></textarea>
                             </div>
                         </div>
 
@@ -67,7 +70,6 @@
                             <label class="col-md-3 control-label"></label>
                             <div class="col-md-9">
                                 <input type="checkbox" class="minimal" ng-model="newEvent.allDay" />&nbsp;&nbsp;&nbsp;Journée entière ?
-                                <pre>{{newEvent.allDay}}</pre>
                             </div>
                         </div>
 
@@ -77,8 +79,19 @@
                             <div class="col-md-5">
                                 <component-datepicker ng-model="newEvent.start" style="width:100%;" />
                             </div>
-                            <div class="col-md-4">
-                                <component-timepicker bind-with="newEvent.description" mask="HH:MM" />
+                            <div class="col-md-4" ng-hide="newEvent.allDay">
+                                <component-timepicker bind-with="newEvent.startTime" mask="HH:MM" />
+                            </div>
+                        </div>
+
+                        <!-- Fin -->
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Fin</label>
+                            <div class="col-md-5">
+                                <component-datepicker ng-model="newEvent.end" style="width:100%;" />
+                            </div>
+                            <div class="col-md-4" ng-hide="newEvent.allDay">
+                                <component-timepicker bind-with="newEvent.endTime" mask="HH:MM" />
                             </div>
                         </div>
 
@@ -86,7 +99,7 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label">Couleur</label>
                             <div class="col-md-9">
-                                <component-colorpicker ng-model="newEvent.color" style="width:100%;" />
+                                <input type="color" ng-model="newEvent.color" />
                             </div>
                         </div>
 

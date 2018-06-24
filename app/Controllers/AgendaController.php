@@ -31,16 +31,24 @@ class AgendaController extends Controller
      */
     public function insert($request, $response, $args)
     {
-        $evenement = Agenda::create([
-            'title' => $this->container->request->getParam('title'),
-            'description' => $this->container->request->getParam('description'),
-            'allDay' => $this->container->request->getParam('allDay'),
-            'start' => $this->container->request->getParam('start'),
-            'end' => $this->container->request->getParam('end'),
-            'generated' => $this->container->request->getParam('generated'),
-            'editable' => $this->container->request->getParam('editable'),
-            'color' => $this->container->request->getParam('color'),
-        ]);
+        try {
+            $this->container['logger']->info('AgendaController.insert : allDay="' .
+                $this->container->request->getParam('allDay') .
+                '"');
+            $evenement = Agenda::create([
+                'title' => $this->container->request->getParam('title'),
+                'description' => $this->container->request->getParam('description'),
+                'allDay' => $this->container->request->getParam('allDay'),
+                'start' => $this->container->request->getParam('start'),
+                'end' => $this->container->request->getParam('end'),
+                'generated' => $this->container->request->getParam('generated'),
+                'editable' => $this->container->request->getParam('editable'),
+                'color' => $this->container->request->getParam('color'),
+            ]);
+        } catch (\Illuminate\Database\QueryException $ex) {
+            $this->container['logger']->info('AgendaController.insertException : ' . $ex->getMessage());
+            // Note any method of class PDOException can be called on $ex.
+        }
         return json_encode($evenement, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     }
 

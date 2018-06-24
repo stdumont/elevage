@@ -30,7 +30,7 @@ angular.module('elevageApp').directive('componentTimepicker', function() {
                 '<input type="text" ' + ro + ' class="form-control pull-right active" id="inputDuree" ' + bind + ' >' +
                 '</div>';
 
-            console.log("mask:" + mask);
+            // console.log("mask:" + mask);
 
             element.html(htmlText);
             element.find('input').inputmask(maskNumeric, { "clearMaskOnLostFocus": false, "placeholder": mask });
