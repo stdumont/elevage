@@ -35,7 +35,7 @@ CREATE TABLE `agenda` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,7 +44,6 @@ CREATE TABLE `agenda` (
 
 LOCK TABLES `agenda` WRITE;
 /*!40000 ALTER TABLE `agenda` DISABLE KEYS */;
-INSERT INTO `agenda` VALUES (1,'Follow - 7 ans',NULL,1,'2018-06-22',NULL,1,0,'#5574AD',NULL,NULL);
 /*!40000 ALTER TABLE `agenda` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -146,7 +145,8 @@ CREATE TABLE `clients` (
   `code_postal` varchar(5) DEFAULT NULL,
   `localite` varchar(255) DEFAULT NULL,
   `pays` varchar(255) DEFAULT NULL,
-  `tel` varchar(255) DEFAULT NULL,
+  `tel1` varchar(255) DEFAULT NULL,
+  `tel2` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `remarques` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -357,4 +357,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-06-22 21:58:59
+-- Dump completed on 2018-06-25  0:47:58

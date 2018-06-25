@@ -1,4 +1,4 @@
-angular.module('elevageApp').controller('clientController', ['$scope', '$route', '$http', 'clientFactory', 'documentFactory', 'NgTableParams', '$sce', function($scope, $route, $http, clientFactory, documentFactory, NgTableParams, $sce) {
+angular.module('elevageApp').controller('clientController', ['$scope', '$route', '$http', 'clientFactory', 'NgTableParams', '$sce', function($scope, $route, $http, clientFactory, NgTableParams, $sce) {
 
     // Mettre à jour le menu de navigation avec le lien courant.
     refreshCurrentLink($route.current.activeTab);
@@ -16,12 +16,83 @@ angular.module('elevageApp').controller('clientController', ['$scope', '$route',
     $scope.clients = null;
     // Typedoc en cours d'ajout ou d'édition
     $scope.currentClient = null;
-    // Filtre de recherche
-    $scope.inputFilterClient = '';
     // Message d'erreur si problème dans la validation
     $scope.clientFormErrorMessage = '';
     // Bool qui indique si il y a une erreur dans la validation du formulaire
     $scope.clientFormError = false;
+    $scope.searchResultsTitle = "Résultats de la recherche";
+    $scope.criteriaNom = null;
+    $scope.criteriaPrenom = null;
+    $scope.criteriaTel = null;
+    $scope.criteriaMail = null;
+    $scope.criteriaCodePostal = null;
+    $scope.criteriaLocalite = null;
+    $scope.criteriaPays = null;
+    $scope.criteriaProprietaire = null;
+
+    // colonnes des résultats de la recherche
+    $scope.columns = [{
+            title: 'No',
+            field: 'id',
+            visible: true,
+            class: ''
+        },
+        {
+            title: 'Nom',
+            field: 'nom',
+            visible: true,
+            class: ''
+        },
+        {
+            title: 'Prénom',
+            field: 'prenom',
+            visible: true,
+            class: ''
+        },
+        {
+            title: 'Téléphone(s)',
+            field: '',
+            visible: true,
+            class: ''
+        },
+        {
+            title: 'E-mail',
+            field: '',
+            visible: true,
+            class: ''
+        },
+        {
+            title: 'Code postal',
+            field: 'code_postal',
+            visible: true,
+            class: ''
+        },
+        {
+            title: 'Localité',
+            field: 'localite',
+            visible: true,
+            class: ''
+        },
+        {
+            title: 'Pays',
+            field: 'pays',
+            visible: true,
+            class: ''
+        },
+        {
+            title: 'Editer',
+            field: '',
+            visible: true,
+            class: ''
+        },
+        {
+            title: 'Suppr.',
+            field: '',
+            visible: true,
+            class: ''
+        }
+    ];
+
     //--------------------------------------------------------------------------
 
 
@@ -29,6 +100,28 @@ angular.module('elevageApp').controller('clientController', ['$scope', '$route',
     //--------------------------------------------------------------------------
     // Evènements de la couche UI
     //--------------------------------------------------------------------------
+
+    // Click sur le bouton annuler des critères de recherche
+    $scope.onClickClearSearch = function() {
+        // effacer les critères
+        $scope.criteriaNom = null;
+        $scope.criteriaPrenom = null;
+        $scope.criteriaTel = null;
+        $scope.criteriaMail = null;
+        $scope.criteriaCodePostal = null;
+        $scope.criteriaLocalite = null;
+        $scope.criteriaPays = null;
+        $scope.criteriaProprietaire = null;
+    };
+
+    // Click sur le bouton rechercher des critères de recherche
+    $scope.onClickStartSearch = function() {
+        // on cache la box des critères
+        $(".box-search-criterias [data-widget='collapse']").click();
+        $scope.listClients();
+
+    };
+
     // [buttonSave:onClick] : clic ou validation du bouton sauvegarder
     $scope.onClickSave = function() {
         $scope.saveClient();
@@ -79,17 +172,18 @@ angular.module('elevageApp').controller('clientController', ['$scope', '$route',
     // ->Clients : Appel REST vers Factory : lister les clients
     $scope.listClients = function() {
         $scope.setListLoading(true);
+        $scope.searchResultsTitle = "Résultats de la recherche";
         clientFactory.list().success(function(clients) {
             $scope.clients = clients;
 
             if ($scope.clients !== null) {
                 $.each($scope.clients, function(index, client) {
-                    documentFactory.countByClient(client.id).success(function(nombre) {
-                        client.count = nombre;
-                    }).error(function() {
-                        $scope.setListLoading(false);
-                    });
+                    // TODO: compter les références dans les chiens
+                    client.count = 0;
+
+
                 });
+                $scope.searchResultsTitle = "Résultats de la recherche (" + $scope.clients.length + ")";
             };
 
             $scope.initTableClients($scope.clients);
@@ -180,7 +274,9 @@ angular.module('elevageApp').controller('clientController', ['$scope', '$route',
     $scope.initTableClients = function(clients) {
         $scope.tableParams = new NgTableParams({
             // PARAMETRES
-            sorting: { nom: "asc" }, // initialiser le tri sur le numero ascendant
+            sorting: {
+                nom: "asc"
+            }, // initialiser le tri sur le numero ascendant
             count: 15 // nbre d elements affiches par defaut
         }, {
             // DONNEES
@@ -204,8 +300,7 @@ angular.module('elevageApp').controller('clientController', ['$scope', '$route',
     //--------------------------------------------------------------------------
     // Mettre à vide un bean client en cas d'ajout
     $scope.initCurrentClient();
-    // Récupérer via REST les équipes en DB pour initialiser la ng-table
-    $scope.listClients();
+
 
     //--------------------------------------------------------------------------
 

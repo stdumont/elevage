@@ -32,9 +32,6 @@ class AgendaController extends Controller
     public function insert($request, $response, $args)
     {
         try {
-            $this->container['logger']->info('AgendaController.insert : allDay="' .
-                $this->container->request->getParam('allDay') .
-                '"');
             $evenement = Agenda::create([
                 'title' => $this->container->request->getParam('title'),
                 'description' => $this->container->request->getParam('description'),

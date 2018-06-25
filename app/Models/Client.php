@@ -31,7 +31,8 @@ class Client extends Model
         'code_postal',
         'localite',
         'pays',
-        'tel',
+        'tel1',
+        'tel2',
         'email',
         'remarques',
     ];
