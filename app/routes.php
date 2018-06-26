@@ -25,6 +25,7 @@ $app->get('/api/parameter/get-application-creator-mail', 'ParameterController:ge
 $app->get('/api/chien/get-count', 'ChienController:getCount');
 $app->get('/api/chien/get-count-by-race/{race_id}', 'ChienController:getCountByRace');
 $app->get('/api/chien/get-count-by-robe/{robe_id}', 'ChienController:getCountByRobe');
+$app->get('/api/chien/get-count-by-client/{client_id}', 'ChienController:getCountByClient');
 
 /**
  * Routes vers les clients

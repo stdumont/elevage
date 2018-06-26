@@ -19,6 +19,11 @@ angular.module('elevageApp')
             return $http.get(urlBase + 'get-count-by-robe' + '/' + robe_id);
         };
 
+        // renvoi le nombre de chiens pour un client
+        chienFactory.countByClient = function(client_id) {
+            return $http.get(urlBase + 'get-count-by-client' + '/' + client_id);
+        };
+
         // renvoi d'une chien sur base de son id
         chienFactory.find = function(id) {
             return $http.get(urlBase + 'find' + '/' + id);

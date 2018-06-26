@@ -32,15 +32,21 @@
                             <i class="fa fa-minus"></i>
                         </button>
                     </div>
+                    <div class="row" id="tabsRecherche" style="padding-top:1em; padding-bottom:1em;">
+                        <div class="col-md-6">
+                            <component-tab ng-tab-group="tab-recherche" ng-model="currentTab" active><span class="fa fa-search"></span>&nbsp;&nbsp;Standard</component-tab>
+                            <component-tab ng-tab-group="tab-recherche" ng-model="currentTab"><span class="fa fa-search-plus"></span>&nbsp;&nbsp;Par chien</component-tab>
+                        </div>
+                    </div>
                 </div>
                 <div class="box-body">
-                    <div class="row">
+                    <div class="row" ng-show="currentTab === 0">
                         <div class="col-md-6">
                             <form class="form-horizontal">
                                 <div class="form-group">
                                     <label for="criteriaNom" class="col-md-3 control-label">Nom</label>
                                     <div class="col-md-9">
-                                        <input type="text" class="form-control" id="criteriaNom" ng-model="criteriaNom">
+                                        <input type="text" class="form-control" id="criteriaNom" ng-model="criteriaNom" autofocus>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -83,30 +89,44 @@
                                         <input type="text" class="form-control" id="criteriaPays" ng-model="criteriaPays">
                                     </div>
                                 </div>
+                            </form>
+                        </div>
+                        <div class="col-md-12">
+                            <button class="btn pull-left" ng-click="onClickClearSearchStandard()">
+                                <i class="fa fa-ban"></i>&nbsp;Effacer les critères
+                            </button>
+                            <button class="btn btn-info pull-right" ng-click="onClickStartSearchStandard()">
+                                <i class="fa fa-search"></i>&nbsp;Rechercher
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row" ng-show="currentTab === 1">
+                        <div class="col-md-6">
+                            <form class="form-horizontal">
                                 <div class="form-group">
                                     <label for="criteriaProprietaire" class="col-md-3 control-label">Propriétaire de</label>
                                     <div class="col-md-9">
-                                        <input type="text" class="form-control" id="criteriaProprietaire" ng-model="criteriaProprietaire">
+                                        <input type="text" class="form-control" id="criteriaProprietaire" ng-model="criteriaProprietaire" autofocus>
                                     </div>
                                 </div>
                             </form>
                         </div>
+                        <div class="col-md-12">
+                            <button class="btn pull-left" ng-click="onClickClearSearchByDog()">
+                                <i class="fa fa-ban"></i>&nbsp;Effacer le critère
+                            </button>
+                            <button class="btn btn-info pull-right" ng-click="onClickStartSearchByDog()">
+                                <i class="fa fa-search-plus"></i>&nbsp;Rechercher
+                            </button>
+                        </div>
                     </div>
-                </div>
-                <div class="box-footer clearfix">
-                    <button class="btn pull-left" ng-click="onClickClearSearch()">
-                        <i class="fa fa-ban"></i>&nbsp;Effacer les critères
-                    </button>
-                    <button class="btn btn-info pull-right" ng-click="onClickStartSearch()">
-                        <i class="fa fa-search"></i>&nbsp;Rechercher
-                    </button>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Résultats de la recherche -->
-    <div class="row">
+    <div class="row" id="searchResultsDiv">
         <div class="col-md-12">
             <div class="box box-info box-search-results">
                 <div class="box-header with-border">
@@ -134,11 +154,12 @@
                             <td class="text-center">
                                 <span ng-bind="client.id"></span>
                             </td>
-                            <td>
-                                <span ng-bind="client.nom"></span>
-                            </td>
-                            <td>
+                            <td style="width: 25%;">
+                                <span ng-bind="client.nom"></span>&nbsp;
                                 <span ng-bind="client.prenom"></span>
+                            </td>
+                            <td class="text-center">
+                                <span ng-bind="client.chiens.length === 0 ? '' : client.chiens.length"></span>
                             </td>
                             <td>
                                 <span ng-bind="client.tel1"></span>&nbsp;
@@ -157,16 +178,16 @@
                                 <span ng-bind="client.pays"></span>
                             </td>
                             <td class="text-center">
-                                <div class="divButton">
+                                <div class="divButton" style="width:40px;padding-right:5px;">
                                     <button class="btn btn-default btn-sm" ng-click="onClickEdit(client)">
-                                        <span class="fa fa-edit"></span>
+                                        <span class="glyphicon glyphicon-pencil"></span>
                                     </button>
                                 </div>
                             </td>
                             <td class="text-center">
-                                <div class="divButton">
+                                <div class="divButton" style="width:40px;padding-right:5px;">
                                     <button class="btn btn-danger btn-sm" ng-confirm-click="Voulez-vous supprimer ce client ?" confirmed-click="onClickDelete(client)" ng-show="isDeletable(client)">
-                                        <span class="fa fa-remove text-danger"></span>
+                                        <span class="glyphicon glyphicon-trash"></span>
                                     </button>
                                 </div>
                             </td>

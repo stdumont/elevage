@@ -37,4 +37,16 @@ class Client extends Model
         'remarques',
     ];
 
+    protected $with = ['chiens'];
+
+    
+    /**
+     * définit la relation 1:N entre client et chien
+     *
+     * @return void
+     */
+    public function chiens() {
+        return $this->hasMany('App\Models\Chien');
+    }
+
 }

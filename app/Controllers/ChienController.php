@@ -39,4 +39,15 @@ class ChienController extends Controller
         return json_encode($nombre, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     }
 
+    /**
+     * Retourne le nombre de chiens pour un client
+     * @return json le nombre de chiens
+     */
+    public function getCountByClient($request, $response, $args)
+    {
+        $client_id = $args['client_id'];
+        $nombre = Chien::where('client_id', $client_id)->count();
+        return json_encode($nombre, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    }
+
 }

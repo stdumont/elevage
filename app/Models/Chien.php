@@ -39,11 +39,15 @@ class Chien extends Model
         'remarques',
     ];
 
-/*     protected $with = ['localite'];
+     protected $with = ['race', 'robe'];
 
-    public function localite() {
-        return $this->belongsTo('App\Models\Localite');
+    public function race() {
+        return $this->belongsTo('App\Models\Race');
     }
- */
+
+    public function robe() {
+        return $this->belongsTo('App\Models\Robe');
+    }
+
 
 }

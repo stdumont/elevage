@@ -35,7 +35,7 @@ CREATE TABLE `agenda` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,6 +44,7 @@ CREATE TABLE `agenda` (
 
 LOCK TABLES `agenda` WRITE;
 /*!40000 ALTER TABLE `agenda` DISABLE KEYS */;
+INSERT INTO `agenda` VALUES (1,'M. Dohet Serge','Mâle noir-feu Métisse',0,'2018-06-23 18:00:00',NULL,0,0,'#004080','2018-06-24 23:03:38','2018-06-24 23:03:38'),(2,'Mme Paurin Jeannette',NULL,0,'2018-06-24 15:00:00',NULL,0,0,'#004080','2018-06-24 23:04:04','2018-06-24 23:04:04');
 /*!40000 ALTER TABLE `agenda` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -82,7 +83,7 @@ CREATE TABLE `chiens` (
   CONSTRAINT `fk_chien_pere` FOREIGN KEY (`pere_id`) REFERENCES `chiens` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_chien_race` FOREIGN KEY (`race_id`) REFERENCES `races` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_chien_robe` FOREIGN KEY (`robe_id`) REFERENCES `robes` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -91,6 +92,7 @@ CREATE TABLE `chiens` (
 
 LOCK TABLES `chiens` WRITE;
 /*!40000 ALTER TABLE `chiens` DISABLE KEYS */;
+INSERT INTO `chiens` VALUES (1,'Yrouk','des Rubis de Lady C','M',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `chiens` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -152,7 +154,7 @@ CREATE TABLE `clients` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -161,6 +163,7 @@ CREATE TABLE `clients` (
 
 LOCK TABLES `clients` WRITE;
 /*!40000 ALTER TABLE `clients` DISABLE KEYS */;
+INSERT INTO `clients` VALUES (1,'Paurin','Jeannette','Rue de Verviers','75/D','4861','Soiron','Belgique','087/33.99.66','0493/65.65.85','jeannette.paurin@gmail.com',NULL,NULL,NULL),(3,'Dohet','Serge',NULL,NULL,NULL,NULL,'Belgique',NULL,NULL,NULL,NULL,NULL,NULL),(4,'Petre-Fabry','Dominique-Dominique','Allée de Fanson','4',NULL,'Xhoris','Belgique',NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `clients` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -357,4 +360,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-06-25  0:47:58
+-- Dump completed on 2018-06-26  1:19:22

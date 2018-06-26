@@ -1,4 +1,4 @@
-angular.module('elevageApp').controller('clientController', ['$scope', '$route', '$http', 'clientFactory', 'NgTableParams', '$sce', function($scope, $route, $http, clientFactory, NgTableParams, $sce) {
+angular.module('elevageApp').controller('clientController', ['$scope', '$route', '$http', 'clientFactory', 'chienFactory', 'NgTableParams', '$sce', function($scope, $route, $http, clientFactory, chienFactory, NgTableParams, $sce) {
 
     // Mettre à jour le menu de navigation avec le lien courant.
     refreshCurrentLink($route.current.activeTab);
@@ -6,19 +6,9 @@ angular.module('elevageApp').controller('clientController', ['$scope', '$route',
     //--------------------------------------------------------------------------
     // Variables
     //--------------------------------------------------------------------------
-    // Titre du formulaire, utilisé via le ng-hide editionMode dans le <h3>
-    $scope.titreAjout = "Ajouter un client";
-    // Titre du formulaire, utilisé via le ng-show editionMode dans le <h3>
-    $scope.titreEdit = "Modifier un client";
-    // Permet d'affiche/masquer le mode ajout ou edition
-    $scope.editionMode = false;
-    // Liste des clients
     $scope.clients = null;
-    // Typedoc en cours d'ajout ou d'édition
     $scope.currentClient = null;
-    // Message d'erreur si problème dans la validation
     $scope.clientFormErrorMessage = '';
-    // Bool qui indique si il y a une erreur dans la validation du formulaire
     $scope.clientFormError = false;
     $scope.searchResultsTitle = "Résultats de la recherche";
     $scope.criteriaNom = null;
@@ -38,14 +28,14 @@ angular.module('elevageApp').controller('clientController', ['$scope', '$route',
             class: ''
         },
         {
-            title: 'Nom',
-            field: 'nom',
+            title: 'Nom, prénom',
+            field: '',
             visible: true,
             class: ''
         },
         {
-            title: 'Prénom',
-            field: 'prenom',
+            title: 'Chiens',
+            field: '',
             visible: true,
             class: ''
         },
@@ -101,8 +91,8 @@ angular.module('elevageApp').controller('clientController', ['$scope', '$route',
     // Evènements de la couche UI
     //--------------------------------------------------------------------------
 
-    // Click sur le bouton annuler des critères de recherche
-    $scope.onClickClearSearch = function() {
+    // Click sur le bouton annuler des critères de recherche standards
+    $scope.onClickClearSearchStandard = function() {
         // effacer les critères
         $scope.criteriaNom = null;
         $scope.criteriaPrenom = null;
@@ -111,14 +101,35 @@ angular.module('elevageApp').controller('clientController', ['$scope', '$route',
         $scope.criteriaCodePostal = null;
         $scope.criteriaLocalite = null;
         $scope.criteriaPays = null;
+    };
+
+    // Click sur le bouton annuler des critères de recherche par chien
+    $scope.onClickClearSearchByDog = function() {
+        // effacer le critère
         $scope.criteriaProprietaire = null;
     };
 
-    // Click sur le bouton rechercher des critères de recherche
-    $scope.onClickStartSearch = function() {
+    // Click sur le bouton rechercher des critères de recherche standards
+    $scope.onClickStartSearchStandard = function() {
         // on cache la box des critères
-        $(".box-search-criterias [data-widget='collapse']").click();
+        // $(".box-search-criterias [data-widget='collapse']").click();
         $scope.listClients();
+        $scope.scroll2Top('searchResultsDiv');
+    };
+
+    // Se positionner dans l'écran
+    $scope.scroll2Top = function(id) {
+        // Scroll to TitreClient
+        var div = $('#' + id);
+        $('html,body').animate({ scrollTop: div.offset().top - 10 }, 'slow');
+    };
+
+    // Click sur le bouton rechercher des critères de recherche par chien
+    $scope.onClickStartSearchByDog = function() {
+        // on cache la box des critères
+        // $(".box-search-criterias [data-widget='collapse']").click();
+        $scope.listClients();
+        $scope.scroll2Top('searchResultsDiv');
 
     };
 
@@ -139,31 +150,10 @@ angular.module('elevageApp').controller('clientController', ['$scope', '$route',
     $scope.onClickDelete = function(client) {
         $scope.deleteClient(client.id);
     };
-    $scope.$watch("inputFilterClient", function(newValue, oldValue) {
-        $scope.filterClients();
-    });
-
     $scope.isDeletable = function(client) {
         return client.count == 0 ? true : false;
     };
     //--------------------------------------------------------------------------
-
-
-    $scope.filterClients = function() {
-        var filteredClients = [];
-        $.each($scope.clients, function(index, client) {
-            let filtre = $scope.inputFilterClient.toLowerCase();
-            let element = client.nom.toLowerCase();
-            if (element.indexOf(filtre) > -1) {
-                filteredClients.push(client);
-            }
-        });
-        if (typeof $scope.tableParams !== 'undefined') {
-            $scope.tableParams.reload();
-        }
-        $scope.initTableClients(filteredClients);
-    };
-
 
 
     //--------------------------------------------------------------------------
@@ -178,10 +168,12 @@ angular.module('elevageApp').controller('clientController', ['$scope', '$route',
 
             if ($scope.clients !== null) {
                 $.each($scope.clients, function(index, client) {
-                    // TODO: compter les références dans les chiens
-                    client.count = 0;
-
-
+                    chienFactory.countByClient(client.id)
+                        .success(function(nombre) {
+                            client.count = nombre;
+                        }).error(function(err) {
+                            showMessageInfo("Erreur", "La création n'a pas fonctionné correctement.");
+                        });
                 });
                 $scope.searchResultsTitle = "Résultats de la recherche (" + $scope.clients.length + ")";
             };
