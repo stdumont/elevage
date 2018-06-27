@@ -172,7 +172,7 @@
                     </script>
 
                     <table ng-table="tableParams" template-header="client_ng_header" class="table table-condensed table-bordered table-striped table-with-tooltip">
-                        <tr ng-repeat="client in $data" ng-click="onClickView(client)" style="cursor:pointer;">
+                        <tr ng-repeat="client in $data">
                             <td class="text-center">
                                 <span ng-bind="client.id"></span>
                             </td>
@@ -180,15 +180,20 @@
                                 <span ng-bind="client.nom"></span>&nbsp;
                                 <span ng-bind="client.prenom"></span>
                             </td>
-                            <td class="text-center">
-                                <span ng-bind="client.chiens.length === 0 ? '' : client.chiens.length"></span>
+                            <td class="text-center" style="width: 15%;">
+                                <span ng-bind="client.chiens.length === 0 ? '' : client.chiens.length"></span> &nbsp;&nbsp;
+                                <button class="btn btn-info btn-sm" title="Voir ses chiens" ng-click="onClickViewDogs(client)" ng-show="!isDeletable(client)">
+                                    <i class="fa fa-paw"></i>
+                                </button>
                             </td>
                             <td>
                                 <span ng-bind="client.tel1"></span>&nbsp;
                                 <span ng-bind="client.tel2">
                             </td>
                             <td>
-                                <span ng-bind="client.email"></span>
+                                <a href="mailto:{{client.email}}">
+                                    <span ng-bind="client.email"></span>
+                                </a>
                             </td>
                             <td class="text-center">
                                 <span ng-bind="client.code_postal"></span>
@@ -218,9 +223,6 @@
                                     <button class="btn btn-danger btn-sm" title="Supprimer ce client" ng-confirm-click="Voulez-vous supprimer ce client ?" confirmed-click="onClickDelete(client)" ng-show="isDeletable(client)">
                                         <span class="glyphicon glyphicon-trash"></span>
                                     </button>
-                                    <button class="btn btn-info btn-sm" title="Voir ses chiens" ng-click="onClickViewDogs(client)" ng-show="!isDeletable(client)">
-                                        <span class="fa fa-paw"></span>
-                                    </button>
                                 </div>
                             </td>
                         </tr>
@@ -235,14 +237,182 @@
         </div>
     </div>
 
-    <!--                                              -->
-    <!-- Modale de visualisation des chiens du client  -->
-    <!--                                              -->
-    <div class="modal" tabindex="-1" role="dialog" id="modalViewDogs">
+    <!--                                                -->
+    <!-- Modale de visualisation des données du client  -->
+    <!--                                                -->
+    <div class="modal fade" role="dialog" id="modalView">
         <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
+            <div class="modal-content loadable">
                 <div class="modal-header">
-                    <h3 class="modal-title"><i class="fa fa-paw text-primary"></i>&nbsp;Chien(s) appartenant à {{currentClient.prenom}} {{currentClient.nom}} ({{currentClient.chiens.length}})</h3>
+                    <h3 class="modal-title">
+                        <i class="fa fa-user text-primary"></i>&nbsp;{{currentClient.prenom}} {{currentClient.nom}}</h3>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col-md-12" style="margin-bottom: 0em;">
+                            <div class="box box-info">
+                                <form class="form-horizontal">
+                                    <div class="box-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <!--
+                                                Rue et numéro
+                                                -->
+                                                <div class="form-group">
+                                                    <label for="inputRue" class="col-md-3 control-label">Rue, n°</label>
+                                                    <div class="col-md-6">
+                                                        <input type="text" class="form-control" id="inputRue" ng-model="currentClient.rue" ng-readonly="true" empty-to-null>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <input type="text" class="form-control" id="inputNumero" ng-model="currentClient.numero" ng-readonly="true" empty-to-null>
+                                                    </div>
+                                                </div>
+
+                                                <!--
+                                                Code postal et localité
+                                                -->
+                                                <div class="form-group">
+                                                    <label for="inputCP" class="col-md-3 control-label">C.P., localité</label>
+                                                    <div class="col-md-3">
+                                                        <input type="text" class="form-control" id="inputCP" ng-model="currentClient.code_postal" ng-readonly="true" empty-to-null>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <input type="text" class="form-control" id="inputLocalite" ng-model="currentClient.localite" ng-readonly="true" empty-to-null>
+                                                    </div>
+                                                </div>
+
+                                                <!--
+                                                Pays
+                                                -->
+                                                <div class="form-group">
+                                                    <label for="inputPays" class="col-md-3 control-label">Pays</label>
+                                                    <div class="col-md-9">
+                                                        <input type="text" class="form-control" id="inputPays" ng-model="currentClient.pays" ng-readonly="true" empty-to-null>
+                                                    </div>
+                                                </div>
+
+                                                <!--
+                                                E-mail
+                                                -->
+                                                <div class="form-group">
+                                                    <label for="inputEmail" class="col-md-3 control-label">E-mail</label>
+                                                    <div class="col-md-9">
+                                                        <input type="email" class="form-control" id="inputEmail" ng-model="currentClient.email" ng-readonly="true" empty-to-null>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- .col-md-6 -->
+                                            <div class="col-md-6">
+                                                <!--
+                                                Téléphone 1
+                                                -->
+                                                <div class="form-group">
+                                                    <label for="inputTel1" class="col-md-3 control-label">Téléphone 1</label>
+                                                    <div class="col-md-9">
+                                                        <input type="text" class="form-control" id="inputTel1" ng-model="currentClient.tel1" ng-readonly="true" empty-to-null>
+                                                    </div>
+                                                </div>
+
+                                                <!--
+                                                Téléphone 2
+                                                -->
+                                                <div class="form-group">
+                                                    <label for="inputTel2" class="col-md-3 control-label">Téléphone 2</label>
+                                                    <div class="col-md-9">
+                                                        <input type="text" class="form-control" id="inputTel2" ng-model="currentClient.tel2" ng-readonly="true" empty-to-null>
+                                                    </div>
+                                                </div>
+
+                                                <!--
+                                                Remarques
+                                                -->
+                                                <div class="form-group">
+                                                    <label for="inputRemarques" class="col-md-3 control-label">Remarques</label>
+                                                    <div class="col-md-9">
+                                                        <textarea rows="3" class="form-control" id="inputRemarques" ng-model="currentClient.remarques" ng-readonly="true" empty-to-null></textarea>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <!-- .col-md-6 -->
+
+                                        </div>
+                                        <!-- .row -->
+
+                                    </div>
+                                    <!-- .box-body -->
+                                </form>
+                            </div>
+                            <!-- .box -->
+                        </div>
+                        <!-- .col-md-12 -->
+                    </div>
+                    <!-- .row -->
+
+                    <table class="table table-bordered table-striped" ng-show="currentClient.chiens.length > 0">
+                        <caption>
+                            <h4>Propriétaire {{currentClient.chiens.length == 1 ? 'd\'un chien' : 'de ' + currentClient.chiens.length + ' chiens'}}</h4>
+                        </caption>
+                        <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Affixe</th>
+                                <th>Race</th>
+                                <th class="text-center">Robe</th>
+                                <th class="text-center">Sexe</th>
+                                <th class="text-center">Naissance</th>
+                                <th class="text-center">Décès</th>
+                                <th>Père</th>
+                                <th>Mère</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="chien in currentClient.chiens">
+                                <td style="display: table-cell">
+                                    <b>{{chien.nom}}</b>
+                                </td>
+                                <td style="display: table-cell">{{chien.affixe}}</td>
+                                <td style="display: table-cell">{{chien.race.nom}}</td>
+                                <td style="display: table-cell" class="text-center">{{chien.robe.nom}}</td>
+                                <td style="display: table-cell" class="text-center">
+                                    <span ng-show="chien.sexe === 'M'">
+                                        <i class="fa fa-mars"></i>
+                                    </span>
+                                    <span ng-show="chien.sexe === 'F'">
+                                        <i class="fa fa-venus"></i>
+                                    </span>
+                                    <td style="display: table-cell" class="text-center">{{toJMA(chien.date_naissance)}}</td>
+                                    <td style="display: table-cell" class="text-center">{{toJMA(chien.date_deces)}}</td>
+                                    <!-- <td style="display: table-cell"><a href="https://www.google.com" target="_blank">{{chien.pere.nom}}</a></td> -->
+                                    <td style="display: table-cell">{{chien.pere.nom}}</td>
+                                    <td style="display: table-cell">{{chien.mere.nom}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- .modal-body -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">
+                        <i class="fa fa-sign-out"></i>&nbsp;Fermer</button>
+                </div>
+                <!-- .modal-footer -->
+            </div>
+            <!-- .modal-content -->
+        </div>
+        <!-- .modal-dialog -->
+    </div>
+    <!-- .modal -->
+
+    <!--                                              -->
+    <!-- Modale de visualisation des chiens du client -->
+    <!--                                              -->
+    <div class="modal fade" role="dialog" id="modalViewDogs">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content loadable">
+                <div class="modal-header">
+                    <h3 class="modal-title">
+                        <i class="fa fa-paw text-primary"></i>&nbsp;Chien(s) appartenant à {{currentClient.prenom}} {{currentClient.nom}} ({{currentClient.chiens.length}})</h3>
                 </div>
                 <div class="modal-body">
                     <table class="table table-bordered table-striped">
@@ -261,13 +431,19 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="chien in currentClient.chiens">
-                                <td style="display: table-cell"><b>{{chien.nom}}</b></td>
+                                <td style="display: table-cell">
+                                    <b>{{chien.nom}}</b>
+                                </td>
                                 <td style="display: table-cell">{{chien.affixe}}</td>
                                 <td style="display: table-cell">{{chien.race.nom}}</td>
                                 <td style="display: table-cell" class="text-center">{{chien.robe.nom}}</td>
                                 <td style="display: table-cell" class="text-center">
-                                    <span ng-show="chien.sexe === 'M'"><i class="fa fa-mars"></i></span>
-                                    <span ng-show="chien.sexe === 'F'"><i class="fa fa-venus"></i></span>
+                                    <span ng-show="chien.sexe === 'M'">
+                                        <i class="fa fa-mars"></i>
+                                    </span>
+                                    <span ng-show="chien.sexe === 'F'">
+                                        <i class="fa fa-venus"></i>
+                                    </span>
                                     <td style="display: table-cell" class="text-center">{{toJMA(chien.date_naissance)}}</td>
                                     <td style="display: table-cell" class="text-center">{{toJMA(chien.date_deces)}}</td>
                                     <!-- <td style="display: table-cell"><a href="https://www.google.com" target="_blank">{{chien.pere.nom}}</a></td> -->

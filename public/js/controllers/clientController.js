@@ -41,7 +41,7 @@ angular.module('elevageApp').controller('clientController', ['$scope', '$route',
             class: ''
         },
         {
-            title: 'Téléphone(s)',
+            title: 'Téléphone',
             field: '',
             visible: true,
             class: ''
@@ -98,7 +98,7 @@ angular.module('elevageApp').controller('clientController', ['$scope', '$route',
     // Evènements de la couche UI
     //--------------------------------------------------------------------------
 
-    // Click sur le bouton annuler des critères de recherche standards
+    // Click sur le bouton effacer les critères de recherche standards
     $scope.onClickClearSearchStandard = function() {
         // effacer les critères
         $scope.criteriaNom = null;
@@ -110,7 +110,7 @@ angular.module('elevageApp').controller('clientController', ['$scope', '$route',
         $scope.criteriaPays = null;
     };
 
-    // Click sur le bouton annuler des critères de recherche par chien
+    // Click sur le bouton effacer les critères de recherche par chien
     $scope.onClickClearSearchByDog = function() {
         // effacer le critère
         $scope.criteriaProprietaire = null;
@@ -189,18 +189,28 @@ angular.module('elevageApp').controller('clientController', ['$scope', '$route',
         $scope.initCurrentClient();
     };
 
+    // Click sur le bouton permettant de voir toutes les données du client
+    $scope.onClickView = function(client) {
+        $scope.currentClient = client;
+        $('#modalView').modal();
+    };
+
+    // Click sur le bouton permettant de voir les chiens du client
     $scope.onClickViewDogs = function(client) {
         $scope.currentClient = client;
         $('#modalViewDogs').modal();
     };
-    // [table:buttonEdit:onClick] : clic sur le bouton d'édition d'un élément du tableau
+
+    // Click sur le bouton d'édition d'un élément du tableau
     $scope.onClickEdit = function(client) {
         $scope.currentClient = client;
     };
-    // [table:buttonDelete:onClick] : clic sur le bouton delete d'un élément du tableau
+    // Click sur le bouton suppression d'un élément du tableau
     $scope.onClickDelete = function(client) {
         $scope.deleteClient(client.id);
     };
+
+    // Fonction permettant de déterminer si un client peut être supprimé (vrai s'il n'a pas de chiens)
     $scope.isDeletable = function(client) {
         return client.chiens.length === 0 ? true : false;
     };
