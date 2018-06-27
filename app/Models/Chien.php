@@ -39,7 +39,7 @@ class Chien extends Model
         'remarques',
     ];
 
-     protected $with = ['race', 'robe'];
+     protected $with = ['race', 'robe', 'pere', 'mere'];
 
     public function race() {
         return $this->belongsTo('App\Models\Race');
@@ -47,6 +47,14 @@ class Chien extends Model
 
     public function robe() {
         return $this->belongsTo('App\Models\Robe');
+    }
+
+    public function pere() {
+        return $this->belongsTo('App\Models\Chien');
+    }
+
+    public function mere() {
+        return $this->belongsTo('App\Models\Chien');
     }
 
 

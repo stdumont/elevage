@@ -31,6 +31,8 @@ $app->get('/api/chien/get-count-by-client/{client_id}', 'ChienController:getCoun
  * Routes vers les clients
  */ 
 $app->get('/api/client/get-all', 'ClientController:getAll');
+$app->get('/api/client/get-search-standard', 'ClientController:getSearchStandard');
+$app->get('/api/client/get-search-by-dog', 'ClientController:getSearchByDog');
 $app->get('/api/client/get-count', 'ClientController:getCount');
 $app->get('/api/client/find/{id}', 'ClientController:find');
 $app->post('/api/client/insert', 'ClientController:insert');

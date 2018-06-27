@@ -19,6 +19,7 @@ angular.module('elevageApp').controller('clientController', ['$scope', '$route',
     $scope.criteriaLocalite = null;
     $scope.criteriaPays = null;
     $scope.criteriaProprietaire = null;
+    $scope.typeRecherche = null;
 
     // colonnes des résultats de la recherche
     $scope.columns = [{
@@ -70,6 +71,12 @@ angular.module('elevageApp').controller('clientController', ['$scope', '$route',
             class: ''
         },
         {
+            title: 'Voir',
+            field: '',
+            visible: true,
+            class: ''
+        },
+        {
             title: 'Editer',
             field: '',
             visible: true,
@@ -111,9 +118,47 @@ angular.module('elevageApp').controller('clientController', ['$scope', '$route',
 
     // Click sur le bouton rechercher des critères de recherche standards
     $scope.onClickStartSearchStandard = function() {
+        $scope.typeRecherche = "Standard";
         // on cache la box des critères
         // $(".box-search-criterias [data-widget='collapse']").click();
-        $scope.listClients();
+
+        clientFactory.getBySearchStandard(
+            $scope.criteriaNom,
+            $scope.criteriaPrenom,
+            $scope.criteriaTel,
+            $scope.criteriaMail,
+            $scope.criteriaCodePostal,
+            $scope.criteriaLocalite,
+            $scope.criteriaPays
+        )
+
+        .success(function(clients) {
+                $scope.listClients(clients);
+            })
+            .error(function(error) {
+                console.log("Erreur de la recherche standard de clients");
+            });
+
+        $scope.scroll2Top('searchResultsDiv');
+    };
+
+    // Click sur le bouton rechercher des critères de recherche par chien
+    $scope.onClickStartSearchByDog = function() {
+        $scope.typeRecherche = "ByDog";
+        // on cache la box des critères
+        // $(".box-search-criterias [data-widget='collapse']").click();
+
+        clientFactory.getBySearchByDog(
+            $scope.criteriaProprietaire
+        )
+
+        .success(function(clients) {
+                $scope.listClients(clients);
+            })
+            .error(function(error) {
+                console.log("Erreur de la recherche par chien de clients");
+            });
+
         $scope.scroll2Top('searchResultsDiv');
     };
 
@@ -121,16 +166,17 @@ angular.module('elevageApp').controller('clientController', ['$scope', '$route',
     $scope.scroll2Top = function(id) {
         // Scroll to TitreClient
         var div = $('#' + id);
-        $('html,body').animate({ scrollTop: div.offset().top - 10 }, 'slow');
+        $('html,body').animate({
+            scrollTop: div.offset().top - 10
+        }, 'slow');
     };
 
-    // Click sur le bouton rechercher des critères de recherche par chien
-    $scope.onClickStartSearchByDog = function() {
-        // on cache la box des critères
-        // $(".box-search-criterias [data-widget='collapse']").click();
-        $scope.listClients();
-        $scope.scroll2Top('searchResultsDiv');
-
+    // Transformer une date YYYY-MM-DD en DD/MM/YYYY
+    $scope.toJMA = function(dateAMJ) {
+        if (dateAMJ) {
+            return moment(dateAMJ, 'YYYY-MM-DD').format('DD/MM/YYYY');
+        }
+        return '';
     };
 
     // [buttonSave:onClick] : clic ou validation du bouton sauvegarder
@@ -142,16 +188,21 @@ angular.module('elevageApp').controller('clientController', ['$scope', '$route',
         // Qd on annule, on revient en mode ajout.
         $scope.initCurrentClient();
     };
+
+    $scope.onClickViewDogs = function(client) {
+        $scope.currentClient = client;
+        $('#modalViewDogs').modal();
+    };
     // [table:buttonEdit:onClick] : clic sur le bouton d'édition d'un élément du tableau
     $scope.onClickEdit = function(client) {
-        $scope.findClient(client.id);
+        $scope.currentClient = client;
     };
     // [table:buttonDelete:onClick] : clic sur le bouton delete d'un élément du tableau
     $scope.onClickDelete = function(client) {
         $scope.deleteClient(client.id);
     };
     $scope.isDeletable = function(client) {
-        return client.count == 0 ? true : false;
+        return client.chiens.length === 0 ? true : false;
     };
     //--------------------------------------------------------------------------
 
@@ -159,30 +210,14 @@ angular.module('elevageApp').controller('clientController', ['$scope', '$route',
     //--------------------------------------------------------------------------
     // Accès vers la couche REST (lien avec les factories Angular)
     //--------------------------------------------------------------------------
-    // ->Clients : Appel REST vers Factory : lister les clients
-    $scope.listClients = function() {
+    // Lister les clients
+    $scope.listClients = function(clients) {
         $scope.setListLoading(true);
-        $scope.searchResultsTitle = "Résultats de la recherche";
-        clientFactory.list().success(function(clients) {
-            $scope.clients = clients;
+        $scope.searchResultsTitle = "Résultats de la recherche (" + clients.length + ")";
+        $scope.clients = clients;
+        $scope.initTableClients($scope.clients);
+        $scope.setListLoading(false);
 
-            if ($scope.clients !== null) {
-                $.each($scope.clients, function(index, client) {
-                    chienFactory.countByClient(client.id)
-                        .success(function(nombre) {
-                            client.count = nombre;
-                        }).error(function(err) {
-                            showMessageInfo("Erreur", "La création n'a pas fonctionné correctement.");
-                        });
-                });
-                $scope.searchResultsTitle = "Résultats de la recherche (" + $scope.clients.length + ")";
-            };
-
-            $scope.initTableClients($scope.clients);
-            $scope.setListLoading(false);
-        }).error(function() {
-            $scope.setListLoading(false);
-        });
     };
     // ->Clients : Appel REST vers Factory : retrouver un client
     $scope.findClient = function(id) {
@@ -255,7 +290,7 @@ angular.module('elevageApp').controller('clientController', ['$scope', '$route',
         $scope.editionMode = true;
     };
     $scope.isFillingValid = function() {
-        if ($scope.currentClient.nom === null || $scope.currentClient.nom === '') {
+        if (!$scope.currentClient.nom) {
             $scope.clientFormError = true;
             $scope.clientFormErrorMessage = 'Le champ nom est obligatoire.';
             return false;
@@ -281,7 +316,7 @@ angular.module('elevageApp').controller('clientController', ['$scope', '$route',
     };
 
     $scope.setListLoading = function(loading) {
-        setLoading('.box-list-clients', loading);
+        setLoading('.box-search-results', loading);
     };
 
     //--------------------------------------------------------------------------
@@ -292,8 +327,7 @@ angular.module('elevageApp').controller('clientController', ['$scope', '$route',
     //--------------------------------------------------------------------------
     // Mettre à vide un bean client en cas d'ajout
     $scope.initCurrentClient();
-
-
+    $("#tabs").tabs();
     //--------------------------------------------------------------------------
 
 

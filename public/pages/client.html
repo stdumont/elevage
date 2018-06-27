@@ -19,7 +19,9 @@
 <!-- Main content -->
 <section class="content">
 
+    <!--                       -->
     <!-- Critères de recherche -->
+    <!--                       -->
     <div class="row">
         <div class="col-md-12">
             <div class="box box-info box-search-criterias">
@@ -32,92 +34,106 @@
                             <i class="fa fa-minus"></i>
                         </button>
                     </div>
-                    <div class="row" id="tabsRecherche" style="padding-top:1em; padding-bottom:1em;">
-                        <div class="col-md-6">
-                            <component-tab ng-tab-group="tab-recherche" ng-model="currentTab" active><span class="fa fa-search"></span>&nbsp;&nbsp;Standard</component-tab>
-                            <component-tab ng-tab-group="tab-recherche" ng-model="currentTab"><span class="fa fa-search-plus"></span>&nbsp;&nbsp;Par chien</component-tab>
-                        </div>
-                    </div>
-                </div>
-                <div class="box-body">
-                    <div class="row" ng-show="currentTab === 0">
-                        <div class="col-md-6">
-                            <form class="form-horizontal">
-                                <div class="form-group">
-                                    <label for="criteriaNom" class="col-md-3 control-label">Nom</label>
-                                    <div class="col-md-9">
-                                        <input type="text" class="form-control" id="criteriaNom" ng-model="criteriaNom" autofocus>
-                                    </div>
+                    <div class="box-body">
+                        <!--      -->
+                        <!-- Tabs -->
+                        <!--      -->
+                        <div class="row" id="tabs" style="padding-top:1em; padding-bottom:1em;">
+                            <ul>
+                                <li>
+                                    <a href="#tab-recherche-standard">Recherche standard</a>
+                                </li>
+                                <li>
+                                    <a href="#tab-recherche-par-chien">Recherche par chien</a>
+                                </li>
+                            </ul>
+
+                            <!--                    -->
+                            <!-- Recherche standard -->
+                            <!--                    -->
+                            <div class="row" id="tab-recherche-standard">
+                                <div class="col-md-6">
+                                    <form class="form-horizontal">
+                                        <div class="form-group">
+                                            <label for="criteriaNom" class="col-md-3 control-label">Nom</label>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" id="criteriaNom" ng-model="criteriaNom" autofocus empty-to-null>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="criteriaPrenom" class="col-md-3 control-label">Prénom</label>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" id="criteriaPrenom" ng-model="criteriaPrenom" empty-to-null>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="criteriaTel" class="col-md-3 control-label">Téléphone</label>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" id="criteriaTel" ng-model="criteriaTel" empty-to-null>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="criteriaMail" class="col-md-3 control-label">E-mail</label>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" id="criteriaMail" ng-model="criteriaMail" empty-to-null>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
-                                <div class="form-group">
-                                    <label for="criteriaPrenom" class="col-md-3 control-label">Prénom</label>
-                                    <div class="col-md-9">
-                                        <input type="text" class="form-control" id="criteriaPrenom" ng-model="criteriaPrenom">
-                                    </div>
+                                <div class="col-md-6">
+                                    <form class="form-horizontal">
+                                        <div class="form-group">
+                                            <label for="criteriaCodePostal" class="col-md-3 control-label">Code postal</label>
+                                            <div class="col-md-3">
+                                                <input type="text" class="form-control" id="criteriaCodePostal" ng-model="criteriaCodePostal" empty-to-null>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="criteriaLocalite" class="col-md-3 control-label">Localité</label>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" id="criteriaLocalite" ng-model="criteriaLocalite" empty-to-null>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="criteriaPays" class="col-md-3 control-label">Pays</label>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" id="criteriaPays" ng-model="criteriaPays" empty-to-null>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
-                                <div class="form-group">
-                                    <label for="criteriaTel" class="col-md-3 control-label">Téléphone</label>
-                                    <div class="col-md-9">
-                                        <input type="text" class="form-control" id="criteriaTel" ng-model="criteriaTel">
-                                    </div>
+                                <div class="col-md-12">
+                                    <button class="btn pull-left" ng-click="onClickClearSearchStandard()">
+                                        <i class="fa fa-ban"></i>&nbsp;Effacer les critères
+                                    </button>
+                                    <button class="btn btn-info pull-right" ng-click="onClickStartSearchStandard()">
+                                        <i class="fa fa-search"></i>&nbsp;Rechercher
+                                    </button>
                                 </div>
-                                <div class="form-group">
-                                    <label for="criteriaMail" class="col-md-3 control-label">E-mail</label>
-                                    <div class="col-md-9">
-                                        <input type="text" class="form-control" id="criteriaMail" ng-model="criteriaMail">
-                                    </div>
+                            </div>
+                            <!--                     -->
+                            <!-- Recherche par chien -->
+                            <!--                     -->
+                            <div class="row" id="tab-recherche-par-chien">
+                                <div class="col-md-6">
+                                    <form class="form-horizontal">
+                                        <div class="form-group">
+                                            <label for="criteriaProprietaire" class="col-md-3 control-label">Propriétaire de</label>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" id="criteriaProprietaire" ng-model="criteriaProprietaire" empty-to-null>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
-                            </form>
-                        </div>
-                        <div class="col-md-6">
-                            <form class="form-horizontal">
-                                <div class="form-group">
-                                    <label for="criteriaCodePostal" class="col-md-3 control-label">Code postal</label>
-                                    <div class="col-md-3">
-                                        <input type="text" class="form-control" id="criteriaCodePostal" ng-model="criteriaCodePostal">
-                                    </div>
+                                <div class="col-md-12">
+                                    <button class="btn pull-left" ng-click="onClickClearSearchByDog()">
+                                        <i class="fa fa-ban"></i>&nbsp;Effacer le critère
+                                    </button>
+                                    <button class="btn btn-info pull-right" ng-click="onClickStartSearchByDog()">
+                                        <i class="fa fa-search-plus"></i>&nbsp;Rechercher
+                                    </button>
                                 </div>
-                                <div class="form-group">
-                                    <label for="criteriaLocalite" class="col-md-3 control-label">Localité</label>
-                                    <div class="col-md-9">
-                                        <input type="text" class="form-control" id="criteriaLocalite" ng-model="criteriaLocalite">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="criteriaPays" class="col-md-3 control-label">Pays</label>
-                                    <div class="col-md-9">
-                                        <input type="text" class="form-control" id="criteriaPays" ng-model="criteriaPays">
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="col-md-12">
-                            <button class="btn pull-left" ng-click="onClickClearSearchStandard()">
-                                <i class="fa fa-ban"></i>&nbsp;Effacer les critères
-                            </button>
-                            <button class="btn btn-info pull-right" ng-click="onClickStartSearchStandard()">
-                                <i class="fa fa-search"></i>&nbsp;Rechercher
-                            </button>
-                        </div>
-                    </div>
-                    <div class="row" ng-show="currentTab === 1">
-                        <div class="col-md-6">
-                            <form class="form-horizontal">
-                                <div class="form-group">
-                                    <label for="criteriaProprietaire" class="col-md-3 control-label">Propriétaire de</label>
-                                    <div class="col-md-9">
-                                        <input type="text" class="form-control" id="criteriaProprietaire" ng-model="criteriaProprietaire" autofocus>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="col-md-12">
-                            <button class="btn pull-left" ng-click="onClickClearSearchByDog()">
-                                <i class="fa fa-ban"></i>&nbsp;Effacer le critère
-                            </button>
-                            <button class="btn btn-info pull-right" ng-click="onClickStartSearchByDog()">
-                                <i class="fa fa-search-plus"></i>&nbsp;Rechercher
-                            </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -125,7 +141,9 @@
         </div>
     </div>
 
+    <!--                           -->
     <!-- Résultats de la recherche -->
+    <!--                           -->
     <div class="row" id="searchResultsDiv">
         <div class="col-md-12">
             <div class="box box-info box-search-results">
@@ -141,6 +159,10 @@
                     </div>
                 </div>
                 <div class="box-body no-padding">
+
+                    <!--                    -->
+                    <!-- Table de Résultats -->
+                    <!--                    -->
                     <script id="client_ng_header" type="text/ng-template">
                         <tr>
                             <th ng-repeat="column in columns" ng-show="column.visible" class="text-center" style="display: table-cell;">
@@ -150,7 +172,7 @@
                     </script>
 
                     <table ng-table="tableParams" template-header="client_ng_header" class="table table-condensed table-bordered table-striped table-with-tooltip">
-                        <tr ng-repeat="client in $data" ng-click="onClickEdit(client)" style="cursor:pointer;">
+                        <tr ng-repeat="client in $data" ng-click="onClickView(client)" style="cursor:pointer;">
                             <td class="text-center">
                                 <span ng-bind="client.id"></span>
                             </td>
@@ -179,15 +201,25 @@
                             </td>
                             <td class="text-center">
                                 <div class="divButton" style="width:40px;padding-right:5px;">
-                                    <button class="btn btn-default btn-sm" ng-click="onClickEdit(client)">
+                                    <button class="btn btn-default btn-sm" title="Voir les données de ce client" ng-click="onClickView(client)">
+                                        <span class="glyphicon glyphicon-eye-open"></span>
+                                    </button>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="divButton" style="width:40px;padding-right:5px;">
+                                    <button class="btn btn-default btn-sm" title="Modifier ce client" ng-click="onClickEdit(client)">
                                         <span class="glyphicon glyphicon-pencil"></span>
                                     </button>
                                 </div>
                             </td>
                             <td class="text-center">
                                 <div class="divButton" style="width:40px;padding-right:5px;">
-                                    <button class="btn btn-danger btn-sm" ng-confirm-click="Voulez-vous supprimer ce client ?" confirmed-click="onClickDelete(client)" ng-show="isDeletable(client)">
+                                    <button class="btn btn-danger btn-sm" title="Supprimer ce client" ng-confirm-click="Voulez-vous supprimer ce client ?" confirmed-click="onClickDelete(client)" ng-show="isDeletable(client)">
                                         <span class="glyphicon glyphicon-trash"></span>
+                                    </button>
+                                    <button class="btn btn-info btn-sm" title="Voir ses chiens" ng-click="onClickViewDogs(client)" ng-show="!isDeletable(client)">
+                                        <span class="fa fa-paw"></span>
                                     </button>
                                 </div>
                             </td>
@@ -203,134 +235,55 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-12 modal fade">
-
-
-            <div class="box box-info form-client">
-
-                <div class="box-header with-border">
-                    <h3 class="box-title" ng-hide="editionMode">
-                        <i class="fa fa-plus"></i>&nbsp;
-                        <span ng-bind="titreAjout"></span>
-                    </h3>
-                    <h3 class="box-title" ng-show="editionMode">
-                        <i class="fa fa-reorder"></i>&nbsp;
-                        <span ng-bind="titreEdit"></span>
-                    </h3>
-
-                    <div class="box-tools pull-right">
-                        <button class="btn btn-box-tool" data-widget="collapse">
-                            <i class="fa fa-minus"></i>
-                        </button>
-                    </div>
+    <!--                                              -->
+    <!-- Modale de visualisation des chiens du client  -->
+    <!--                                              -->
+    <div class="modal" tabindex="-1" role="dialog" id="modalViewDogs">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title"><i class="fa fa-paw text-primary"></i>&nbsp;Chien(s) appartenant à {{currentClient.prenom}} {{currentClient.nom}} ({{currentClient.chiens.length}})</h3>
                 </div>
-                <!-- /.box-header -->
-
-                <form class="form-horizontal" ng-submit="onClickSave()">
-
-                    <div class="box-body">
-
-                        <div class="box callout callout-danger" ng-show="clientFormError">
-                            <h4>
-                                <i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;Enregistrement annulé</h4>
-                            <p ng-bind="clientFormErrorMessage"></p>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="inputNom" class="col-md-3 control-label">Nom*</label>
-                            <div class="col-md-9">
-                                <input type="text" class="form-control" id="inputNom" ng-model="currentClient.nom" autofocus placeholder="Nom du client">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="inputPrénom" class="col-md-3 control-label">Prénom</label>
-                            <div class="col-md-9">
-                                <input type="text" class="form-control" id="inputPrenom" ng-model="currentClient.prenom">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="inputRue" class="col-md-3 control-label">Rue, n°</label>
-                            <div class="col-md-7">
-                                <input type="text" class="form-control" id="inputRue" ng-model="currentClient.rue" empty-to-null>
-                            </div>
-                            <div class="col-md-2">
-                                <input type="text" class="form-control" id="inputNumero" ng-model="currentClient.numero" empty-to-null>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="inputCP" class="col-md-3 control-label">Code postal, localité</label>
-                            <div class="col-md-2">
-                                <input type="text" class="form-control" id="inputCP" ng-model="currentClient.code_postal" empty-to-null>
-                            </div>
-                            <div class="col-md-7">
-                                <input type="text" class="form-control" id="inputLoc" ng-model="currentClient.localite" empty-to-null>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="inputPays" class="col-md-3 control-label">Pays</label>
-                            <div class="col-md-9">
-                                <input type="text" class="form-control" id="inputPays" ng-model="currentClient.pays" empty-to-null>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="inputTel1" class="col-md-3 control-label">Téléphone 1</label>
-                            <div class="col-md-9">
-                                <input type="text" class="form-control" id="inputTel1" ng-model="currentClient.tel1" empty-to-null>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="inputTel2" class="col-md-3 control-label">Téléphone 2</label>
-                            <div class="col-md-9">
-                                <input type="text" class="form-control" id="inputTel2" ng-model="currentClient.tel2" empty-to-null>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="inputMail" class="col-md-3 control-label">E-mail</label>
-                            <div class="col-md-9">
-                                <input type="email" class="form-control" id="inputMail" ng-model="currentClient.email" empty-to-null>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="inputRemarques" class="col-md-3 control-label">Remarques</label>
-                            <div class="col-md-9">
-                                <textarea class="form-control" cols="3" ng-model="currentClient.remarques" empty-to-null></textarea>
-                            </div>
-                        </div>
-
-                    </div>
-                    <!-- /.box-body -->
-
-
-                    <div class="box-footer clearfix">
-                        <input type="button" id="btnCancel" value="Annuler" ng-click="onClickCancel()" class="btn pull-left" />
-                        <input type="submit" id="btnAjouter" value="Sauvegarder" class="btn btn-info pull-right" />
-                    </div>
-                    <!-- /.box-footer -->
-
-                </form>
-
-                <div class="loadingHidden overlay">
-                    <i class="fa fa-refresh fa-spin"></i>
+                <div class="modal-body">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Affixe</th>
+                                <th>Race</th>
+                                <th class="text-center">Robe</th>
+                                <th class="text-center">Sexe</th>
+                                <th class="text-center">Naissance</th>
+                                <th class="text-center">Décès</th>
+                                <th>Père</th>
+                                <th>Mère</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="chien in currentClient.chiens">
+                                <td style="display: table-cell"><b>{{chien.nom}}</b></td>
+                                <td style="display: table-cell">{{chien.affixe}}</td>
+                                <td style="display: table-cell">{{chien.race.nom}}</td>
+                                <td style="display: table-cell" class="text-center">{{chien.robe.nom}}</td>
+                                <td style="display: table-cell" class="text-center">
+                                    <span ng-show="chien.sexe === 'M'"><i class="fa fa-mars"></i></span>
+                                    <span ng-show="chien.sexe === 'F'"><i class="fa fa-venus"></i></span>
+                                    <td style="display: table-cell" class="text-center">{{toJMA(chien.date_naissance)}}</td>
+                                    <td style="display: table-cell" class="text-center">{{toJMA(chien.date_deces)}}</td>
+                                    <!-- <td style="display: table-cell"><a href="https://www.google.com" target="_blank">{{chien.pere.nom}}</a></td> -->
+                                    <td style="display: table-cell">{{chien.pere.nom}}</td>
+                                    <td style="display: table-cell">{{chien.mere.nom}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">
+                        <i class="fa fa-sign-out"></i>&nbsp;Fermer</button>
+                </div>
             </div>
-
-
         </div>
-        <!-- /.col -->
     </div>
-    <!-- /.row -->
-
-
 
 </section>
 <!-- /.content -->

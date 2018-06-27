@@ -46,7 +46,7 @@ class Client extends Model
      * @return void
      */
     public function chiens() {
-        return $this->hasMany('App\Models\Chien');
+        return $this->hasMany('App\Models\Chien')->orderBy('nom');
     }
 
 }
