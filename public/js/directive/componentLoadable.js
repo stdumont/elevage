@@ -42,7 +42,7 @@
  * 
  * @author Adrien Dessilly
  */
-angular.module('civadisApp').directive('ngLoadable', function() {
+angular.module('elevageApp').directive('ngLoadable', function() {
 
     return {
         restrict: 'A', //attribute
@@ -51,33 +51,33 @@ angular.module('civadisApp').directive('ngLoadable', function() {
             ngLoadable: '=',
         },
 
-        link: function (scope, element, attrs) {
-            
-            scope.setLoading = function (loading) {
-                if(loading) {
+        link: function(scope, element, attrs) {
+
+            scope.setLoading = function(loading) {
+                if (loading) {
                     $(element).children('.overlay').removeClass('loadingHidden');
                 } else {
                     $(element).children('.overlay').addClass('loadingHidden');
-                }    
+                }
             };
-            
+
             $(element).addClass('loadable');
-            element.append( 
+            element.append(
                 '<div class="loadingHidden overlay">' +
-                    '<i class="fa fa-refresh fa-spin"></i>' +
+                '<i class="fa fa-refresh fa-spin"></i>' +
                 '</div>'
             );
-    
+
             scope.$watch('ngLoadable', function(newVal, oldVal) {
                 scope.setLoading(newVal);
             });
-        } 
+        }
     };
-    
+
 });
 
 
-angular.module('civadisApp').directive('ngLoadableCell', function() {
+angular.module('elevageApp').directive('ngLoadableCell', function() {
 
     return {
         restrict: 'A', //attribute
@@ -86,27 +86,27 @@ angular.module('civadisApp').directive('ngLoadableCell', function() {
             ngLoadableCell: '=',
         },
 
-        link: function (scope, element, attrs) {
-            
-            scope.setLoading = function (loading) {
-                if(loading) {
+        link: function(scope, element, attrs) {
+
+            scope.setLoading = function(loading) {
+                if (loading) {
                     $(element).children('.overlay').removeClass('loadingHidden');
                 } else {
                     $(element).children('.overlay').addClass('loadingHidden');
-                }    
+                }
             };
-            
+
             $(element).addClass('loadable');
-            element.append( 
+            element.append(
                 '<div class="loadingHidden overlay">' +
-                    '<i class="fa fa-refresh fa-spin" style="font-size:15px;margin-top:-8px;margin-left:-8px;"></i>' +
+                '<i class="fa fa-refresh fa-spin" style="font-size:15px;margin-top:-8px;margin-left:-8px;"></i>' +
                 '</div>'
             );
-    
+
             scope.$watch('ngLoadableCell', function(newVal, oldVal) {
                 scope.setLoading(newVal);
             });
-        } 
+        }
     };
-    
+
 });

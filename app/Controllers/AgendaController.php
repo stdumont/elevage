@@ -8,6 +8,16 @@ class AgendaController extends Controller
 {
 
     /**
+     * Retourne le nombre d'événements de l'agenda
+     * @return json le nombre d'événements
+     */
+    public function getCount()
+    {
+        $nombre = Agenda::count();
+        return json_encode($nombre, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    }
+
+    /**
      * Retourne les événements compris entre start et end
      * @return json liste d'événements
      */

@@ -5,7 +5,10 @@
         <small>Aperçu général</small>
     </h1>
     <ol class="breadcrumb">
-        <li><a href="javascript:void(0);"><i class="fa fa-users"></i> Accueil</a></li>
+        <li>
+            <a href="javascript:void(0);">
+                <i class="fa fa-users"></i> Accueil</a>
+        </li>
         <li class="active">Tableau de bord</li>
     </ol>
 
@@ -15,9 +18,12 @@
 <!-- Main content -->
 <section class="content" style="min-height:800px;">
     <div class="row">
-        <div class="col-md-3 col-sm-6 col-xs-12">
+
+        <div class="col-md-3">
             <div class="info-box">
-                <span class="info-box-icon bg-aqua"><i class="ion-ios-paw"></i></span>
+                <span class="info-box-icon bg-aqua">
+                    <i class="ion-ios-paw"></i>
+                </span>
 
                 <div class="info-box-content">
                     <span class="info-box-text">Chiens</span>
@@ -28,9 +34,28 @@
             <!-- /.info-box -->
         </div>
         <!-- /.col -->
-        <div class="col-md-3 col-sm-6 col-xs-12">
+
+        <div class="col-md-3">
             <div class="info-box">
-                <span class="info-box-icon bg-green"><i class="fa fa-user"></i></span>
+                <span class="info-box-icon bg-red">
+                    <i class="fa fa-venus-mars"></i>
+                </span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">Portées</span>
+                    <span class="info-box-number" ng-bind="nombrePortees"></span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+
+        <div class="col-md-3">
+            <div class="info-box">
+                <span class="info-box-icon bg-green">
+                    <i class="fa fa-user"></i>
+                </span>
 
                 <div class="info-box-content">
                     <span class="info-box-text">Clients</span>
@@ -40,5 +65,22 @@
             </div>
             <!-- /.info-box -->
         </div>
+        <!-- /.col -->
+
+        <div class="col-md-3">
+            <div class="info-box">
+                <span class="info-box-icon bg-blue">
+                    <i class="fa fa-calendar"></i>
+                </span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">Agenda</span>
+                    <span class="info-box-number" ng-bind="nombreAgenda"></span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
     </div>
 </section>

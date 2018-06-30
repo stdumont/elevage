@@ -28,6 +28,11 @@ $app->get('/api/chien/get-count-by-robe/{robe_id}', 'ChienController:getCountByR
 $app->get('/api/chien/get-count-by-client/{client_id}', 'ChienController:getCountByClient');
 
 /**
+ * Routes vers les portées
+ */ 
+$app->get('/api/portee/get-count', 'PorteeController:getCount');
+
+/**
  * Routes vers les clients
  */ 
 $app->get('/api/client/get-all', 'ClientController:getAll');
@@ -69,6 +74,7 @@ $app->delete('/api/robe/delete/{id}', 'RobeController:delete');
 /**
  * Routes vers l'agenda'
  */ 
+$app->get('/api/agenda/get-count', 'AgendaController:getCount');
 $app->get('/api/agenda/retrieve', 'AgendaController:retrieve');
 $app->post('/api/agenda/insert', 'AgendaController:insert');
 $app->post('/api/agenda/update', 'AgendaController:update');

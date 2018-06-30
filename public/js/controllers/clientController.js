@@ -8,8 +8,6 @@ angular.module('elevageApp').controller('clientController', ['$scope', '$route',
     //--------------------------------------------------------------------------
     $scope.clients = null;
     $scope.currentClient = null;
-    $scope.clientFormErrorMessage = '';
-    $scope.clientFormError = false;
     $scope.searchResultsTitle = "Résultats de la recherche";
     $scope.criteriaNom = null;
     $scope.criteriaPrenom = null;
@@ -20,6 +18,7 @@ angular.module('elevageApp').controller('clientController', ['$scope', '$route',
     $scope.criteriaPays = null;
     $scope.criteriaProprietaire = null;
     $scope.typeRecherche = null;
+    $scope.titleAddUpdate = null;
 
     // colonnes des résultats de la recherche
     $scope.columns = [{
@@ -182,11 +181,7 @@ angular.module('elevageApp').controller('clientController', ['$scope', '$route',
     // [buttonSave:onClick] : clic ou validation du bouton sauvegarder
     $scope.onClickSave = function() {
         $scope.saveClient();
-    };
-    // [buttonCancel:onClick] : clic ou validation du bouton annuler
-    $scope.onClickCancel = function() {
-        // Qd on annule, on revient en mode ajout.
-        $scope.initCurrentClient();
+
     };
 
     // Click sur le bouton permettant de voir toutes les données du client
@@ -201,10 +196,37 @@ angular.module('elevageApp').controller('clientController', ['$scope', '$route',
         $('#modalViewDogs').modal();
     };
 
+    // Click sur le bouton d'ajout d'un client
+    $scope.onClickAdd = function() {
+        $scope.titleAddUpdate = 'Ajout d\'un nouveau client';
+        $('#nomFormGroup').removeClass('has-error');
+        $('#nomHelpBlock').addClass('hide');
+        $scope.currentClient = {
+            id: null,
+            nom: null,
+            prenom: null,
+            rue: null,
+            numero: null,
+            code_postal: null,
+            localite: null,
+            pays: 'Belgique',
+            tel1: null,
+            tel2: null,
+            email: null,
+            remarques: null,
+        };
+        $('#modalAddUpdate').modal();
+    };
+
     // Click sur le bouton d'édition d'un élément du tableau
     $scope.onClickEdit = function(client) {
+        $scope.titleAddUpdate = 'Mise à jour d\'un client';
         $scope.currentClient = client;
+        $('#nomFormGroup').removeClass('has-error');
+        $('#nomHelpBlock').addClass('hide');
+        $('#modalAddUpdate').modal();
     };
+
     // Click sur le bouton suppression d'un élément du tableau
     $scope.onClickDelete = function(client) {
         $scope.deleteClient(client.id);
@@ -229,46 +251,45 @@ angular.module('elevageApp').controller('clientController', ['$scope', '$route',
         $scope.setListLoading(false);
 
     };
-    // ->Clients : Appel REST vers Factory : retrouver un client
-    $scope.findClient = function(id) {
-        $scope.setFormLoading(true);
-        clientFactory.find(id).success(function(client) {
-            $scope.setCurrentClient(client);
-            $scope.setFormLoading(false);
-        }).error(function() {
-            $scope.setFormLoading(false);
-        });
-    };
     // ->Clients : Appel REST vers Factory : créer ou mettre à jour un client
     $scope.saveClient = function() {
         if ($scope.isFillingValid()) {
             if ($scope.currentClient.id === null) {
                 clientFactory.insert($scope.currentClient).success(function() {
-                    $scope.initCurrentClient();
-                    $scope.listClients();
+                    $scope.afterCUD();
                 }).error(function(err) {
                     showMessageInfo("Erreur", "La création n'a pas fonctionné correctement.");
                 });
             } else {
                 clientFactory.update($scope.currentClient).success(function() {
-                    $scope.initCurrentClient();
-                    $scope.listClients();
+                    $scope.afterCUD();
                 }).error(function(err) {
                     showMessageInfo("Erreur", "La mise à jour n'a pas fonctionné correctement.");
                 });
             };
+            $('#modalAddUpdate').modal('hide');
+
+        } else {
+            $('#nomFormGroup').addClass('has-error');
+            $('#nomHelpBlock').removeClass('hide');
         }
     };
     // ->Clients : Appel REST vers Factory : supprimer un client
     $scope.deleteClient = function(id) {
         clientFactory.delete(id).success(function() {
-            if ($scope.currentClient.id === id) {
-                $scope.initCurrentClient();
-            }
-            $scope.listClients();
+            $scope.afterCUD;
         }).error(function(err) {
             showMessageInfo("Erreur", "La suppression n'a pas fonctionné correctement.");
         });
+    };
+    //
+    $scope.afterCUD = function() {
+        console.log($scope.typeRecherche);
+        if ($scope.typeRecherche === 'Standard') {
+            $scope.onClickStartSearchStandard();
+        } else {
+            $scope.onClickStartSearchByDog();
+        };
     };
     //--------------------------------------------------------------------------
 
@@ -277,32 +298,8 @@ angular.module('elevageApp').controller('clientController', ['$scope', '$route',
     //--------------------------------------------------------------------------
     // Méthodes de manipulation et d'initialisation de formulaire
     //--------------------------------------------------------------------------
-    $scope.initCurrentClient = function() {
-        // Remettre le bean à 0 pour qu'il puisse se mettre en mode ajout
-        $scope.currentClient = {
-            id: null,
-            nom: '',
-            rue: null,
-            numero: null,
-            cp: null,
-            localite: null,
-            tel: null,
-            email: null
-        };
-        // Indiquer au scope qu'on revient en mode ajout, et donc le titre du formulaire va changer
-        $scope.editionMode = false;
-        // Mise à zéro du formulaire donc tout message d'erreur actuellement affiché est retiré
-        $scope.clientFormError = false;
-    };
-    $scope.setCurrentClient = function(client) {
-        $scope.currentClient = client;
-        // Indiquer au scope qu'on revient en mode ajout, et donc le titre du formulaire va changer
-        $scope.editionMode = true;
-    };
     $scope.isFillingValid = function() {
         if (!$scope.currentClient.nom) {
-            $scope.clientFormError = true;
-            $scope.clientFormErrorMessage = 'Le champ nom est obligatoire.';
             return false;
         }
         return true;
@@ -336,7 +333,6 @@ angular.module('elevageApp').controller('clientController', ['$scope', '$route',
     // MAIN
     //--------------------------------------------------------------------------
     // Mettre à vide un bean client en cas d'ajout
-    $scope.initCurrentClient();
     $("#tabs").tabs();
     //--------------------------------------------------------------------------
 

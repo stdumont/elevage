@@ -112,7 +112,8 @@ class ClientController extends Controller
             'code_postal' => $this->container->request->getParam('code_postal'),
             'localite' => $this->container->request->getParam('localite'),
             'pays' => $this->container->request->getParam('pays'),
-            'tel' => $this->container->request->getParam('tel'),
+            'tel1' => $this->container->request->getParam('tel1'),
+            'tel2' => $this->container->request->getParam('tel2'),
             'email' => $this->container->request->getParam('email'),
             'remarques' => $this->container->request->getParam('remarques'),
         ]);
@@ -134,7 +135,8 @@ class ClientController extends Controller
             'code_postal' => $this->container->request->getParam('code_postal'),
             'localite' => $this->container->request->getParam('localite'),
             'pays' => $this->container->request->getParam('pays'),
-            'tel' => $this->container->request->getParam('tel'),
+            'tel1' => $this->container->request->getParam('tel1'),
+            'tel2' => $this->container->request->getParam('tel2'),
             'email' => $this->container->request->getParam('email'),
             'remarques' => $this->container->request->getParam('remarques'),
         ]);

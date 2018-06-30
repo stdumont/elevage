@@ -80,6 +80,9 @@ $container['ParameterController'] = function ($container) {
 $container['ChienController'] = function ($container) {
     return new \App\Controllers\ChienController($container);
 };
+$container['PorteeController'] = function ($container) {
+    return new \App\Controllers\PorteeController($container);
+};
 $container['ClientController'] = function ($container) {
     return new \App\Controllers\ClientController($container);
 };
