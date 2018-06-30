@@ -117,10 +117,11 @@
                             <div class="row" id="tab-recherche-par-chien">
                                 <div class="col-md-6">
                                     <form class="form-horizontal">
-                                        <div class="form-group">
+                                        <div class="form-group" id="proprietaireFormGroup">
                                             <label for="criteriaProprietaire" class="col-md-3 control-label">Propriétaire de</label>
                                             <div class="col-md-9">
                                                 <input type="text" class="form-control" id="criteriaProprietaire" ng-model="criteriaProprietaire" empty-to-null>
+                                                <span class="help-block hide" id="proprietaireHelpBlock">Quelques lettres du nom d'un chien sont nécessaires</span>
                                             </div>
                                         </div>
                                     </form>

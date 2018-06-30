@@ -143,6 +143,13 @@ angular.module('elevageApp').controller('clientController', ['$scope', '$route',
 
     // Click sur le bouton rechercher des critères de recherche par chien
     $scope.onClickStartSearchByDog = function() {
+        $('#proprietaireFormGroup').removeClass('has-error');
+        $('#proprietaireHelpBlock').addClass('hide');
+        if (!$scope.criteriaProprietaire) {
+            $('#proprietaireFormGroup').addClass('has-error');
+            $('#proprietaireHelpBlock').removeClass('hide');
+            return;
+        };
         $scope.typeRecherche = "ByDog";
         // on cache la box des critères
         // $(".box-search-criterias [data-widget='collapse']").click();
@@ -277,14 +284,13 @@ angular.module('elevageApp').controller('clientController', ['$scope', '$route',
     // ->Clients : Appel REST vers Factory : supprimer un client
     $scope.deleteClient = function(id) {
         clientFactory.delete(id).success(function() {
-            $scope.afterCUD;
+            $scope.afterCUD();
         }).error(function(err) {
             showMessageInfo("Erreur", "La suppression n'a pas fonctionné correctement.");
         });
     };
     //
     $scope.afterCUD = function() {
-        console.log($scope.typeRecherche);
         if ($scope.typeRecherche === 'Standard') {
             $scope.onClickStartSearchStandard();
         } else {
@@ -332,8 +338,19 @@ angular.module('elevageApp').controller('clientController', ['$scope', '$route',
     //--------------------------------------------------------------------------
     // MAIN
     //--------------------------------------------------------------------------
-    // Mettre à vide un bean client en cas d'ajout
     $("#tabs").tabs();
+    $('#criteriaNom').keyup(function(event) {
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if (keycode == '13') {
+            $scope.onClickStartSearchStandard();
+        }
+    });
+    $('#criteriaProprietaire').keyup(function(event) {
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if (keycode == '13') {
+            $scope.onClickStartSearchByDog();
+        }
+    });
     //--------------------------------------------------------------------------
 
 
