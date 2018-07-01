@@ -13,6 +13,20 @@
         <li ng-hide="!isUserAdministrator()"><a href="#page-agenda"><i class="fa fa-calendar"></i> <span>Agenda</span></a></li>
         -->
 
+        <!-- Outils -->
+        <li class="treeview">
+            <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="fa fa-wrench"></i>
+                <span>Outils</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right" style="padding-right:0.5em"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li><a href="#page-outils-calcul-dates"><i class="fa fa-wrench"></i> Calculs sur les dates</a></li>
+            </ul>
+        </li>
+
         <!-- Paramètres -->
         <li class="treeview">
             <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
@@ -26,20 +40,6 @@
                 <li><a href="#page-parametres-elevage"><i class="fa fa-cog"></i> Elevage</a></li>
                 <li><a href="#page-parametres-races"><i class="fa fa-cog"></i> Races</a></li>
                 <li><a href="#page-parametres-robes"><i class="fa fa-cog"></i> Robes</a></li>
-            </ul>
-        </li>
-
-        <!-- Outils -->
-        <li class="treeview">
-            <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
-                <i class="fa fa-wrench"></i>
-                <span>Outils</span>
-                <span class="pull-right-container">
-                    <i class="fa fa-angle-left pull-right" style="padding-right:0.5em"></i>
-                </span>
-            </a>
-            <ul class="treeview-menu">
-                <li><a href="#page-outils-calcul-dates"><i class="fa fa-wrench"></i> Calculs sur les dates</a></li>
             </ul>
         </li>
     </ul>
