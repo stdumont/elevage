@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\Agenda;
+use App\Models\Chien;
 
 class AgendaController extends Controller
 {
@@ -77,6 +78,35 @@ class AgendaController extends Controller
             'color' => $this->container->request->getParam('color'),
         ]);
         return json_encode($evenement, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    }
+
+    /**
+     * Génère les événements d'anniversaire des chiens
+     */
+    public function generate($request, $response, $args)
+    {
+        $datePlafond = date("Y-m-d", strtotime("-1 year"));
+        $dateY = date("Y");
+        $deletedRows = Agenda::where('generated', 1)->delete();
+        $chiens = Chien::
+            whereNotNull('date_naissance')
+            ->where('date_naissance', '<=', $datePlafond)
+            ->whereNull('date_deces')
+            ->get();
+            $i = 0;
+        foreach ($chiens as $chien) {
+            $dn = date_parse($chien->date_naissance);
+            $delta = $dateY - $dn['year'];
+            $agenda = new Agenda;
+            $agenda->title = $chien->nom . ' - ' . $delta . ' ' . ($delta < 2 ? 'an' : 'ans');
+            $agenda->allDay = 1;
+            $agenda->start = $dateY . '-' . ($dn['month'] < 10 ? '0' : '') . $dn['month'] . '-' . ($dn['day'] < 10 ? '0' : '') . $dn['day'];
+            $agenda->generated = 1;
+            $agenda->save();
+            $i++;
+        }
+        $message = $i . ' événement(s) automatique(s) généré(s).';
+        return json_encode($message, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     }
 
     /**

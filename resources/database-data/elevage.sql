@@ -92,7 +92,7 @@ CREATE TABLE `chiens` (
 
 LOCK TABLES `chiens` WRITE;
 /*!40000 ALTER TABLE `chiens` DISABLE KEYS */;
-INSERT INTO `chiens` VALUES (1,'Yrouk','des Rubis de Lady C','M',1,2,'2004-04-04','2017-11-26',NULL,NULL,NULL,NULL,1,NULL,NULL,NULL),(2,'Rodger','des Rubis de Lady C','M',1,3,'2018-05-23',NULL,1,3,NULL,NULL,NULL,NULL,NULL,NULL),(3,'Yoline','des Rubis de Lady C','F',1,3,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(4,'Fergie','des Rubis de Lady C','F',1,2,NULL,NULL,NULL,NULL,NULL,NULL,7,NULL,NULL,NULL),(5,'Elton','des Rubis de Lady C','M',1,3,NULL,NULL,NULL,NULL,NULL,NULL,7,NULL,NULL,NULL);
+INSERT INTO `chiens` VALUES (1,'Yrouk','des Rubis de Lady C','M',1,2,'2004-04-04','2017-11-26',NULL,NULL,NULL,NULL,1,NULL,NULL,NULL),(2,'Rodger','des Rubis de Lady C','M',1,3,'2017-06-30',NULL,1,3,NULL,NULL,NULL,NULL,NULL,NULL),(3,'Yoline','des Rubis de Lady C','F',1,3,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(4,'Fergie','des Rubis de Lady C','F',1,2,NULL,NULL,NULL,NULL,NULL,NULL,7,NULL,NULL,NULL),(5,'Elton','des Rubis de Lady C','M',1,3,NULL,NULL,NULL,NULL,NULL,NULL,7,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `chiens` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -154,7 +154,7 @@ CREATE TABLE `clients` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -163,7 +163,7 @@ CREATE TABLE `clients` (
 
 LOCK TABLES `clients` WRITE;
 /*!40000 ALTER TABLE `clients` DISABLE KEYS */;
-INSERT INTO `clients` VALUES (1,'Paurin','Jeannette','Rue de Verviers','75/D','4861','Soiron','Belgique','087/33.99.66','0493/65.65.85','jeannette.paurin@gmail.com',NULL,NULL,NULL),(3,'Dohet','Serge',NULL,NULL,'4020','Liège','Belgique',NULL,NULL,NULL,NULL,NULL,NULL),(4,'Petre-Fabry','Dominique-Dominique','Allée de Fanson','4','4190','Xhoris','Belgique',NULL,NULL,NULL,NULL,NULL,NULL),(5,'de Failly','Stéphanie',NULL,NULL,'1030','Bruxelles','Belgique',NULL,NULL,NULL,NULL,NULL,NULL),(6,'Dumont-Delange','Stéphane-Catherine','Rue Favauche','1','5150','Floriffoux','Belgique','081/44.68.68','0493/65.03.71','info@lesrubis.com','Propriétaires de l\'élevage des Rubis de Lady C (Cavaliers King Charles)',NULL,NULL),(7,'Sienicky','Nicole',NULL,NULL,'6250','Aiseau-Presles','Belgique',NULL,NULL,NULL,NULL,NULL,NULL),(8,'Dumont','Claudine','Chaussée de Dinant','45','5537','Anhée','Belgique',NULL,NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `clients` VALUES (1,'Paurin','Jeannette','Rue de Visé','75/E','4861','Soiron','Belgique','087/33.99.66','0493/65.65.85','jeannette.paurin@gmail.com',NULL,NULL,'2018-06-30 01:08:58'),(3,'Dohet','Serge',NULL,NULL,'4020','Liège','Belgique',NULL,NULL,NULL,NULL,NULL,NULL),(6,'Dumont-Delange','Stéphane-Catherine','Rue Favauche','1','5150','Floriffoux','Belgique','081/44.68.68','0493/65.03.71','info@lesrubis.com','Propriétaires de l\'élevage des Rubis de Lady C (Cavaliers King Charles)',NULL,NULL),(7,'Sienicky','Nicole',NULL,NULL,'6250','Aiseau-Presles','Belgique',NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `clients` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -360,4 +360,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-06-29  0:10:04
+-- Dump completed on 2018-07-01  0:52:35

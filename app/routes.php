@@ -78,4 +78,5 @@ $app->get('/api/agenda/get-count', 'AgendaController:getCount');
 $app->get('/api/agenda/retrieve', 'AgendaController:retrieve');
 $app->post('/api/agenda/insert', 'AgendaController:insert');
 $app->post('/api/agenda/update', 'AgendaController:update');
+$app->post('/api/agenda/generate', 'AgendaController:generate');
 $app->delete('/api/agenda/delete/{id}', 'AgendaController:delete');
