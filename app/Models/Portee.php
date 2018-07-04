@@ -31,6 +31,7 @@ class Portee extends Model
         'date_saillie_1',
         'date_saillie_2',
         'date_naissance',
+        'remarques',
     ];
 
      protected $with = ['race', 'pere', 'mere'];

@@ -35,7 +35,7 @@ CREATE TABLE `agenda` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,7 +44,6 @@ CREATE TABLE `agenda` (
 
 LOCK TABLES `agenda` WRITE;
 /*!40000 ALTER TABLE `agenda` DISABLE KEYS */;
-INSERT INTO `agenda` VALUES (1,'M. Dohet Serge','Mâle noir-feu Métisse',0,'2018-06-23 18:00:00',NULL,0,0,'#004080','2018-06-24 23:03:38','2018-06-24 23:03:38'),(2,'Mme Paurin Jeannette',NULL,0,'2018-06-24 15:00:00',NULL,0,0,'#004080','2018-06-24 23:04:04','2018-06-24 23:04:04');
 /*!40000 ALTER TABLE `agenda` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -68,7 +67,12 @@ CREATE TABLE `chiens` (
   `mere_id` int(11) DEFAULT NULL,
   `puce` varchar(255) DEFAULT NULL,
   `passeport` varchar(255) DEFAULT NULL,
+  `tatouage` varchar(255) DEFAULT NULL,
   `client_id` int(11) DEFAULT NULL,
+  `portee_id` int(11) DEFAULT NULL,
+  `chiot_id` int(11) DEFAULT NULL,
+  `present` tinyint(1) NOT NULL DEFAULT '0',
+  `produit` tinyint(1) NOT NULL DEFAULT '0',
   `remarques` varchar(255) DEFAULT NULL,
   `created_at` date DEFAULT NULL,
   `updated_at` date DEFAULT NULL,
@@ -78,12 +82,18 @@ CREATE TABLE `chiens` (
   KEY `fk_chien_pere_idx` (`pere_id`),
   KEY `fk_chien_mere_idx` (`mere_id`),
   KEY `fk_chien_client_idx` (`client_id`),
+  KEY `fk_chien_portee_idx` (`portee_id`),
+  KEY `idx_chien_nom` (`nom`),
+  KEY `idx_chien_sexe` (`sexe`),
+  KEY `fk_chien_chiot_idx` (`chiot_id`),
+  CONSTRAINT `fk_chien_chiot` FOREIGN KEY (`chiot_id`) REFERENCES `chiots` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_chien_client` FOREIGN KEY (`client_id`) REFERENCES `clients` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_chien_mere` FOREIGN KEY (`mere_id`) REFERENCES `chiens` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_chien_pere` FOREIGN KEY (`pere_id`) REFERENCES `chiens` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_chien_portee` FOREIGN KEY (`portee_id`) REFERENCES `portees` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_chien_race` FOREIGN KEY (`race_id`) REFERENCES `races` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_chien_robe` FOREIGN KEY (`robe_id`) REFERENCES `robes` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -92,7 +102,6 @@ CREATE TABLE `chiens` (
 
 LOCK TABLES `chiens` WRITE;
 /*!40000 ALTER TABLE `chiens` DISABLE KEYS */;
-INSERT INTO `chiens` VALUES (1,'Yrouk','des Rubis de Lady C','M',1,2,'2004-04-04','2017-11-26',NULL,NULL,NULL,NULL,1,NULL,NULL,NULL),(2,'Rodger','des Rubis de Lady C','M',1,3,'2017-06-30',NULL,1,3,NULL,NULL,NULL,NULL,NULL,NULL),(3,'Yoline','des Rubis de Lady C','F',1,3,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(4,'Fergie','des Rubis de Lady C','F',1,2,NULL,NULL,NULL,NULL,NULL,NULL,7,NULL,NULL,NULL),(5,'Elton','des Rubis de Lady C','M',1,3,NULL,NULL,NULL,NULL,NULL,NULL,7,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `chiens` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -110,6 +119,7 @@ CREATE TABLE `chiots` (
   `sexe` varchar(1) NOT NULL,
   `robe_id` int(11) NOT NULL,
   `chien_id` int(11) DEFAULT NULL,
+  `remarques` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -154,7 +164,7 @@ CREATE TABLE `clients` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -163,7 +173,6 @@ CREATE TABLE `clients` (
 
 LOCK TABLES `clients` WRITE;
 /*!40000 ALTER TABLE `clients` DISABLE KEYS */;
-INSERT INTO `clients` VALUES (1,'Paurin','Jeannette','Rue de Visé','75/E','4861','Soiron','Belgique','087/33.99.66','0493/65.65.85','jeannette.paurin@gmail.com',NULL,NULL,'2018-06-30 01:08:58'),(3,'Dohet','Serge',NULL,NULL,'4020','Liège','Belgique',NULL,NULL,NULL,NULL,NULL,NULL),(6,'Dumont-Delange','Stéphane-Catherine','Rue Favauche','1','5150','Floriffoux','Belgique','081/44.68.68','0493/65.03.71','info@lesrubis.com','Propriétaires de l\'élevage des Rubis de Lady C (Cavaliers King Charles)',NULL,NULL),(7,'Sienicky','Nicole',NULL,NULL,'6250','Aiseau-Presles','Belgique',NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `clients` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -246,6 +255,7 @@ CREATE TABLE `portees` (
   `date_saillie_1` date DEFAULT NULL,
   `date_saillie_2` date DEFAULT NULL,
   `date_naissance` date NOT NULL,
+  `remarques` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -360,4 +370,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-07-01  0:52:35
+-- Dump completed on 2018-07-04 22:55:07

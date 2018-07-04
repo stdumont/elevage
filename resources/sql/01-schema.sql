@@ -133,62 +133,6 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `elevage`.`chiens`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `elevage`.`chiens` ;
-
-CREATE TABLE IF NOT EXISTS `elevage`.`chiens` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `nom` VARCHAR(255) NOT NULL,
-  `affixe` VARCHAR(255) NULL,
-  `sexe` VARCHAR(1) NOT NULL,
-  `race_id` INT NOT NULL,
-  `robe_id` INT NULL,
-  `date_naissance` DATE NULL,
-  `date_deces` DATE NULL,
-  `pere_id` INT NULL,
-  `mere_id` INT NULL,
-  `puce` VARCHAR(255) NULL,
-  `passeport` VARCHAR(255) NULL,
-  `client_id` INT NULL,
-  `remarques` VARCHAR(255) NULL,
-  `created_at` DATE NULL,
-  `updated_at` DATE NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_chien_race_idx` (`race_id` ASC),
-  INDEX `fk_chien_robe_idx` (`robe_id` ASC),
-  INDEX `fk_chien_pere_idx` (`pere_id` ASC),
-  INDEX `fk_chien_mere_idx` (`mere_id` ASC),
-  INDEX `fk_chien_client_idx` (`client_id` ASC),
-  CONSTRAINT `fk_chien_race`
-    FOREIGN KEY (`race_id`)
-    REFERENCES `elevage`.`races` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_chien_robe`
-    FOREIGN KEY (`robe_id`)
-    REFERENCES `elevage`.`robes` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_chien_pere`
-    FOREIGN KEY (`pere_id`)
-    REFERENCES `elevage`.`chiens` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_chien_mere`
-    FOREIGN KEY (`mere_id`)
-    REFERENCES `elevage`.`chiens` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_chien_client`
-    FOREIGN KEY (`client_id`)
-    REFERENCES `elevage`.`clients` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `elevage`.`portees`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `elevage`.`portees` ;
@@ -202,6 +146,7 @@ CREATE TABLE IF NOT EXISTS `elevage`.`portees` (
   `date_saillie_1` DATE NULL,
   `date_saillie_2` DATE NULL,
   `date_naissance` DATE NOT NULL,
+  `remarques` VARCHAR(255) NULL,
   `created_at` TIMESTAMP NULL,
   `updated_at` TIMESTAMP NULL,
   PRIMARY KEY (`id`),
@@ -238,6 +183,7 @@ CREATE TABLE IF NOT EXISTS `elevage`.`chiots` (
   `sexe` VARCHAR(1) NOT NULL,
   `robe_id` INT NOT NULL,
   `chien_id` INT NULL,
+  `remarques` VARCHAR(255) NULL,
   `created_at` TIMESTAMP NULL,
   `updated_at` TIMESTAMP NULL,
   PRIMARY KEY (`id`),
@@ -257,6 +203,81 @@ CREATE TABLE IF NOT EXISTS `elevage`.`chiots` (
   CONSTRAINT `fk_chiot_chien`
     FOREIGN KEY (`chien_id`)
     REFERENCES `elevage`.`chiens` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `elevage`.`chiens`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `elevage`.`chiens` ;
+
+CREATE TABLE IF NOT EXISTS `elevage`.`chiens` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nom` VARCHAR(255) NOT NULL,
+  `affixe` VARCHAR(255) NULL,
+  `sexe` VARCHAR(1) NOT NULL,
+  `race_id` INT NOT NULL,
+  `robe_id` INT NULL,
+  `date_naissance` DATE NULL,
+  `date_deces` DATE NULL,
+  `pere_id` INT NULL,
+  `mere_id` INT NULL,
+  `puce` VARCHAR(255) NULL,
+  `passeport` VARCHAR(255) NULL,
+  `tatouage` VARCHAR(255) NULL,
+  `client_id` INT NULL,
+  `portee_id` INT NULL,
+  `chiot_id` INT NULL,
+  `present` TINYINT(1) NOT NULL DEFAULT 0,
+  `produit` TINYINT(1) NOT NULL DEFAULT 0,
+  `remarques` VARCHAR(255) NULL,
+  `created_at` DATE NULL,
+  `updated_at` DATE NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_chien_race_idx` (`race_id` ASC),
+  INDEX `fk_chien_robe_idx` (`robe_id` ASC),
+  INDEX `fk_chien_pere_idx` (`pere_id` ASC),
+  INDEX `fk_chien_mere_idx` (`mere_id` ASC),
+  INDEX `fk_chien_client_idx` (`client_id` ASC),
+  INDEX `fk_chien_portee_idx` (`portee_id` ASC),
+  INDEX `idx_chien_nom` (`nom` ASC),
+  INDEX `idx_chien_sexe` (`sexe` ASC),
+  INDEX `fk_chien_chiot_idx` (`chiot_id` ASC),
+  CONSTRAINT `fk_chien_race`
+    FOREIGN KEY (`race_id`)
+    REFERENCES `elevage`.`races` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_chien_robe`
+    FOREIGN KEY (`robe_id`)
+    REFERENCES `elevage`.`robes` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_chien_pere`
+    FOREIGN KEY (`pere_id`)
+    REFERENCES `elevage`.`chiens` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_chien_mere`
+    FOREIGN KEY (`mere_id`)
+    REFERENCES `elevage`.`chiens` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_chien_client`
+    FOREIGN KEY (`client_id`)
+    REFERENCES `elevage`.`clients` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_chien_portee`
+    FOREIGN KEY (`portee_id`)
+    REFERENCES `elevage`.`portees` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_chien_chiot`
+    FOREIGN KEY (`chiot_id`)
+    REFERENCES `elevage`.`chiots` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

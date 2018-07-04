@@ -92,6 +92,7 @@ class AgendaController extends Controller
             whereNotNull('date_naissance')
             ->where('date_naissance', '<=', $datePlafond)
             ->whereNull('date_deces')
+            ->where('present', '=', 1)
             ->get();
             $i = 0;
         foreach ($chiens as $chien) {

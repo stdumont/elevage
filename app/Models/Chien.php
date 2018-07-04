@@ -35,11 +35,21 @@ class Chien extends Model
         'mere_id',
         'puce',
         'passeport',
+        'tatouage',
         'client_id',
+        'portee_id',
+        'chiot_id',
+        'present',
+        'produit',
         'remarques',
     ];
 
-     protected $with = ['race', 'robe', 'pere', 'mere'];
+     protected $with = ['race', 'robe', 'pere', 'mere', 'client', 'portee', 'chiot'];
+     
+    protected $casts = [
+        'present' => 'boolean',
+        'produit' => 'boolean',
+    ];
 
     public function race() {
         return $this->belongsTo('App\Models\Race');
@@ -55,6 +65,18 @@ class Chien extends Model
 
     public function mere() {
         return $this->belongsTo('App\Models\Chien');
+    }
+
+    public function client() {
+        return $this->belongsTo('App\Models\Client');
+    }
+
+    public function portee() {
+        return $this->belongsTo('App\Models\Portee');
+    }
+
+    public function chiot() {
+        return $this->belongsTo('App\Models\Chiot');
     }
 
 

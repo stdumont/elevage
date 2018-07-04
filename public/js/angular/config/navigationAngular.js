@@ -15,11 +15,11 @@ angular.module('elevageApp').config(['$routeProvider', function($routeProvider) 
         activeTab: 'page-tableau-bord'
     })
 
-    // page : agenda
-    .when('/page-agenda', {
-        templateUrl: 'pages/agenda.html',
-        controller: 'agendaController',
-        activeTab: 'page-agenda'
+    // page : chiens
+    .when('/page-chiens', {
+        templateUrl: 'pages/chien.html',
+        controller: 'chienController',
+        activeTab: 'page-chiens'
     })
 
     // page : clients
@@ -27,6 +27,20 @@ angular.module('elevageApp').config(['$routeProvider', function($routeProvider) 
         templateUrl: 'pages/client.html',
         controller: 'clientController',
         activeTab: 'page-clients'
+    })
+
+    // page : agenda
+    .when('/page-agenda', {
+        templateUrl: 'pages/agenda.html',
+        controller: 'agendaController',
+        activeTab: 'page-agenda'
+    })
+
+    // page : outils : calculs sur les dates
+    .when('/page-outils-calcul-dates', {
+        templateUrl: 'pages/outils/calcul-dates.html',
+        controller: 'calculDatesController',
+        activeTab: 'page-outils-calcul-dates'
     })
 
     // page : paramètres : élevage
@@ -48,13 +62,6 @@ angular.module('elevageApp').config(['$routeProvider', function($routeProvider) 
         templateUrl: 'pages/parametres/robes.html',
         controller: 'robeController',
         activeTab: 'page-parametres-robes'
-    })
-
-    // page : outils : calculs sur les dates
-    .when('/page-outils-calcul-dates', {
-        templateUrl: 'pages/outils/calcul-dates.html',
-        controller: 'calculDatesController',
-        activeTab: 'page-outils-calcul-dates'
     })
 
     ;

@@ -26,6 +26,11 @@ $app->get('/api/chien/get-count', 'ChienController:getCount');
 $app->get('/api/chien/get-count-by-race/{race_id}', 'ChienController:getCountByRace');
 $app->get('/api/chien/get-count-by-robe/{robe_id}', 'ChienController:getCountByRobe');
 $app->get('/api/chien/get-count-by-client/{client_id}', 'ChienController:getCountByClient');
+$app->get('/api/chien/find/{id}', 'ChienController:find');
+$app->get('/api/chien/get-search-standard', 'ChienController:getSearchStandard');
+$app->get('/api/chien/get-search-by-client', 'ChienController:getSearchByClient');
+$app->post('/api/chien/save', 'ChienController:save');
+$app->delete('/api/chien/delete/{id}', 'ChienController:delete');
 
 /**
  * Routes vers les portées
