@@ -1,4 +1,4 @@
-angular.module('elevageApp').controller('chienController', ['$scope', '$route', '$http', 'chienFactory', 'NgTableParams', '$sce', function($scope, $route, $http, chienFactory, NgTableParams, $sce) {
+angular.module('elevageApp').controller('chienController', ['$scope', '$route', '$http', 'chienFactory', 'raceFactory', 'NgTableParams', '$sce', function($scope, $route, $http, chienFactory, raceFactory, NgTableParams, $sce) {
 
     // Mettre à jour le menu de navigation avec le lien courant.
     refreshCurrentLink($route.current.activeTab);
@@ -249,6 +249,25 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
     //--------------------------------------------------------------------------
     // Accès vers la couche REST (lien avec les factories Angular)
     //--------------------------------------------------------------------------
+
+    // Lister les races
+    $scope.listRaces = function() {
+        raceFactory.list().success(function(races) {
+            $scope.races = races;
+            var selectCallBack = function(id) {
+                $scope.currentRobe.race_id = id;
+            };
+
+            // creer les objets UI et initialiser le select2
+            var raceToSelect2 = function(race) {
+                return { id: race.id, text: race.nom };
+            };
+
+            setSelect2(".races-select", races, null, raceToSelect2, $scope.select2Template, selectCallBack);
+
+        }).error(function() {});
+    };
+
     // Lister les chiens
     $scope.listChiens = function(chiens) {
         $scope.setListLoading(true);
@@ -339,18 +358,19 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
     // MAIN
     //--------------------------------------------------------------------------
     $("#tabs").tabs();
+    $('input').iCheck({
+        checkboxClass: 'icheckbox_flat-blue',
+        radioClass: 'iradio_flat-blue'
+    });
     $('#criteriaNom').keyup(function(event) {
         var keycode = (event.keyCode ? event.keyCode : event.which);
         if (keycode == '13') {
             $scope.onClickStartSearchStandard();
         }
     });
-    $('#criteriaProprietaire').keyup(function(event) {
-        var keycode = (event.keyCode ? event.keyCode : event.which);
-        if (keycode == '13') {
-            $scope.onClickStartSearchByDog();
-        }
-    });
+    emptySelect2(".races-select");
+    $scope.listRaces();
+
     //--------------------------------------------------------------------------
 
 

@@ -41,17 +41,17 @@
                         <div class="row" id="tabs" style="padding-top:1em; padding-bottom:1em;">
                             <ul>
                                 <li>
-                                    <a href="#tab-recherche-standard">Recherche standard</a>
+                                    <a href="#tab-criteres-courants">Critères courants</a>
                                 </li>
                                 <li>
-                                    <a href="#tab-recherche-par-chien">Recherche par chien</a>
+                                    <a href="#tab-naissance-deces">Naissance - Décès</a>
                                 </li>
                             </ul>
 
-                            <!--                    -->
-                            <!-- Recherche standard -->
-                            <!--                    -->
-                            <div class="row" id="tab-recherche-standard">
+                            <!--                   -->
+                            <!-- Critères courants -->
+                            <!--                   -->
+                            <div class="row" id="tab-criteres-courants">
                                 <div class="col-md-6">
                                     <form class="form-horizontal">
                                         <div class="form-group">
@@ -61,21 +61,42 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="criteriaPrenom" class="col-md-3 control-label">Prénom</label>
+                                            <label for="criteriaAffixe" class="col-md-3 control-label">Affixe</label>
                                             <div class="col-md-9">
-                                                <input type="text" class="form-control" id="criteriaPrenom" ng-model="criteriaPrenom" empty-to-null>
+                                                <input type="text" class="form-control" id="criteriaAffixe" ng-model="criteriaAffixe" empty-to-null>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="criteriaTel" class="col-md-3 control-label">Téléphone</label>
+                                            <label for="criteriaRace" class="col-md-3 control-label">Race</label>
                                             <div class="col-md-9">
-                                                <input type="text" class="form-control" id="criteriaTel" ng-model="criteriaTel" empty-to-null>
+                                                <select name="criteriaRace" class="races-select" style="width:100%;"></select>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="criteriaMail" class="col-md-3 control-label">E-mail</label>
-                                            <div class="col-md-9">
-                                                <input type="text" class="form-control" id="criteriaMail" ng-model="criteriaMail" empty-to-null>
+                                            <label for="criteriaSexe" class="col-md-3 control-label">Sexe</label>
+                                            <div class="col-md-3">
+                                                <input type="checkbox" name="sexeM" checked> Mâle
+                                            </div>
+                                            <div class="col-md-3">
+                                                <input type="checkbox" name="sexeF" checked> Femelle
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="criteriaPresent" class="col-md-3 control-label">Présence</label>
+                                            <div class="col-md-3">
+                                                <input type="checkbox" name="presentY" checked> Présent
+                                            </div>
+                                            <div class="col-md-3">
+                                                <input type="checkbox" name="presentN" checked> Absent
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">Production</label>
+                                            <div class="col-md-3">
+                                                <input type="checkbox" name="produitY" checked> Produit
+                                            </div>
+                                            <div class="col-md-3">
+                                                <input type="checkbox" name="produitN" checked> Non produit
                                             </div>
                                         </div>
                                     </form>
