@@ -93,7 +93,7 @@ CREATE TABLE `chiens` (
   CONSTRAINT `fk_chien_portee` FOREIGN KEY (`portee_id`) REFERENCES `portees` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_chien_race` FOREIGN KEY (`race_id`) REFERENCES `races` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_chien_robe` FOREIGN KEY (`robe_id`) REFERENCES `robes` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -102,8 +102,22 @@ CREATE TABLE `chiens` (
 
 LOCK TABLES `chiens` WRITE;
 /*!40000 ALTER TABLE `chiens` DISABLE KEYS */;
+INSERT INTO `chiens` VALUES (1,'Moonlight','des Rubis de Lady C','F',1,4,'2013-05-24',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,1,NULL,NULL,NULL),(2,'Lochness',NULL,'M',1,3,'2014-09-26',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,0,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `chiens` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Temporary table structure for view `chiens_distinct_annee_naissance`
+--
+
+DROP TABLE IF EXISTS `chiens_distinct_annee_naissance`;
+/*!50001 DROP VIEW IF EXISTS `chiens_distinct_annee_naissance`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE TABLE `chiens_distinct_annee_naissance` (
+  `year` tinyint NOT NULL
+) ENGINE=MyISAM */;
+SET character_set_client = @saved_cs_client;
 
 --
 -- Table structure for table `chiots`
@@ -360,6 +374,25 @@ LOCK TABLES `users` WRITE;
 INSERT INTO `users` VALUES (1,'Stéphane','dumont.stephane@gmail.com','$2y$10$EunfkQSE6wjJkG4WIUi7Xejyzq8U8eaorBZ.cGFhUN2yCAH2dVn1m','1',NULL,NULL),(2,'Catherine','catherine.delange@skynet.be','$2y$10$jX9w0MXYHBbcex6VMkSMhOMVQ6iNQ2c5MLZdjUyrRBUZoDc66aEO2','0',NULL,NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Final view structure for view `chiens_distinct_annee_naissance`
+--
+
+/*!50001 DROP TABLE IF EXISTS `chiens_distinct_annee_naissance`*/;
+/*!50001 DROP VIEW IF EXISTS `chiens_distinct_annee_naissance`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `chiens_distinct_annee_naissance` AS select distinct year(`chiens`.`date_naissance`) AS `year` from `chiens` order by 1 desc */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -370,4 +403,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-07-04 22:55:07
+-- Dump completed on 2018-07-11 23:52:18

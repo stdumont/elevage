@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\Chien;
+use Illuminate\Database\Capsule\Manager as DB;
 
 class ChienController extends Controller
 {
@@ -48,6 +49,16 @@ class ChienController extends Controller
         $client_id = $args['client_id'];
         $nombre = Chien::where('client_id', $client_id)->count();
         return json_encode($nombre, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    }
+
+    /**
+     * Retourne les années de naissance (distinct) des chiens
+     * @return json les années de naissance
+     */
+    public function getDistinctBirthYear()
+    {
+        $years = DB::select('select * from chiens_distinct_annee_naissance');
+        return json_encode($years, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     }
 
     /**

@@ -1,4 +1,4 @@
-angular.module('elevageApp').controller('chienController', ['$scope', '$route', '$http', 'chienFactory', 'raceFactory', 'NgTableParams', '$sce', function($scope, $route, $http, chienFactory, raceFactory, NgTableParams, $sce) {
+angular.module('elevageApp').controller('chienController', ['$scope', '$route', '$http', 'chienFactory', 'raceFactory', 'robeFactory', 'NgTableParams', '$sce', function($scope, $route, $http, chienFactory, raceFactory, robeFactory, NgTableParams, $sce) {
 
     // Mettre à jour le menu de navigation avec le lien courant.
     refreshCurrentLink($route.current.activeTab);
@@ -9,15 +9,18 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
     $scope.chiens = null;
     $scope.currentChien = null;
     $scope.searchResultsTitle = "Résultats de la recherche";
+    $scope.birthYears = null;
+    $scope.deathYears = null;
     $scope.criteriaNom = null;
-    $scope.criteriaPrenom = null;
-    $scope.criteriaTel = null;
-    $scope.criteriaMail = null;
-    $scope.criteriaCodePostal = null;
-    $scope.criteriaLocalite = null;
-    $scope.criteriaPays = null;
-    $scope.criteriaProprietaire = null;
-    $scope.typeRecherche = null;
+    $scope.criteriaAffixe = null;
+    $scope.sexeM = 'true';
+    $scope.sexeF = true;
+    $scope.presentY = true;
+    $scope.presentN = true;
+    $scope.produitY = true;
+    $scope.produitN = true;
+    $scope.vivantY = true;
+    $scope.vivantN = true;
     $scope.titleAddUpdate = null;
 
     // colonnes des résultats de la recherche
@@ -97,73 +100,46 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
     // Evènements de la couche UI
     //--------------------------------------------------------------------------
 
-    // Click sur le bouton effacer les critères de recherche standards
-    $scope.onClickClearSearchStandard = function() {
+    // Click sur le bouton effacer les critères de recherche
+    $scope.onClickClearSearch = function() {
         // effacer les critères
         $scope.criteriaNom = null;
-        $scope.criteriaPrenom = null;
-        $scope.criteriaTel = null;
-        $scope.criteriaMail = null;
-        $scope.criteriaCodePostal = null;
-        $scope.criteriaLocalite = null;
-        $scope.criteriaPays = null;
+        $scope.criteriaAffixe = null;
     };
 
-    // Click sur le bouton effacer les critères de recherche par chien
-    $scope.onClickClearSearchByDog = function() {
-        // effacer le critère
-        $scope.criteriaProprietaire = null;
-    };
-
-    // Click sur le bouton rechercher des critères de recherche standards
-    $scope.onClickStartSearchStandard = function() {
-        $scope.typeRecherche = "Standard";
+    // Click sur le bouton rechercher des critères de recherche
+    $scope.onClickStartSearch = function() {
         // on cache la box des critères
         // $(".box-search-criterias [data-widget='collapse']").click();
 
-        chienFactory.getBySearchStandard(
-            $scope.criteriaNom,
-            $scope.criteriaPrenom,
-            $scope.criteriaTel,
-            $scope.criteriaMail,
-            $scope.criteriaCodePostal,
-            $scope.criteriaLocalite,
-            $scope.criteriaPays
-        )
+        console.log('Sexe');
+        console.log($('#sexeM').iCheck('update')[0].checked);
+        console.log($('#sexeF').iCheck('update')[0].checked);
 
-        .success(function(chiens) {
-                $scope.listChiens(chiens);
-            })
-            .error(function(error) {
-                console.log("Erreur de la recherche standard de chiens");
-            });
+        console.log('Présent');
+        console.log($('#presentY').iCheck('update')[0].checked);
+        console.log($('#presentN').iCheck('update')[0].checked);
 
-        $scope.scroll2Top('searchResultsDiv');
-    };
+        console.log('Produit');
+        console.log($('#produitY').iCheck('update')[0].checked);
+        console.log($('#produitN').iCheck('update')[0].checked);
 
-    // Click sur le bouton rechercher des critères de recherche par chien
-    $scope.onClickStartSearchByDog = function() {
-        $('#proprietaireFormGroup').removeClass('has-error');
-        $('#proprietaireHelpBlock').addClass('hide');
-        if (!$scope.criteriaProprietaire) {
-            $('#proprietaireFormGroup').addClass('has-error');
-            $('#proprietaireHelpBlock').removeClass('hide');
-            return;
-        };
-        $scope.typeRecherche = "ByDog";
-        // on cache la box des critères
-        // $(".box-search-criterias [data-widget='collapse']").click();
+        console.log('Etat');
+        console.log($('#vivantY').iCheck('update')[0].checked);
+        console.log($('#vivantN').iCheck('update')[0].checked);
 
-        chienFactory.getBySearchByDog(
-            $scope.criteriaProprietaire
-        )
 
-        .success(function(chiens) {
-                $scope.listChiens(chiens);
-            })
-            .error(function(error) {
-                console.log("Erreur de la recherche par chien de chiens");
-            });
+        // chienFactory.getByCriteria(
+        //         $scope.criteriaNom,
+        //         $scope.criteriaAffixe
+        //     )
+
+        //     .success(function (chiens) {
+        //         $scope.listChiens(chiens);
+        //     })
+        //     .error(function (error) {
+        //         console.log("Erreur de la recherche de chiens");
+        //     });
 
         $scope.scroll2Top('searchResultsDiv');
     };
@@ -252,18 +228,50 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
 
     // Lister les races
     $scope.listRaces = function() {
+        emptySelect2(".races-select");
         raceFactory.list().success(function(races) {
             $scope.races = races;
-            var selectCallBack = function(id) {
-                $scope.currentRobe.race_id = id;
+            var toutesRaces = {
+                id: -1,
+                nom: "Toutes les races"
             };
+            $scope.races.splice(0, 0, toutesRaces);
+            var selectRacesCallBack = function(id) {};
 
             // creer les objets UI et initialiser le select2
             var raceToSelect2 = function(race) {
-                return { id: race.id, text: race.nom };
+                return {
+                    id: race.id,
+                    text: race.nom
+                };
             };
 
-            setSelect2(".races-select", races, null, raceToSelect2, $scope.select2Template, selectCallBack);
+            setSelect2(".races-select", $scope.races, toutesRaces, raceToSelect2, $scope.select2Template, selectRacesCallBack);
+
+        }).error(function() {});
+    };
+
+    // Lister les robes
+    $scope.listRobes = function() {
+        emptySelect2(".robes-select");
+        robeFactory.list().success(function(robes) {
+            $scope.robes = robes;
+            var toutesRobes = {
+                id: -1,
+                nom: "Toutes les robes"
+            };
+            $scope.robes.splice(0, 0, toutesRobes);
+            var selectRobesCallBack = function(id) {};
+
+            // creer les objets UI et initialiser le select2
+            var robeToSelect2 = function(robe) {
+                return {
+                    id: robe.id,
+                    text: robe.nom
+                };
+            };
+
+            setSelect2(".robes-select", $scope.robes, toutesRobes, robeToSelect2, $scope.select2Template, selectRobesCallBack);
 
         }).error(function() {});
     };
@@ -277,6 +285,19 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
         $scope.setListLoading(false);
 
     };
+
+    // rechercher les différentes années de naissance des chiens
+    $scope.getDistinctBirthYear = function() {
+        $scope.birthYears = [];
+        chienFactory.getDistinctBirthYear()
+            .success(function(birthYears) {
+                $scope.birthYears = birthYears;
+                console.log($scope.birthYears);
+            }).error(function(err) {
+                showMessageInfo("Erreur", "La recherche des années de naissance n'a pas fonctionné correctement.");
+            });
+    };
+
     // ->Chiens : Appel REST vers Factory : créer ou mettre à jour un chien
     $scope.saveChien = function() {
         if ($scope.isFillingValid()) {
@@ -358,19 +379,20 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
     // MAIN
     //--------------------------------------------------------------------------
     $("#tabs").tabs();
-    $('input').iCheck({
-        checkboxClass: 'icheckbox_flat-blue',
-        radioClass: 'iradio_flat-blue'
+    $('input[type=checkbox]').iCheck({
+        checkboxClass: 'icheckbox_flat-blue'
     });
+    $('input[type=checkbox]').iCheck('check');
     $('#criteriaNom').keyup(function(event) {
         var keycode = (event.keyCode ? event.keyCode : event.which);
         if (keycode == '13') {
             $scope.onClickStartSearchStandard();
         }
     });
-    emptySelect2(".races-select");
-    $scope.listRaces();
 
+    $scope.listRaces();
+    $scope.listRobes();
+    $scope.getDistinctBirthYear();
     //--------------------------------------------------------------------------
 
 
