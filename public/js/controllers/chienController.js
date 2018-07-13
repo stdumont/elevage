@@ -288,11 +288,27 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
 
     // rechercher les différentes années de naissance des chiens
     $scope.getDistinctBirthYear = function() {
+        emptySelect2(".naissance-annee-select");
         $scope.birthYears = [];
         chienFactory.getDistinctBirthYear()
             .success(function(birthYears) {
                 $scope.birthYears = birthYears;
-                console.log($scope.birthYears);
+                var toutesAnneesNaissance = {
+                    id: -1,
+                    nom: "Toutes les années"
+                };
+                $scope.birthYears.splice(0, 0, toutesAnneesNaissance);
+                var selectAnneesNaissanceCallBack = function(id) {};
+                var anneeNaissanceToSelect2 = function(anneeNaissance) {
+                    console.log(anneeNaissance);
+                    return {
+                        id: anneeNaissance.year,
+                        text: anneeNaissance.year
+                    };
+                };
+
+                setSelect2(".naissance-annee-select", $scope.birthYears, toutesAnneesNaissance, anneeNaissanceToSelect2, $scope.select2Template, selectAnneesNaissanceCallBack);
+
             }).error(function(err) {
                 showMessageInfo("Erreur", "La recherche des années de naissance n'a pas fonctionné correctement.");
             });

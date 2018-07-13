@@ -150,13 +150,68 @@
                             <!--                               -->
                             <div class="row" id="tab-naissance-deces">
                                 <div class="col-md-6">
-                                    <div class="form-group" id="proprietaireFormGroup">
-                                        <label for="criteriaProprietaire" class="col-md-3 control-label">Propriétaire de</label>
-                                        <div class="col-md-9">
-                                            <input type="text" class="form-control" id="criteriaProprietaire" ng-model="criteriaProprietaire" empty-to-null>
-                                            <span class="help-block hide" id="proprietaireHelpBlock">Quelques lettres du nom d'un chien sont nécessaires</span>
+                                    <div class="box box-info box-naissance">
+                                        <div class="box-header with-border">
+                                            <h4 class="box-title">
+                                                Naissance
+                                            </h4>
                                         </div>
+                                        <!-- .box-header -->
+                                        <div class="box-body">
+                                            <div class="form-group">
+                                                <label for="criteriaNaissanceDu" class="col-md-3 control-label">Depuis le</label>
+                                                <div class="col-md-9">
+                                                    <component-datepicker ng-model="criteriaNaissanceDu" style="width:100%;" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="criteriaNaissanceAu" class="col-md-3 control-label">Jusqu'au</label>
+                                                <div class="col-md-9">
+                                                    <component-datepicker ng-model="criteriaNaissanceAu" style="width:100%;" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="criteriaNaissanceAnnee" class="col-md-3 control-label">Année</label>
+                                                <div class="col-md-6">
+                                                    <select name="criteriaNaissanceAnnee" class="naissance-annee-select" style="width:100%;"></select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- .box-body -->
                                     </div>
+                                    <!-- .box-naissance -->
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="box box-info box-deces">
+                                        <div class="box-header with-border">
+                                            <h4 class="box-title">
+                                                Décès
+                                            </h4>
+                                        </div>
+                                        <!-- .box-header -->
+                                        <div class="box-body with-border">
+                                            <div class="form-group">
+                                                <label for="criteriaDecesDu" class="col-md-3 control-label">Depuis le</label>
+                                                <div class="col-md-9">
+                                                    <component-datepicker ng-model="criteriaDecesDu" style="width:100%;" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="criteriaDecesAu" class="col-md-3 control-label">Jusqu'au</label>
+                                                <div class="col-md-9">
+                                                    <component-datepicker ng-model="criteriaDecesAu" style="width:100%;" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="criteriaDecesAnnee" class="col-md-3 control-label">Année</label>
+                                                <div class="col-md-6">
+                                                    <select name="criteriaDecesAnnee" class="deces-annee-select" style="width:100%;"></select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- .box-body -->
+                                    </div>
+                                    <!-- .box-deces -->
                                 </div>
                             </div>
                             <!-- .row -->
@@ -202,11 +257,11 @@
                     <div class="box-footer">
                         <div class="col-md-12">
                             <button class="btn pull-left" ng-click="onClickClearSearch()">
-                            <i class="fa fa-ban"></i>&nbsp;Effacer les critères
-                        </button>
+                                <i class="fa fa-ban"></i>&nbsp;Effacer les critères
+                            </button>
                             <button type="submit" class="btn btn-info pull-right" ng-click="onClickStartSearch()">
-                            <i class="fa fa-search"></i>&nbsp;Rechercher
-                        </button>
+                                <i class="fa fa-search"></i>&nbsp;Rechercher
+                            </button>
                         </div>
                         <!-- .col-md-12 -->
 
@@ -228,8 +283,8 @@
                         </h3>
                         <div class="box-tools pull-right">
                             <button class="btn btn-box-tool" data-widget="collapse">
-                            <i class="fa fa-minus"></i>
-                        </button>
+                                <i class="fa fa-minus"></i>
+                            </button>
                         </div>
                     </div>
                     <div class="box-body no-padding">
@@ -257,16 +312,16 @@
                                 <td class="text-center" style="width: 15%;">
                                     <span ng-bind="client.chiens.length===0 ? '' : client.chiens.length"></span> &nbsp;&nbsp;
                                     <button class="btn btn-info btn-sm" title="Voir ses chiens" ng-click="onClickViewDogs(client)" ng-show="!isDeletable(client)">
-                                    <i class="fa fa-paw"></i>
-                                </button>
+                                        <i class="fa fa-paw"></i>
+                                    </button>
                                 </td>
                                 <td>
                                     <span ng-bind="client.tel1"></span>&nbsp;
                                     <span ng-bind="client.tel2">
-                            </td>
-                            <td>
-                                <a href="mailto:{{client.email}}">
-                                    <span ng-bind="client.email"></span>
+                                </td>
+                                <td>
+                                    <a href="mailto:{{client.email}}">
+                                        <span ng-bind="client.email"></span>
                                     </a>
                                 </td>
                                 <td class="text-center">
@@ -281,22 +336,22 @@
                                 <td class="text-center">
                                     <div class="divButton" style="width:40px;padding-right:5px;">
                                         <button class="btn btn-default btn-sm" title="Voir les données de ce client" ng-click="onClickView(client)">
-                                        <span class="glyphicon glyphicon-eye-open"></span>
-                                    </button>
+                                            <span class="glyphicon glyphicon-eye-open"></span>
+                                        </button>
                                     </div>
                                 </td>
                                 <td class="text-center">
                                     <div class="divButton" style="width:40px;padding-right:5px;">
                                         <button class="btn btn-default btn-sm" title="Modifier ce client" ng-click="onClickEdit(client)">
-                                        <span class="glyphicon glyphicon-pencil"></span>
-                                    </button>
+                                            <span class="glyphicon glyphicon-pencil"></span>
+                                        </button>
                                     </div>
                                 </td>
                                 <td class="text-center">
                                     <div class="divButton" style="width:40px;padding-right:5px;">
                                         <button class="btn btn-danger btn-sm" title="Supprimer ce client" ng-confirm-click="Voulez-vous supprimer ce client ?" confirmed-click="onClickDelete(client)" ng-show="isDeletable(client)">
-                                        <span class="glyphicon glyphicon-trash"></span>
-                                    </button>
+                                            <span class="glyphicon glyphicon-trash"></span>
+                                        </button>
                                     </div>
                                 </td>
                             </tr>
@@ -304,8 +359,8 @@
                     </div>
                     <div class="box-footer clearfix">
                         <button class="btn btn-info pull-right" ng-click="onClickAdd()">
-                        <i class="fa fa-plus"></i>&nbsp;Ajouter un client
-                    </button>
+                            <i class="fa fa-plus"></i>&nbsp;Ajouter un client
+                        </button>
                     </div>
                 </div>
             </div>
@@ -451,11 +506,11 @@
                                     <td style="display: table-cell" class="text-center">{{chien.robe.nom}}</td>
                                     <td style="display: table-cell" class="text-center">
                                         <span ng-show="chien.sexe === 'M'">
-                                        <i class="fa fa-mars"></i>
-                                    </span>
+                                            <i class="fa fa-mars"></i>
+                                        </span>
                                         <span ng-show="chien.sexe === 'F'">
-                                        <i class="fa fa-venus"></i>
-                                    </span>
+                                            <i class="fa fa-venus"></i>
+                                        </span>
                                         <td style="display: table-cell" class="text-center">{{toJMA(chien.date_naissance)}}</td>
                                         <td style="display: table-cell" class="text-center">{{toJMA(chien.date_deces)}}</td>
                                         <!-- <td style="display: table-cell"><a href="https://www.google.com" target="_blank">{{chien.pere.nom}}</a></td> -->
@@ -468,7 +523,7 @@
                     <!-- .modal-body -->
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" data-dismiss="modal">
-                        <i class="fa fa-sign-out"></i>&nbsp;Fermer</button>
+                            <i class="fa fa-sign-out"></i>&nbsp;Fermer</button>
                     </div>
                     <!-- .modal-footer -->
                 </div>
@@ -637,11 +692,11 @@
                                     <td style="display: table-cell" class="text-center">{{chien.robe.nom}}</td>
                                     <td style="display: table-cell" class="text-center">
                                         <span ng-show="chien.sexe === 'M'">
-                                        <i class="fa fa-mars"></i>
-                                    </span>
+                                            <i class="fa fa-mars"></i>
+                                        </span>
                                         <span ng-show="chien.sexe === 'F'">
-                                        <i class="fa fa-venus"></i>
-                                    </span>
+                                            <i class="fa fa-venus"></i>
+                                        </span>
                                         <td style="display: table-cell" class="text-center">{{toJMA(chien.date_naissance)}}</td>
                                         <td style="display: table-cell" class="text-center">{{toJMA(chien.date_deces)}}</td>
                                         <!-- <td style="display: table-cell"><a href="https://www.google.com" target="_blank">{{chien.pere.nom}}</a></td> -->
@@ -654,9 +709,9 @@
                     <!-- .modal-body -->
                     <div class="modal-footer">
                         <button type="button" class="btn pull-left" data-dismiss="modal">
-                        <i class="fa fa-ban"></i>&nbsp;Annuler</button>
+                            <i class="fa fa-ban"></i>&nbsp;Annuler</button>
                         <button type="button" class="btn btn-primary pull-right" ng-click="onClickSave()">
-                        <i class="fa fa-check"></i>&nbsp;Sauvegarder</button>
+                            <i class="fa fa-check"></i>&nbsp;Sauvegarder</button>
                     </div>
                     <!-- .modal-footer -->
                 </div>
@@ -701,11 +756,11 @@
                                     <td style="display: table-cell" class="text-center">{{chien.robe.nom}}</td>
                                     <td style="display: table-cell" class="text-center">
                                         <span ng-show="chien.sexe === 'M'">
-                                        <i class="fa fa-mars"></i>
-                                    </span>
+                                            <i class="fa fa-mars"></i>
+                                        </span>
                                         <span ng-show="chien.sexe === 'F'">
-                                        <i class="fa fa-venus"></i>
-                                    </span>
+                                            <i class="fa fa-venus"></i>
+                                        </span>
                                         <td style="display: table-cell" class="text-center">{{toJMA(chien.date_naissance)}}</td>
                                         <td style="display: table-cell" class="text-center">{{toJMA(chien.date_deces)}}</td>
                                         <!-- <td style="display: table-cell"><a href="https://www.google.com" target="_blank">{{chien.pere.nom}}</a></td> -->
@@ -717,7 +772,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" data-dismiss="modal">
-                        <i class="fa fa-sign-out"></i>&nbsp;Fermer</button>
+                            <i class="fa fa-sign-out"></i>&nbsp;Fermer</button>
                     </div>
                 </div>
             </div>

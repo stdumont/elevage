@@ -57,8 +57,9 @@ class ChienController extends Controller
      */
     public function getDistinctBirthYear()
     {
-        $years = DB::select('select * from chiens_distinct_annee_naissance');
-        return json_encode($years, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        $result = DB::select('select * from chiens_distinct_annee_naissance');
+        $years = [];
+        return json_encode($years, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); 
     }
 
     /**
