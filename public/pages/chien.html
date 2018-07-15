@@ -54,7 +54,10 @@
                                 <a href="#tab-identifications">Identifications</a>
                             </li>
                             <li>
-                                <a href="#tab-parentes">Parentés</a>
+                                <a href="#tab-parentes">Parents-Enfants</a>
+                            </li>
+                            <li>
+                                <a href="#tab-clients">Clients</a>
                             </li>
                         </ul>
 
@@ -246,28 +249,80 @@
                                 <div class="col-md-6">
 
                                     <div class="form-group">
-                                        <label for="criteriaPereDe" class="col-md-3 control-label">Père de</label>
+                                        <label for="criteriaParentsDe" class="col-md-3 control-label">Parents de</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" id="criteriaPereDe" ng-model="criteriaPereDe" empty-to-null>
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="fa fa-paw"></i></span>
+                                                <input type="text" class="form-control" id="criteriaParentsDe" ng-model="criteriaParentsDe" empty-to-null>
+                                            </div>
                                         </div>
                                     </div>
-                                    <!-- .form-group (père de) -->
+                                    <!-- .form-group (parents de) -->
 
                                     <div class="form-group">
-                                        <label for="criteriaMereDe" class="col-md-3 control-label">Mère de</label>
+                                        <label for="criteriaEnfantsDeM" class="col-md-3 control-label">Enfants de</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" id="criteriaMereDe" ng-model="criteriaMereDe" empty-to-null>
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="fa fa-mars"></i></span>
+                                                <input type="text" class="form-control" id="criteriaEnfantsDeM" ng-model="criteriaEnfantsDeM" empty-to-null>
+                                            </div>
                                         </div>
                                     </div>
-                                    <!-- .form-group (puce) -->
+                                    <!-- .form-group (enfants de mâle) -->
 
                                     <div class="form-group">
-                                        <label for="criteriaTatouage" class="col-md-3 control-label">Tatouage</label>
+                                        <label for="criteriaEnfantsDeF" class="col-md-3 control-label">Enfants de</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" id="criteriaTatouage" ng-model="criteriaTatouage" empty-to-null>
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="fa fa-venus"></i></span>
+                                                <input type="text" class="form-control" id="criteriaEnfantsDeF" ng-model="criteriaEnfantsDeF" empty-to-null>
+                                            </div>
                                         </div>
                                     </div>
-                                    <!-- .form-group (tatouage) -->
+                                    <!-- .form-group (enfants de femelle) -->
+
+                                </div>
+                            </div>
+
+                            <!--                       -->
+                            <!-- Recherche par clients -->
+                            <!--                       -->
+                            <div class="row" id="tab-clients">
+                                <div class="col-md-6">
+
+                                    <div class="form-group">
+                                        <label for="criteriaNomClient" class="col-md-3 control-label">Nom client</label>
+                                        <div class="col-md-9">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                                <input type="text" class="form-control" id="criteriaNomClient" ng-model="criteriaNomClient" empty-to-null>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- .form-group (parents de) -->
+
+                                    <div class="form-group">
+                                        <label for="criteriaEnfantsDeM" class="col-md-3 control-label">Enfants de</label>
+                                        <div class="col-md-9">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="fa fa-mars"></i></span>
+                                                <input type="text" class="form-control" id="criteriaEnfantsDeM" ng-model="criteriaEnfantsDeM" empty-to-null>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- .form-group (enfants de mâle) -->
+
+                                    <div class="form-group">
+                                        <label for="criteriaEnfantsDeF" class="col-md-3 control-label">Enfants de</label>
+                                        <div class="col-md-9">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="fa fa-venus"></i></span>
+                                                <input type="text" class="form-control" id="criteriaEnfantsDeF" ng-model="criteriaEnfantsDeF" empty-to-null>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- .form-group (enfants de femelle) -->
+
                                 </div>
                             </div>
                         </form>

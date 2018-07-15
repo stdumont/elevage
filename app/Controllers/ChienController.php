@@ -3,7 +3,6 @@
 namespace App\Controllers;
 
 use App\Models\Chien;
-use Illuminate\Database\Capsule\Manager as DB;
 
 class ChienController extends Controller
 {
@@ -66,12 +65,50 @@ class ChienController extends Controller
      * Retrouver le père/la mère du chien 'doggy'
      * SELECT * FROM `chiens` as p LEFT JOIN `chiens` as c ON p.id = c.pere_id where c.pere_id is not null and c.nom = 'doggy'
      * SELECT * FROM `chiens` as p LEFT JOIN `chiens` as c ON p.id = c.mere_id where c.mere_id is not null and c.nom = 'doggy'
-     * 
+     *
      * Retrouver les enfants dont le père / la mère est 'doggy father' / 'doggy mother'
      * SELECT * FROM `chiens` as c LEFT JOIN `chiens` as p ON c.pere_id = p.id where c.pere_id is not null and p.nom = 'doggy father'
      * SELECT * FROM `chiens` as c LEFT JOIN `chiens` as p ON c.mere_id = p.id where c.mere_id is not null and p.nom = 'doggy mother'
      */
 
+    public function getByCriteria($request, $response)
+    {
+        $nom = $request->getParam('nom');
+        $affixe = $request->getParam('affixe');
+        $race = $request->getParam('race');
+        $robe = $request->getParam('robe');
+        $sexe = $request->getParam('sexe');
+        $present = $request->getParam('present');
+        $produit = $request->getParam('produit');
+        $vivant = $request->getParam('vivant');
+        $naissanceDu = $request->getParam('naissanceDu');
+        $naissanceAu = $request->getParam('naissanceAu');
+        $decesDu = $request->getParam('decesDu');
+        $decesAu = $request->getParam('decesAu');
+        $passeport = $request->getParam('passeport');
+        $puce = $request->getParam('puce');
+        $tatouage = $request->getParam('tatouage');
+        $parentsDe = $request->getParam('parentsDe');
+        $enfantsDeM = $request->getParam('enfantsDeM');
+        $enfantsDeF = $request->getParam('enfantsDeF');
+        $nomClient = $request->getParam('nomClient');
+
+        $searchByNom = (is_null($nom) || $nom == 'null') ? false : true;
+        $searchByAffixe = (is_null($affixe) || $affixe == 'null') ? false : true;
+        $searchByRace = (is_null($race) || $race == -1) ? false : true;
+        $searchByRobe = (is_null($robe) || $robe == -1) ? false : true;
+
+        $chiens = Chien::
+            when($searchByNom, function ($query) use ($nom) {
+            return $query->where('nom', 'like', '%' . $nom . '%');
+        })->when($searchByAffixe, function ($query) use ($affixe) {
+            return $query->where('affixe', 'like', '%' . $affixe . '%');
+        })
+            ->orderBy('nom', 'asc')->orderBy('affixe', 'asc')
+            ->get();
+
+        return json_encode($chiens, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    }
 
     /**
      * Retourne une liste de chiens sur base de critères standard
@@ -140,9 +177,9 @@ class ChienController extends Controller
     public function save($request, $response, $args)
     {
         $id = $this->container->request->getParam('id');
-        if($id){
+        if ($id) {
             $chien = Chien::find($id);
-        }else{
+        } else {
             $chien = new Chien;
         };
         $chien->save([

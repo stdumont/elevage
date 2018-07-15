@@ -4,6 +4,53 @@ angular.module('elevageApp')
         var urlBase = '/api/chien/';
         var chienFactory = {};
 
+        // recherche des chiens sur base de critères
+        chienFactory.getByCriteria = function(
+            criteriaNom,
+            criteriaAffixe,
+            criteriaRace,
+            criteriaRobe,
+            criteriaSexe,
+            criteriaPresent,
+            criteriaProduit,
+            criteriaVivant,
+            criteriaNaissanceDu,
+            criteriaNaissanceAu,
+            criteriaDecesDu,
+            criteriaDecesAu,
+            criteriaPasseport,
+            criteriaPuce,
+            criteriaTatouage,
+            criteriaParentsDe,
+            criteriaEnfantsDeM,
+            criteriaEnfantsDeF,
+            criteriaNomClient
+        ) {
+            return $http.get(urlBase + 'get-by-criteria', {
+                params: {
+                    nom: criteriaNom,
+                    affixe: criteriaAffixe,
+                    race: criteriaRace,
+                    robe: criteriaRobe,
+                    sexe: criteriaSexe,
+                    present: criteriaPresent,
+                    produit: criteriaProduit,
+                    vivant: criteriaVivant,
+                    naissanceDu: criteriaNaissanceDu,
+                    naissanceAu: criteriaNaissanceAu,
+                    decesDu: criteriaDecesDu,
+                    decesAu: criteriaDecesAu,
+                    passeport: criteriaPasseport,
+                    puce: criteriaPuce,
+                    tatouage: criteriaTatouage,
+                    parentsDe: criteriaParentsDe,
+                    enfantsDeM: criteriaEnfantsDeM,
+                    enfantsDeF: criteriaEnfantsDeF,
+                    nomClient: criteriaNomClient
+                }
+            });
+        };
+
         // renvoi le nombre de chiens
         chienFactory.count = function() {
             return $http.get(urlBase + 'get-count');

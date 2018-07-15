@@ -24,6 +24,10 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
     $scope.criteriaPasseport = null;
     $scope.criteriaPuce = null;
     $scope.criteriaTatouage = null;
+    $scope.criteriaParentsDe = null;
+    $scope.criteriaEnfantsDeM = null;
+    $scope.criteriaEnfantsDeF = null;
+    $scope.criteriaNomClient = null;
     $scope.titleAddUpdate = null;
 
     // colonnes des résultats de la recherche
@@ -110,7 +114,7 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
         $scope.criteriaAffixe = null;
         $('.races-select').val('-1').trigger('change');
         $('.robes-select').val('-1').trigger('change');
-        $('input[type=checkbox]').iCheck('check');
+        $('.box-search-criterias input[type=checkbox]').iCheck('check');
         $scope.criteriaNaissanceDu = null;
         $scope.criteriaNaissanceAu = null;
         $scope.criteriaDecesDu = null;
@@ -118,6 +122,10 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
         $scope.criteriaPasseport = null;
         $scope.criteriaPuce = null;
         $scope.criteriaTatouage = null;
+        $scope.criteriaParentsDe = null;
+        $scope.criteriaEnfantsDeM = null;
+        $scope.criteriaEnfantsDeF = null;
+        $scope.criteriaNomClient = null;
     };
 
     // Click sur le bouton rechercher des critères de recherche
@@ -218,19 +226,40 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
         console.log('passeport=' + $scope.criteriaPasseport);
         console.log('puce=' + $scope.criteriaPuce);
         console.log('tatouage=' + $scope.criteriaTatouage);
+        console.log('parents de=' + $scope.criteriaParentsDe);
+        console.log('enfants de mâle=' + $scope.criteriaEnfantsDeM);
+        console.log('enfants de femelle=' + $scope.criteriaEnfantsDeF);
+        console.log('nom client=' + $scope.criteriaNomClient);
 
 
-        // chienFactory.getByCriteria(
-        //         $scope.criteriaNom,
-        //         $scope.criteriaAffixe
-        //     )
+        chienFactory.getByCriteria(
+            $scope.criteriaNom,
+            $scope.criteriaAffixe,
+            $scope.criteriaRace,
+            $scope.criteriaRobe,
+            $scope.criteriaSexe,
+            $scope.criteriaPresent,
+            $scope.criteriaProduit,
+            $scope.criteriaVivant,
+            $scope.criteriaNaissanceDu,
+            $scope.criteriaNaissanceAu,
+            $scope.criteriaDecesDu,
+            $scope.criteriaDecesAu,
+            $scope.criteriaPasseport,
+            $scope.criteriaPuce,
+            $scope.criteriaTatouage,
+            $scope.criteriaParentsDe,
+            $scope.criteriaEnfantsDeM,
+            $scope.criteriaEnfantsDeF,
+            $scope.criteriaNomClient
+        )
 
-        //     .success(function (chiens) {
-        //         $scope.listChiens(chiens);
-        //     })
-        //     .error(function (error) {
-        //         console.log("Erreur de la recherche de chiens");
-        //     });
+        .success(function(chiens) {
+                $scope.listChiens(chiens);
+            })
+            .error(function(error) {
+                console.log("Erreur de la recherche de chiens");
+            });
 
         $scope.scroll2Top('searchResultsDiv');
     };
