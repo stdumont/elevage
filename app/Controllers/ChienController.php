@@ -52,17 +52,6 @@ class ChienController extends Controller
     }
 
     /**
-     * Retourne les années de naissance (distinct) des chiens
-     * @return json les années de naissance
-     */
-    public function getDistinctBirthYear()
-    {
-        $result = DB::select('select * from chiens_distinct_annee_naissance');
-        $years = [];
-        return json_encode($years, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); 
-    }
-
-    /**
      * Retourne un chien sur base de son id
      * @return json chien
      */
@@ -72,6 +61,17 @@ class ChienController extends Controller
         $chien = Chien::find($id);
         return json_encode($chien, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     }
+
+    /**
+     * Retrouver le père/la mère du chien 'doggy'
+     * SELECT * FROM `chiens` as p LEFT JOIN `chiens` as c ON p.id = c.pere_id where c.pere_id is not null and c.nom = 'doggy'
+     * SELECT * FROM `chiens` as p LEFT JOIN `chiens` as c ON p.id = c.mere_id where c.mere_id is not null and c.nom = 'doggy'
+     * 
+     * Retrouver les enfants dont le père / la mère est 'doggy father' / 'doggy mother'
+     * SELECT * FROM `chiens` as c LEFT JOIN `chiens` as p ON c.pere_id = p.id where c.pere_id is not null and p.nom = 'doggy father'
+     * SELECT * FROM `chiens` as c LEFT JOIN `chiens` as p ON c.mere_id = p.id where c.mere_id is not null and p.nom = 'doggy mother'
+     */
+
 
     /**
      * Retourne une liste de chiens sur base de critères standard

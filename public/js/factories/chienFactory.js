@@ -24,11 +24,6 @@ angular.module('elevageApp')
             return $http.get(urlBase + 'get-count-by-client' + '/' + client_id);
         };
 
-        // renvoi des différentes années de naissance des chiens
-        chienFactory.getDistinctBirthYear = function() {
-            return $http.get(urlBase + 'get-distinct-birth-year');
-        };
-
         // renvoi d'un chien sur base de son id
         chienFactory.find = function(id) {
             return $http.get(urlBase + 'find' + '/' + id);

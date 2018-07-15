@@ -9,18 +9,21 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
     $scope.chiens = null;
     $scope.currentChien = null;
     $scope.searchResultsTitle = "Résultats de la recherche";
-    $scope.birthYears = null;
-    $scope.deathYears = null;
     $scope.criteriaNom = null;
     $scope.criteriaAffixe = null;
-    $scope.sexeM = 'true';
-    $scope.sexeF = true;
-    $scope.presentY = true;
-    $scope.presentN = true;
-    $scope.produitY = true;
-    $scope.produitN = true;
-    $scope.vivantY = true;
-    $scope.vivantN = true;
+    $scope.criteriaRace = null;
+    $scope.criteriaRobe = null;
+    $scope.criteriaSexe = null;
+    $scope.criteriaPresent = null;
+    $scope.criteriaProduit = null;
+    $scope.criteriaVivant = null;
+    $scope.criteriaNaissanceDu = null;
+    $scope.criteriaNaissanceAu = null;
+    $scope.criteriaDecesDu = null;
+    $scope.criteriaDecesAu = null;
+    $scope.criteriaPasseport = null;
+    $scope.criteriaPuce = null;
+    $scope.criteriaTatouage = null;
     $scope.titleAddUpdate = null;
 
     // colonnes des résultats de la recherche
@@ -105,6 +108,16 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
         // effacer les critères
         $scope.criteriaNom = null;
         $scope.criteriaAffixe = null;
+        $('.races-select').val('-1').trigger('change');
+        $('.robes-select').val('-1').trigger('change');
+        $('input[type=checkbox]').iCheck('check');
+        $scope.criteriaNaissanceDu = null;
+        $scope.criteriaNaissanceAu = null;
+        $scope.criteriaDecesDu = null;
+        $scope.criteriaDecesAu = null;
+        $scope.criteriaPasseport = null;
+        $scope.criteriaPuce = null;
+        $scope.criteriaTatouage = null;
     };
 
     // Click sur le bouton rechercher des critères de recherche
@@ -112,21 +125,99 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
         // on cache la box des critères
         // $(".box-search-criterias [data-widget='collapse']").click();
 
-        console.log('Sexe');
-        console.log($('#sexeM').iCheck('update')[0].checked);
-        console.log($('#sexeF').iCheck('update')[0].checked);
+        // Formattage des critères
+        var sexeM = $('#sexeM').iCheck('update')[0].checked;
+        var sexeF = $('#sexeF').iCheck('update')[0].checked;
+        if ((sexeM && sexeF) || (!sexeM && !sexeF)) {
+            $scope.criteriaSexe = null;
+        } else {
+            if (sexeM) {
+                $scope.criteriaSexe = 'M';
+            };
+            if (sexeF) {
+                $scope.criteriaSexe = 'F';
+            };
+        };
 
-        console.log('Présent');
-        console.log($('#presentY').iCheck('update')[0].checked);
-        console.log($('#presentN').iCheck('update')[0].checked);
+        var presentY = $('#presentY').iCheck('update')[0].checked;
+        var presentN = $('#presentN').iCheck('update')[0].checked;
+        if ((presentY && presentN) || (!presentY && !presentN)) {
+            $scope.criteriaPresent = null;
+        } else {
+            if (presentY) {
+                $scope.criteriaPresent = '1';
+            };
+            if (presentN) {
+                $scope.criteriaPresent = '0';
+            };
+        };
 
-        console.log('Produit');
-        console.log($('#produitY').iCheck('update')[0].checked);
-        console.log($('#produitN').iCheck('update')[0].checked);
+        var produitY = $('#produitY').iCheck('update')[0].checked;
+        var produitN = $('#produitN').iCheck('update')[0].checked;
+        if ((produitY && produitN) || (!produitY && !produitN)) {
+            $scope.criteriaProduit = null;
+        } else {
+            if (produitY) {
+                $scope.criteriaProduit = '1';
+            };
+            if (produitN) {
+                $scope.criteriaProduit = '0';
+            };
+        };
 
-        console.log('Etat');
-        console.log($('#vivantY').iCheck('update')[0].checked);
-        console.log($('#vivantN').iCheck('update')[0].checked);
+        var vivantY = $('#vivantY').iCheck('update')[0].checked;
+        var vivantN = $('#vivantN').iCheck('update')[0].checked;
+        if ((vivantY && vivantN) || (!vivantY && !vivantN)) {
+            $scope.criteriaVivant = null;
+        } else {
+            if (vivantY) {
+                $scope.criteriaVivant = '1';
+            };
+            if (vivantN) {
+                $scope.criteriaVivant = '0';
+            };
+        };
+
+        if (!$scope.criteriaNaissanceDu || $scope.criteriaNaissanceDu.length < 1) {
+            $scope.criteriaNaissanceDu = null;
+        } else {
+            $scope.criteriaNaissanceDu = $scope.toAMJ($scope.criteriaNaissanceDu);
+        };
+
+        if (!$scope.criteriaNaissanceAu || $scope.criteriaNaissanceAu.length < 1) {
+            $scope.criteriaNaissanceAu = null;
+        } else {
+            $scope.criteriaNaissanceAu = $scope.toAMJ($scope.criteriaNaissanceAu);
+        };
+
+        if (!$scope.criteriaDecesDu || $scope.criteriaDecesDu.length < 1) {
+            $scope.criteriaDecesDu = null;
+        } else {
+            $scope.criteriaDecesDu = $scope.toAMJ($scope.criteriaDecesDu);
+        };
+
+        if (!$scope.criteriaDecesAu || $scope.criteriaDecesAu.length < 1) {
+            $scope.criteriaDecesAu = null;
+        } else {
+            $scope.criteriaDecesAu = $scope.toAMJ($scope.criteriaDecesAu);
+        };
+
+
+        console.log('nom=' + $scope.criteriaNom);
+        console.log('affixe=' + $scope.criteriaAffixe);
+        console.log('id race=' + $scope.criteriaRace);
+        console.log('id robe=' + $scope.criteriaRobe);
+        console.log('sexe=' + $scope.criteriaSexe);
+        console.log('present=' + $scope.criteriaPresent);
+        console.log('produit=' + $scope.criteriaProduit);
+        console.log('vivant=' + $scope.criteriaVivant);
+        console.log('date naissance du=' + $scope.criteriaNaissanceDu);
+        console.log('date naissance au=' + $scope.criteriaNaissanceAu);
+        console.log('date deces du=' + $scope.criteriaDecesDu);
+        console.log('date deces au=' + $scope.criteriaDecesAu);
+        console.log('passeport=' + $scope.criteriaPasseport);
+        console.log('puce=' + $scope.criteriaPuce);
+        console.log('tatouage=' + $scope.criteriaTatouage);
 
 
         // chienFactory.getByCriteria(
@@ -157,6 +248,14 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
     $scope.toJMA = function(dateAMJ) {
         if (dateAMJ) {
             return moment(dateAMJ, 'YYYY-MM-DD').format('DD/MM/YYYY');
+        }
+        return '';
+    };
+
+    // Transformer une date DD/MM/YYYY en YYYY-MM-DD
+    $scope.toAMJ = function(dateJMA) {
+        if (dateJMA) {
+            return moment(dateJMA, 'DD/MM/YYYY').format('YYYY-MM-DD');
         }
         return '';
     };
@@ -236,7 +335,13 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
                 nom: "Toutes les races"
             };
             $scope.races.splice(0, 0, toutesRaces);
-            var selectRacesCallBack = function(id) {};
+            var selectRacesCallBack = function(id) {
+                if (id === -1) {
+                    $scope.criteriaRace = null;
+                } else {
+                    $scope.criteriaRace = id;
+                };
+            };
 
             // creer les objets UI et initialiser le select2
             var raceToSelect2 = function(race) {
@@ -248,7 +353,9 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
 
             setSelect2(".races-select", $scope.races, toutesRaces, raceToSelect2, $scope.select2Template, selectRacesCallBack);
 
-        }).error(function() {});
+        }).error(function() {
+            showMessageInfo("Erreur", "Impossible de récupérer la liste des races.");
+        });
     };
 
     // Lister les robes
@@ -261,7 +368,13 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
                 nom: "Toutes les robes"
             };
             $scope.robes.splice(0, 0, toutesRobes);
-            var selectRobesCallBack = function(id) {};
+            var selectRobesCallBack = function(id) {
+                if (id === -1) {
+                    $scope.criteriaRobe = null;
+                } else {
+                    $scope.criteriaRobe = id;
+                };
+            };
 
             // creer les objets UI et initialiser le select2
             var robeToSelect2 = function(robe) {
@@ -273,7 +386,9 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
 
             setSelect2(".robes-select", $scope.robes, toutesRobes, robeToSelect2, $scope.select2Template, selectRobesCallBack);
 
-        }).error(function() {});
+        }).error(function() {
+            showMessageInfo("Erreur", "Impossible de récupérer la liste des robes.");
+        });
     };
 
     // Lister les chiens
@@ -284,34 +399,6 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
         $scope.initTableChiens($scope.chiens);
         $scope.setListLoading(false);
 
-    };
-
-    // rechercher les différentes années de naissance des chiens
-    $scope.getDistinctBirthYear = function() {
-        emptySelect2(".naissance-annee-select");
-        $scope.birthYears = [];
-        chienFactory.getDistinctBirthYear()
-            .success(function(birthYears) {
-                $scope.birthYears = birthYears;
-                var toutesAnneesNaissance = {
-                    id: -1,
-                    nom: "Toutes les années"
-                };
-                $scope.birthYears.splice(0, 0, toutesAnneesNaissance);
-                var selectAnneesNaissanceCallBack = function(id) {};
-                var anneeNaissanceToSelect2 = function(anneeNaissance) {
-                    console.log(anneeNaissance);
-                    return {
-                        id: anneeNaissance.year,
-                        text: anneeNaissance.year
-                    };
-                };
-
-                setSelect2(".naissance-annee-select", $scope.birthYears, toutesAnneesNaissance, anneeNaissanceToSelect2, $scope.select2Template, selectAnneesNaissanceCallBack);
-
-            }).error(function(err) {
-                showMessageInfo("Erreur", "La recherche des années de naissance n'a pas fonctionné correctement.");
-            });
     };
 
     // ->Chiens : Appel REST vers Factory : créer ou mettre à jour un chien
@@ -408,7 +495,6 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
 
     $scope.listRaces();
     $scope.listRobes();
-    $scope.getDistinctBirthYear();
     //--------------------------------------------------------------------------
 
 
