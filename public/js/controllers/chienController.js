@@ -1,4 +1,4 @@
-angular.module('elevageApp').controller('chienController', ['$scope', '$route', '$http', 'chienFactory', 'raceFactory', 'robeFactory', 'NgTableParams', '$sce', function($scope, $route, $http, chienFactory, raceFactory, robeFactory, NgTableParams, $sce) {
+angular.module('elevageApp').controller('chienController', ['$scope', '$route', '$http', 'chienFactory', 'raceFactory', 'robeFactory', 'clientFactory', 'NgTableParams', '$sce', function($scope, $route, $http, chienFactory, raceFactory, robeFactory, clientFactory, NgTableParams, $sce) {
 
     // Mettre à jour le menu de navigation avec le lien courant.
     refreshCurrentLink($route.current.activeTab);
@@ -24,9 +24,6 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
     $scope.criteriaPasseport = null;
     $scope.criteriaPuce = null;
     $scope.criteriaTatouage = null;
-    $scope.criteriaParentsDe = null;
-    $scope.criteriaEnfantsDeM = null;
-    $scope.criteriaEnfantsDeF = null;
     $scope.criteriaNomClient = null;
     $scope.titleAddUpdate = null;
 
@@ -38,44 +35,56 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
             class: ''
         },
         {
-            title: 'Nom, prénom',
+            title: 'Présent',
             field: '',
             visible: true,
             class: ''
         },
         {
-            title: 'Chiens',
+            title: 'Produit',
             field: '',
             visible: true,
             class: ''
         },
         {
-            title: 'Téléphone',
+            title: 'Nom',
             field: '',
             visible: true,
             class: ''
         },
         {
-            title: 'E-mail',
+            title: 'Sexe',
             field: '',
             visible: true,
             class: ''
         },
         {
-            title: 'Code postal',
-            field: 'code_postal',
+            title: 'Race',
+            field: '',
             visible: true,
             class: ''
         },
         {
-            title: 'Localité',
-            field: 'localite',
+            title: 'Robe',
+            field: '',
             visible: true,
             class: ''
         },
         {
-            title: 'Pays',
-            field: 'pays',
+            title: 'Naissance',
+            field: '',
+            visible: true,
+            class: ''
+        },
+        {
+            title: 'Décès',
+            field: '',
+            visible: true,
+            class: ''
+        },
+        {
+            title: 'Client',
+            field: '',
             visible: true,
             class: ''
         },
@@ -87,12 +96,6 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
         },
         {
             title: 'Editer',
-            field: '',
-            visible: true,
-            class: ''
-        },
-        {
-            title: 'Suppr.',
             field: '',
             visible: true,
             class: ''
@@ -122,9 +125,6 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
         $scope.criteriaPasseport = null;
         $scope.criteriaPuce = null;
         $scope.criteriaTatouage = null;
-        $scope.criteriaParentsDe = null;
-        $scope.criteriaEnfantsDeM = null;
-        $scope.criteriaEnfantsDeF = null;
         $scope.criteriaNomClient = null;
     };
 
@@ -187,50 +187,30 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
         };
 
         if (!$scope.criteriaNaissanceDu || $scope.criteriaNaissanceDu.length < 1) {
-            $scope.criteriaNaissanceDu = null;
+            $scope.criteriaNaissanceDuAMJ = null;
         } else {
-            $scope.criteriaNaissanceDu = $scope.toAMJ($scope.criteriaNaissanceDu);
+            $scope.criteriaNaissanceDuAMJ = $scope.toAMJ($scope.criteriaNaissanceDu);
         };
 
         if (!$scope.criteriaNaissanceAu || $scope.criteriaNaissanceAu.length < 1) {
-            $scope.criteriaNaissanceAu = null;
+            $scope.criteriaNaissanceAuAMJ = null;
         } else {
-            $scope.criteriaNaissanceAu = $scope.toAMJ($scope.criteriaNaissanceAu);
+            $scope.criteriaNaissanceAuAMJ = $scope.toAMJ($scope.criteriaNaissanceAu);
         };
 
         if (!$scope.criteriaDecesDu || $scope.criteriaDecesDu.length < 1) {
-            $scope.criteriaDecesDu = null;
+            $scope.criteriaDecesDuAMJ = null;
         } else {
-            $scope.criteriaDecesDu = $scope.toAMJ($scope.criteriaDecesDu);
+            $scope.criteriaDecesDuAMJ = $scope.toAMJ($scope.criteriaDecesDu);
         };
 
         if (!$scope.criteriaDecesAu || $scope.criteriaDecesAu.length < 1) {
-            $scope.criteriaDecesAu = null;
+            $scope.criteriaDecesAuAMJ = null;
         } else {
-            $scope.criteriaDecesAu = $scope.toAMJ($scope.criteriaDecesAu);
+            $scope.criteriaDecesAuAMJ = $scope.toAMJ($scope.criteriaDecesAu);
         };
 
-
-        console.log('nom=' + $scope.criteriaNom);
-        console.log('affixe=' + $scope.criteriaAffixe);
-        console.log('id race=' + $scope.criteriaRace);
-        console.log('id robe=' + $scope.criteriaRobe);
-        console.log('sexe=' + $scope.criteriaSexe);
-        console.log('present=' + $scope.criteriaPresent);
-        console.log('produit=' + $scope.criteriaProduit);
-        console.log('vivant=' + $scope.criteriaVivant);
-        console.log('date naissance du=' + $scope.criteriaNaissanceDu);
-        console.log('date naissance au=' + $scope.criteriaNaissanceAu);
-        console.log('date deces du=' + $scope.criteriaDecesDu);
-        console.log('date deces au=' + $scope.criteriaDecesAu);
-        console.log('passeport=' + $scope.criteriaPasseport);
-        console.log('puce=' + $scope.criteriaPuce);
-        console.log('tatouage=' + $scope.criteriaTatouage);
-        console.log('parents de=' + $scope.criteriaParentsDe);
-        console.log('enfants de mâle=' + $scope.criteriaEnfantsDeM);
-        console.log('enfants de femelle=' + $scope.criteriaEnfantsDeF);
-        console.log('nom client=' + $scope.criteriaNomClient);
-
+        $scope.setListLoading(true);
 
         chienFactory.getByCriteria(
             $scope.criteriaNom,
@@ -241,24 +221,23 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
             $scope.criteriaPresent,
             $scope.criteriaProduit,
             $scope.criteriaVivant,
-            $scope.criteriaNaissanceDu,
-            $scope.criteriaNaissanceAu,
-            $scope.criteriaDecesDu,
-            $scope.criteriaDecesAu,
+            $scope.criteriaNaissanceDuAMJ,
+            $scope.criteriaNaissanceAuAMJ,
+            $scope.criteriaDecesDuAMJ,
+            $scope.criteriaDecesAuAMJ,
             $scope.criteriaPasseport,
             $scope.criteriaPuce,
             $scope.criteriaTatouage,
-            $scope.criteriaParentsDe,
-            $scope.criteriaEnfantsDeM,
-            $scope.criteriaEnfantsDeF,
             $scope.criteriaNomClient
         )
 
         .success(function(chiens) {
                 $scope.listChiens(chiens);
+                $scope.setListLoading(false);
             })
             .error(function(error) {
                 console.log("Erreur de la recherche de chiens");
+                $scope.setListLoading(false);
             });
 
         $scope.scroll2Top('searchResultsDiv');
@@ -342,11 +321,6 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
     $scope.onClickDelete = function(chien) {
         $scope.deleteChien(chien.id);
     };
-
-    // Fonction permettant de déterminer si un chien peut être supprimé (vrai s'il n'a pas de chiens)
-    $scope.isDeletable = function(chien) {
-        return chien.chiens.length === 0 ? true : false;
-    };
     //--------------------------------------------------------------------------
 
 
@@ -422,11 +396,24 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
 
     // Lister les chiens
     $scope.listChiens = function(chiens) {
-        $scope.setListLoading(true);
         $scope.searchResultsTitle = "Résultats de la recherche (" + chiens.length + ")";
         $scope.chiens = chiens;
+        for (chien of $scope.chiens) {
+            if (chien.client_id) {
+                clientFactory.find(chien.client_id)
+                    .success(function(client) {
+                        chien['client'] = client;
+                    })
+                    .error(function(error) {
+                        console.log("Erreur de la recherche du client");
+                        chien['client'] = { nom: '', prenom: '' };
+                    });
+            } else {
+                chien['client'] = { nom: '', prenom: '' };
+            };
+        }
         $scope.initTableChiens($scope.chiens);
-        $scope.setListLoading(false);
+
 
     };
 

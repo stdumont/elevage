@@ -44,7 +44,7 @@ class Chien extends Model
         'remarques',
     ];
 
-     protected $with = ['race', 'robe', 'pere', 'mere', 'client', 'portee', 'chiot'];
+     protected $with = ['race', 'robe', 'pere', 'mere', 'portee', 'chiot'];
      
     protected $casts = [
         'present' => 'boolean',

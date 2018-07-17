@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\Chien;
+use Illuminate\Support\Facades\DB as DB;
 
 class ChienController extends Controller
 {
@@ -88,24 +89,72 @@ class ChienController extends Controller
         $passeport = $request->getParam('passeport');
         $puce = $request->getParam('puce');
         $tatouage = $request->getParam('tatouage');
-        $parentsDe = $request->getParam('parentsDe');
-        $enfantsDeM = $request->getParam('enfantsDeM');
-        $enfantsDeF = $request->getParam('enfantsDeF');
         $nomClient = $request->getParam('nomClient');
 
         $searchByNom = (is_null($nom) || $nom == 'null') ? false : true;
         $searchByAffixe = (is_null($affixe) || $affixe == 'null') ? false : true;
         $searchByRace = (is_null($race) || $race == -1) ? false : true;
         $searchByRobe = (is_null($robe) || $robe == -1) ? false : true;
+        $searchBySexe = (is_null($sexe)) ? false : true;
+        $searchByPresent = (is_null($present)) ? false : true;
+        $searchByProduit = (is_null($produit)) ? false : true;
+        $searchByVivantY = (!is_null($vivant) && $vivant == '1') ? true : false;
+        $searchByVivantN = (!is_null($vivant) && $vivant == '0') ? true : false;
+        $searchByNaissanceDu = (is_null($naissanceDu)) ? false : true;
+        $searchByNaissanceAu = (is_null($naissanceAu)) ? false : true;
+        $searchByDecesDu = (is_null($decesDu)) ? false : true;
+        $searchByDecesAu = (is_null($decesAu)) ? false : true;
+        $searchByPasseport = (is_null($passeport)) ? false : true;
+        $searchByPuce = (is_null($puce)) ? false : true;
+        $searchByTatouage = (is_null($tatouage)) ? false : true;
+        $searchByNomClient = (is_null($nomClient)) ? false : true;
+
+        if($searchByNomClient){
+            $chiens = Chien::leftJoin('clients', function ($join) {
+                $join->on('chiens.client_id', '=', 'clients.id');
+            })
+                ->where('clients.nom', 'like', '%' . $nomClient . '%')
+                ->orderBy('nom', 'asc')
+                ->orderBy('affixe', 'asc')
+                ->get(['chiens.*']);
+            return json_encode($chiens, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        };
 
         $chiens = Chien::
             when($searchByNom, function ($query) use ($nom) {
             return $query->where('nom', 'like', '%' . $nom . '%');
         })->when($searchByAffixe, function ($query) use ($affixe) {
             return $query->where('affixe', 'like', '%' . $affixe . '%');
+        })->when($searchByRace, function ($query) use ($race) {
+            return $query->where('race_id', '=', $race);
+        })->when($searchByRobe, function ($query) use ($robe) {
+            return $query->where('robe_id', '=', $robe);
+        })->when($searchBySexe, function ($query) use ($sexe) {
+            return $query->where('sexe', '=', $sexe);
+        })->when($searchByPresent, function ($query) use ($present) {
+            return $query->where('present', '=', $present);
+        })->when($searchByProduit, function ($query) use ($produit) {
+            return $query->where('produit', '=', $produit);
+        })->when($searchByVivantY, function ($query) {
+            return $query->whereNull('date_deces');
+        })->when($searchByVivantN, function ($query) {
+            return $query->whereNotNull('date_deces');
+        })->when($searchByNaissanceDu, function ($query) use ($naissanceDu) {
+            return $query->where('date_naissance', '>=', $naissanceDu);
+        })->when($searchByNaissanceAu, function ($query) use ($naissanceAu) {
+            return $query->where('date_naissance', '<=', $naissanceAu);
+        })->when($searchByDecesDu, function ($query) use ($decesDu) {
+            return $query->where('date_deces', '>=', $decesDu);
+        })->when($searchByDecesAu, function ($query) use ($decesAu) {
+            return $query->where('date_deces', '<=', $decesAu);
+        })->when($searchByPasseport, function ($query) use ($passeport) {
+            return $query->where('passeport', 'like', '%' . $passeport . '%');
+        })->when($searchByPuce, function ($query) use ($puce) {
+            return $query->where('puce', 'like', '%' . $puce . '%');
+        })->when($searchByTatouage, function ($query) use ($tatouage) {
+            return $query->where('tatouage', 'like', '%' . $tatouage . '%');
         })
-            ->orderBy('nom', 'asc')->orderBy('affixe', 'asc')
-            ->get();
+        ->orderBy('nom', 'asc')->orderBy('affixe', 'asc')->get();
 
         return json_encode($chiens, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     }

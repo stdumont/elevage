@@ -54,9 +54,6 @@
                                 <a href="#tab-identifications">Identifications</a>
                             </li>
                             <li>
-                                <a href="#tab-parentes">Parents-Enfants</a>
-                            </li>
-                            <li>
                                 <a href="#tab-clients">Clients</a>
                             </li>
                         </ul>
@@ -217,14 +214,6 @@
                                 <div class="col-md-6">
 
                                     <div class="form-group">
-                                        <label for="criteriaPasseport" class="col-md-3 control-label">Passeport</label>
-                                        <div class="col-md-9">
-                                            <input type="text" class="form-control" id="criteriaPasseport" ng-model="criteriaPasseport" empty-to-null>
-                                        </div>
-                                    </div>
-                                    <!-- .form-group (passeport) -->
-
-                                    <div class="form-group">
                                         <label for="criteriaPuce" class="col-md-3 control-label">Puce</label>
                                         <div class="col-md-9">
                                             <input type="text" class="form-control" id="criteriaPuce" ng-model="criteriaPuce" empty-to-null>
@@ -233,54 +222,20 @@
                                     <!-- .form-group (puce) -->
 
                                     <div class="form-group">
+                                        <label for="criteriaPasseport" class="col-md-3 control-label">Passeport</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" id="criteriaPasseport" ng-model="criteriaPasseport" empty-to-null>
+                                        </div>
+                                    </div>
+                                    <!-- .form-group (passeport) -->
+
+                                    <div class="form-group">
                                         <label for="criteriaTatouage" class="col-md-3 control-label">Tatouage</label>
                                         <div class="col-md-9">
                                             <input type="text" class="form-control" id="criteriaTatouage" ng-model="criteriaTatouage" empty-to-null>
                                         </div>
                                     </div>
                                     <!-- .form-group (tatouage) -->
-                                </div>
-                            </div>
-
-                            <!--                        -->
-                            <!-- Recherche par parentés -->
-                            <!--                        -->
-                            <div class="row" id="tab-parentes">
-                                <div class="col-md-6">
-
-                                    <div class="form-group">
-                                        <label for="criteriaParentsDe" class="col-md-3 control-label">Parents de</label>
-                                        <div class="col-md-9">
-                                            <div class="input-group">
-                                                <span class="input-group-addon"><i class="fa fa-paw"></i></span>
-                                                <input type="text" class="form-control" id="criteriaParentsDe" ng-model="criteriaParentsDe" empty-to-null>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- .form-group (parents de) -->
-
-                                    <div class="form-group">
-                                        <label for="criteriaEnfantsDeM" class="col-md-3 control-label">Enfants de</label>
-                                        <div class="col-md-9">
-                                            <div class="input-group">
-                                                <span class="input-group-addon"><i class="fa fa-mars"></i></span>
-                                                <input type="text" class="form-control" id="criteriaEnfantsDeM" ng-model="criteriaEnfantsDeM" empty-to-null>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- .form-group (enfants de mâle) -->
-
-                                    <div class="form-group">
-                                        <label for="criteriaEnfantsDeF" class="col-md-3 control-label">Enfants de</label>
-                                        <div class="col-md-9">
-                                            <div class="input-group">
-                                                <span class="input-group-addon"><i class="fa fa-venus"></i></span>
-                                                <input type="text" class="form-control" id="criteriaEnfantsDeF" ng-model="criteriaEnfantsDeF" empty-to-null>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- .form-group (enfants de femelle) -->
-
                                 </div>
                             </div>
 
@@ -299,30 +254,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- .form-group (parents de) -->
-
-                                    <div class="form-group">
-                                        <label for="criteriaEnfantsDeM" class="col-md-3 control-label">Enfants de</label>
-                                        <div class="col-md-9">
-                                            <div class="input-group">
-                                                <span class="input-group-addon"><i class="fa fa-mars"></i></span>
-                                                <input type="text" class="form-control" id="criteriaEnfantsDeM" ng-model="criteriaEnfantsDeM" empty-to-null>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- .form-group (enfants de mâle) -->
-
-                                    <div class="form-group">
-                                        <label for="criteriaEnfantsDeF" class="col-md-3 control-label">Enfants de</label>
-                                        <div class="col-md-9">
-                                            <div class="input-group">
-                                                <span class="input-group-addon"><i class="fa fa-venus"></i></span>
-                                                <input type="text" class="form-control" id="criteriaEnfantsDeF" ng-model="criteriaEnfantsDeF" empty-to-null>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- .form-group (enfants de femelle) -->
-
+                                    <!-- .form-group (clients) -->
                                 </div>
                             </div>
                         </form>
@@ -372,7 +304,7 @@
                     <!--                    -->
                     <!-- Table de Résultats -->
                     <!--                    -->
-                    <script id="client_ng_header" type="text/ng-template">
+                    <script id="chien_ng_header" type="text/ng-template">
                         <tr>
                             <th ng-repeat="column in columns" ng-show="column.visible" class="text-center" style="display: table-cell;">
                                 {{column.title}}
@@ -380,57 +312,56 @@
                         </tr>
                     </script>
 
-                    <table ng-table="tableParams" template-header="client_ng_header" class="table table-condensed table-bordered table-striped table-with-tooltip">
-                        <tr ng-repeat="client in $data">
+                    <table ng-table="tableParams" template-header="chien_ng_header" class="table table-condensed table-bordered table-striped table-with-tooltip">
+                        <tr ng-repeat="chien in $data">
                             <td class="text-center">
-                                <span ng-bind="client.id"></span>
-                            </td>
-                            <td style="width: 25%;">
-                                <span ng-bind="client.nom"></span>&nbsp;
-                                <span ng-bind="client.prenom"></span>
-                            </td>
-                            <td class="text-center" style="width: 15%;">
-                                <span ng-bind="client.chiens.length===0 ? '' : client.chiens.length"></span> &nbsp;&nbsp;
-                                <button class="btn btn-info btn-sm" title="Voir ses chiens" ng-click="onClickViewDogs(client)" ng-show="!isDeletable(client)">
-                                    <i class="fa fa-paw"></i>
-                                </button>
-                            </td>
-                            <td>
-                                <span ng-bind="client.tel1"></span>&nbsp;
-                                <span ng-bind="client.tel2">
-                            </td>
-                            <td>
-                                <a href="mailto:{{client.email}}">
-                                    <span ng-bind="client.email"></span>
-                                </a>
+                                <span ng-bind="chien.id"></span>
                             </td>
                             <td class="text-center">
-                                <span ng-bind="client.code_postal"></span>
-                            </td>
-                            <td>
-                                <span ng-bind="client.localite"></span>
-                            </td>
-                            <td>
-                                <span ng-bind="client.pays"></span>
+                                <i class="text-success fa fa-square" ng-show="chien.present == 1"></i>
+                                <i class="text-gray fa fa-square" ng-show="chien.present == 0"></i>
                             </td>
                             <td class="text-center">
+                                <i class="text-success fa fa-wrench" ng-show="chien.produit == 1"></i>
+                                <i class="text-gray fa fa-wrench" ng-show="chien.produit == 0"></i>
+                            </td>
+                            <td style="width: 20%;">
+                                <b>
+                                    <span ng-bind="chien.nom"></span>&nbsp;
+                                    <span ng-bind="chien.affixe"></span>
+                                </b>
+                            </td>
+                            <td class="text-center">
+                                <span ng-show="chien.sexe == 'M'"><i class="fa fa-mars"></i></span>
+                                <span ng-show="chien.sexe == 'F'"><i class="fa fa-venus"></i></span>
+                            </td>
+                            <td class="text-center">
+                                <span ng-bind="chien.race.nom"></span>
+                            </td>
+                            <td class="text-center">
+                                <span ng-bind="chien.robe.nom"></span>
+                            </td>
+                            <td class="text-center">
+                                <span ng-bind="toJMA(chien.date_naissance)"></span>
+                            </td>
+                            <td class="text-center">
+                                <span ng-bind="toJMA(chien.date_deces)"></span>
+                            </td>
+                            <td style="width: 15%;">
+                                <span ng-bind="chien.client.nom"></span>&nbsp;
+                                <span ng-bind="chien.client.prenom"></span>
+                            </td>
+                            <td class=" text-center">
                                 <div class="divButton" style="width:40px;padding-right:5px;">
-                                    <button class="btn btn-default btn-sm" title="Voir les données de ce client" ng-click="onClickView(client)">
+                                    <button class="btn btn-default btn-sm" title="Voir les données de ce chien" ng-click="onClickView(chien)">
                                         <span class="glyphicon glyphicon-eye-open"></span>
                                     </button>
                                 </div>
                             </td>
                             <td class="text-center">
                                 <div class="divButton" style="width:40px;padding-right:5px;">
-                                    <button class="btn btn-default btn-sm" title="Modifier ce client" ng-click="onClickEdit(client)">
+                                    <button class="btn btn-default btn-sm" title="Modifier ce chien" ng-click="onClickEdit(chien)">
                                         <span class="glyphicon glyphicon-pencil"></span>
-                                    </button>
-                                </div>
-                            </td>
-                            <td class="text-center">
-                                <div class="divButton" style="width:40px;padding-right:5px;">
-                                    <button class="btn btn-danger btn-sm" title="Supprimer ce client" ng-confirm-click="Voulez-vous supprimer ce client ?" confirmed-click="onClickDelete(client)" ng-show="isDeletable(client)">
-                                        <span class="glyphicon glyphicon-trash"></span>
                                     </button>
                                 </div>
                             </td>
@@ -439,7 +370,7 @@
                 </div>
                 <div class="box-footer clearfix">
                     <button class="btn btn-info pull-right" ng-click="onClickAdd()">
-                        <i class="fa fa-plus"></i>&nbsp;Ajouter un client
+                        <i class="fa fa-plus"></i>&nbsp;Ajouter un chien
                     </button>
                 </div>
             </div>
@@ -447,7 +378,7 @@
     </div>
 
     <!--                                                -->
-    <!-- Modale de visualisation des données du client  -->
+    <!-- Modale de visualisation des données du chien  -->
     <!--                                                -->
     <div class="modal" role="dialog" id="modalView">
         <div class="modal-dialog modal-lg" role="document">
