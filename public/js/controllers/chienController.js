@@ -25,7 +25,14 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
     $scope.criteriaPuce = null;
     $scope.criteriaTatouage = null;
     $scope.criteriaNomClient = null;
-    $scope.titleAddUpdate = null;
+    $scope.action = null;
+    $scope.actionView = 'View';
+    $scope.actionAdd = 'Add';
+    $scope.actionUpdate = 'Update';
+    $scope.title = null;
+    $scope.titleView = null;
+    $scope.titleAdd = 'Ajouter un nouveau chien';
+    $scope.titleUpdate = 'Modifier un chien existant';
 
     // colonnes des résultats de la recherche
     $scope.columns = [{
@@ -277,49 +284,49 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
     // Click sur le bouton permettant de voir toutes les données du chien
     $scope.onClickView = function(chien) {
         $scope.currentChien = chien;
-        $('#modalView').modal();
-    };
-
-    // Click sur le bouton permettant de voir les chiens du chien
-    $scope.onClickViewDogs = function(chien) {
-        $scope.currentChien = chien;
-        $('#modalViewDogs').modal();
+        $scope.action = $scope.actionView;
+        $scope.titleView = chien.nom + ' ' + chien.affixe;
+        $scope.title = $scope.titleView;
+        $('#modalVAU').modal();
     };
 
     // Click sur le bouton d'ajout d'un chien
     $scope.onClickAdd = function() {
-        $scope.titleAddUpdate = 'Ajout d\'un nouveau chien';
+        $scope.action = $scope.actionAdd;
+        $scope.title = $scope.titleAdd;
         $('#nomFormGroup').removeClass('has-error');
         $('#nomHelpBlock').addClass('hide');
         $scope.currentChien = {
             id: null,
             nom: null,
-            prenom: null,
-            rue: null,
-            numero: null,
-            code_postal: null,
-            localite: null,
-            pays: 'Belgique',
-            tel1: null,
-            tel2: null,
-            email: null,
+            affixe: null,
+            race_id: null,
+            robe_id: null,
+            date_naissance: null,
+            date_deces: null,
+            pere_id: null,
+            mere_id: null,
+            puce: null,
+            passeport: null,
+            tatouage: null,
+            client_id: null,
+            portee_id: null,
+            chiot_id: null,
+            present: null,
+            produit: null,
             remarques: null,
         };
-        $('#modalAddUpdate').modal();
+        $('#modalVAU').modal();
     };
 
     // Click sur le bouton d'édition d'un élément du tableau
     $scope.onClickEdit = function(chien) {
-        $scope.titleAddUpdate = 'Mise à jour d\'un chien';
+        $scope.action = $scope.actionUpdate;
+        $scope.title = $scope.titleUpdate;
         $scope.currentChien = chien;
         $('#nomFormGroup').removeClass('has-error');
         $('#nomHelpBlock').addClass('hide');
-        $('#modalAddUpdate').modal();
-    };
-
-    // Click sur le bouton suppression d'un élément du tableau
-    $scope.onClickDelete = function(chien) {
-        $scope.deleteChien(chien.id);
+        $('#modalVAU').modal();
     };
     //--------------------------------------------------------------------------
 

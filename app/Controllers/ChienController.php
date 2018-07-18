@@ -3,7 +3,6 @@
 namespace App\Controllers;
 
 use App\Models\Chien;
-use Illuminate\Support\Facades\DB as DB;
 
 class ChienController extends Controller
 {
@@ -63,6 +62,44 @@ class ChienController extends Controller
     }
 
     /**
+     * Retourne les chiens mâles encore vivants (dropdown des pères)
+     * @return json liste de chiens mâles vivants
+     */
+    public function getMalesVivants($request, $response, $args)
+    {
+        $datePlafond = date("Y-m-d", strtotime("-420 days"));
+        $chiens = Chien::
+            where('sexe', 'M')
+            ->where(function($query) use ($datePlafond) {
+                $query->where('date_naissance', '<=', $datePlafond)->orWhereNull('date_naissance');
+            })
+            ->whereNull('date_deces')
+            ->orderBy('nom', 'asc')
+            ->orderBy('affixe', 'asc')
+            ->get();
+        return json_encode($chiens, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    }
+
+    /**
+     * Retourne les chiens femelles encore vivantes (dropdown des mères)
+     * @return json liste de chiens femelles vivantes
+     */
+    public function getFemellesVivantes($request, $response, $args)
+    {
+        $datePlafond = date("Y-m-d", strtotime("-420 days"));
+        $chiens = Chien::
+            where('sexe', 'F')
+            ->where(function($query) use ($datePlafond) {
+                $query->where('date_naissance', '<=', $datePlafond)->orWhereNull('date_naissance');
+            })
+            ->whereNull('date_deces')
+            ->orderBy('nom', 'asc')
+            ->orderBy('affixe', 'asc')
+            ->get();
+        return json_encode($chiens, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    }
+
+    /**
      * Retrouver le père/la mère du chien 'doggy'
      * SELECT * FROM `chiens` as p LEFT JOIN `chiens` as c ON p.id = c.pere_id where c.pere_id is not null and c.nom = 'doggy'
      * SELECT * FROM `chiens` as p LEFT JOIN `chiens` as c ON p.id = c.mere_id where c.mere_id is not null and c.nom = 'doggy'
@@ -109,7 +146,7 @@ class ChienController extends Controller
         $searchByTatouage = (is_null($tatouage)) ? false : true;
         $searchByNomClient = (is_null($nomClient)) ? false : true;
 
-        if($searchByNomClient){
+        if ($searchByNomClient) {
             $chiens = Chien::leftJoin('clients', function ($join) {
                 $join->on('chiens.client_id', '=', 'clients.id');
             })
@@ -154,7 +191,7 @@ class ChienController extends Controller
         })->when($searchByTatouage, function ($query) use ($tatouage) {
             return $query->where('tatouage', 'like', '%' . $tatouage . '%');
         })
-        ->orderBy('nom', 'asc')->orderBy('affixe', 'asc')->get();
+            ->orderBy('nom', 'asc')->orderBy('affixe', 'asc')->get();
 
         return json_encode($chiens, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     }
