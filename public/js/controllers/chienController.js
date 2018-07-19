@@ -30,7 +30,7 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
     $scope.actionAdd = 'Add';
     $scope.actionUpdate = 'Update';
     $scope.title = null;
-    $scope.titleView = null;
+    $scope.titleView = 'Visualiser les données d\'un chien';
     $scope.titleAdd = 'Ajouter un nouveau chien';
     $scope.titleUpdate = 'Modifier un chien existant';
 
@@ -285,7 +285,6 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
     $scope.onClickView = function(chien) {
         $scope.currentChien = chien;
         $scope.action = $scope.actionView;
-        $scope.titleView = chien.nom + ' ' + chien.affixe;
         $scope.title = $scope.titleView;
         $('#modalVAU').modal();
     };
@@ -504,7 +503,7 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
     //--------------------------------------------------------------------------
     // MAIN
     //--------------------------------------------------------------------------
-    $("#tabs").tabs();
+    $(".tabs").tabs();
     $('input[type=checkbox]').iCheck({
         checkboxClass: 'icheckbox_flat-blue'
     });
