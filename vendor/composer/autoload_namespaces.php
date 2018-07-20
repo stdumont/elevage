@@ -6,6 +6,11 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'VersionControl' => array($vendorDir . '/pear/versioncontrol_git'),
     'Twig_' => array($vendorDir . '/twig/twig/lib'),
     'Pimple' => array($vendorDir . '/pimple/pimple/src'),
+    'PEAR' => array($vendorDir . '/pear/pear_exception'),
+    'Console' => array($vendorDir . '/pear/console_getopt'),
+    'Archive_Tar' => array($vendorDir . '/pear/archive_tar'),
+    '' => array($vendorDir . '/pear/pear-core-minimal/src'),
 );
