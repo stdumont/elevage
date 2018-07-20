@@ -423,9 +423,9 @@
                                     <!--   N O M   -->
                                     <!-- ========= -->
                                     <div class="form-group">
-                                        <label for="inputNom" class="col-md-3 control-label">Nom</label>
+                                        <label class="col-md-3 control-label">Nom *</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" id="inputNom" ng-model="currentChien.nom" ng-readonly="action == actionView" empty-to-null>
+                                            <input type="text" class="form-control" id="inputNom" ng-model="currentChien.nom" empty-to-null>
                                         </div>
                                     </div>
 
@@ -433,19 +433,29 @@
                                     <!--   A F F I X E   -->
                                     <!-- =============== -->
                                     <div class="form-group">
-                                        <label for="inputAffixe" class="col-md-3 control-label">Affixe</label>
+                                        <label class="col-md-3 control-label">Affixe</label>
                                         <div class="col-md-9">
-                                            <input type="text" class="form-control" id="inputAffixe" ng-model="currentChien.affixe" ng-readonly="action == actionView" empty-to-null>
+                                            <input type="text" class="form-control" id="inputAffixe" ng-model="currentChien.affixe" empty-to-null>
                                         </div>
                                     </div>
 
                                     <!-- =========== -->
-                                    <!--   S E X E   -->
+                                    <!--   R A C E   -->
                                     <!-- =========== -->
                                     <div class="form-group">
-                                        <label for="inputSexe" class="col-md-3 control-label">Sexe</label>
-                                        <div class="col-md-3">
-                                            <input type="text" class="form-control" id="inputSexe" ng-model="currentChien.sexe" ng-readonly="action == actionView" empty-to-null>
+                                        <label class="col-md-3 control-label">Race *</label>
+                                        <div class="col-md-9">
+                                            <select class="races-select-VAU" style="width:100%;"></select>
+                                        </div>
+                                    </div>
+
+                                    <!-- =========== -->
+                                    <!--   R O B E   -->
+                                    <!-- =========== -->
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Robe</label>
+                                        <div class="col-md-9">
+                                            <select class="robes-select-VAU" style="width:100%;"></select>
                                         </div>
                                     </div>
 
@@ -453,6 +463,58 @@
                                 <!-- .col-md-6 -->
 
                                 <div class="col-md-6">
+
+                                    <!-- =========== -->
+                                    <!--   S E X E   -->
+                                    <!-- =========== -->
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Sexe *</label>
+                                        <div class="col-md-3 checkbox checkbox-primary">
+                                            <input type="checkbox" id="inputSexeM"> Mâle
+                                        </div>
+                                        <div class="col-md-3 checkbox checkbox-primary">
+                                            <input type="checkbox" id="inputSexeF"> Femelle
+                                        </div>
+                                    </div>
+
+                                    <!-- =================== -->
+                                    <!--   P R E S E N C E   -->
+                                    <!-- =================== -->
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Présent *</label>
+                                        <div class="col-md-3 checkbox checkbox-primary">
+                                            <input type="checkbox" id="inputPresentY"> Oui
+                                        </div>
+                                        <div class="col-md-3 checkbox checkbox-primary">
+                                            <input type="checkbox" id="inputPresentN"> Non
+                                        </div>
+                                    </div>
+
+                                    <!-- ======================= -->
+                                    <!--   P R O D U C T I O N   -->
+                                    <!-- ======================= -->
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Produit *</label>
+                                        <div class="col-md-3 checkbox checkbox-primary">
+                                            <input type="checkbox" id="inputProduitY"> Oui
+                                        </div>
+                                        <div class="col-md-3 checkbox checkbox-primary">
+                                            <input type="checkbox" id="inputProduitN"> Non
+                                        </div>
+                                    </div>
+
+                                    <!-- =========== -->
+                                    <!--   E T A T   -->
+                                    <!-- =========== -->
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Etat</label>
+                                        <div class="col-md-3 checkbox checkbox-primary">
+                                            <input type="checkbox" id="inputVivantY"> Vivant
+                                        </div>
+                                        <div class="col-md-3 checkbox checkbox-primary">
+                                            <input type="checkbox" id="inputVivantN"> Décédé
+                                        </div>
+                                    </div>
 
                                 </div>
                                 <!-- .col-md-6 -->
