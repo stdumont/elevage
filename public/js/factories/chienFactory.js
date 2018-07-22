@@ -45,6 +45,16 @@ angular.module('elevageApp')
             });
         };
 
+        // renvoi la liste des mâles vivants
+        chienFactory.getMalesVivants = function() {
+            return $http.get(urlBase + 'get-males-vivants');
+        };
+
+        // renvoi la liste des femelles vivantes
+        chienFactory.getFemellesVivantes = function() {
+            return $http.get(urlBase + 'get-femelles-vivantes');
+        };
+
         // renvoi le nombre de chiens
         chienFactory.count = function() {
             return $http.get(urlBase + 'get-count');

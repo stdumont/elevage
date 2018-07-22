@@ -352,6 +352,8 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
             remarques: null,
         };
         $('.robes-select-VAU').select2('val', -1);
+        $('.peres-select-VAU').select2('val', -1);
+        $('.meres-select-VAU').select2('val', -1);
         $('#modalVAU').modal();
     };
 
@@ -400,14 +402,24 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
         if ($scope.currentChien.date_deces) {
             $('#inputVivantN').iCheck('check');
         };
-        $('.races-select-VAU').select2('val', $scope.currentChien.race.id);
-        if ($scope.currentChien.robe.id) {
-            $('.robes-select-VAU').select2('val', $scope.currentChien.robe.id);
+        $('.races-select-VAU').select2('val', $scope.currentChien.race_id);
+        if ($scope.currentChien.robe_id) {
+            $('.robes-select-VAU').select2('val', $scope.currentChien.robe_id);
         } else {
             $('.robes-select-VAU').select2('val', -1);
         };
         $scope.currentChien.date_naissance = $scope.toJMA($scope.currentChien.date_naissance);
         $scope.currentChien.date_deces = $scope.toJMA($scope.currentChien.date_deces);
+        if ($scope.currentChien.pere_id) {
+            $('.peres-select-VAU').select2('val', $scope.currentChien.pere_id);
+        } else {
+            $('.peres-select-VAU').select2('val', -1);
+        };
+        if ($scope.currentChien.mere_id) {
+            $('.meres-select-VAU').select2('val', $scope.currentChien.mere_id);
+        } else {
+            $('.meres-select-VAU').select2('val', -1);
+        };
 
     };
     //--------------------------------------------------------------------------
@@ -514,7 +526,7 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
             $scope.robesVAU = robes;
             var robeInconnue = {
                 id: -1,
-                nom: "Robe inconnue"
+                nom: "Inconnue"
             };
             $scope.robesVAU.splice(0, 0, robeInconnue);
             var selectRobesVAUCallBack = function(id) {
@@ -540,6 +552,78 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
 
         }).error(function() {
             showMessageInfo("Erreur", "Impossible de récupérer la liste des robes (VAU).");
+        });
+    };
+
+    // Lister les pères
+    $scope.listPeresVAU = function() {
+        emptySelect2(".peres-select-VAU");
+        chienFactory.getMalesVivants().success(function(peres) {
+            $scope.peresVAU = peres;
+            var pereInconnu = {
+                id: -1,
+                nom: "Inconnu"
+            };
+            $scope.peresVAU.splice(0, 0, pereInconnu);
+            var selectPeresVAUCallBack = function(id) {
+                if ($scope.currentChien) {
+                    if (id == -1) {
+                        $scope.currentChien.pere_id = null;
+                    } else {
+                        $scope.currentChien.pere_id = id;
+                    };
+                };
+            };
+
+            // creer les objets UI et initialiser le select2
+            var pereVAUToSelect2 = function(pere) {
+                return {
+                    id: pere.id,
+                    text: pere.nom + ' ' + (pere.affixe ? pere.affixe : '')
+                };
+            };
+
+            setSelect2(".peres-select-VAU", $scope.peresVAU, pereInconnu, pereVAUToSelect2, $scope.select2Template, selectPeresVAUCallBack);
+
+
+        }).error(function() {
+            showMessageInfo("Erreur", "Impossible de récupérer la liste des pères (VAU).");
+        });
+    };
+
+    // Lister les mères
+    $scope.listMeresVAU = function() {
+        emptySelect2(".meres-select-VAU");
+        chienFactory.getFemellesVivantes().success(function(meres) {
+            $scope.meresVAU = meres;
+            var mereInconnue = {
+                id: -1,
+                nom: "Inconnue"
+            };
+            $scope.meresVAU.splice(0, 0, mereInconnue);
+            var selectMeresVAUCallBack = function(id) {
+                if ($scope.currentChien) {
+                    if (id == -1) {
+                        $scope.currentChien.mere_id = null;
+                    } else {
+                        $scope.currentChien.mere_id = id;
+                    };
+                };
+            };
+
+            // creer les objets UI et initialiser le select2
+            var mereVAUToSelect2 = function(mere) {
+                return {
+                    id: mere.id,
+                    text: mere.nom + ' ' + (mere.affixe ? mere.affixe : '')
+                };
+            };
+
+            setSelect2(".meres-select-VAU", $scope.meresVAU, mereInconnue, mereVAUToSelect2, $scope.select2Template, selectMeresVAUCallBack);
+
+
+        }).error(function() {
+            showMessageInfo("Erreur", "Impossible de récupérer la liste des pères (VAU).");
         });
     };
 
@@ -668,6 +752,8 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
     $scope.listRobes();
     $scope.listRacesVAU();
     $scope.listRobesVAU();
+    $scope.listPeresVAU();
+    $scope.listMeresVAU();
     //--------------------------------------------------------------------------
 
 

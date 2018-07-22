@@ -67,13 +67,16 @@ class ChienController extends Controller
      */
     public function getMalesVivants($request, $response, $args)
     {
-        $datePlafond = date("Y-m-d", strtotime("-420 days"));
+        $datePlafond = date("Y-m-d", strtotime("-14 months"));
+        $datePlancher = date("Y-m-d", strtotime("-16 years"));
         $chiens = Chien::
             where('sexe', 'M')
-            ->where(function($query) use ($datePlafond) {
-                $query->where('date_naissance', '<=', $datePlafond)->orWhereNull('date_naissance');
+            /*
+            ->where(function($query) use ($datePlancher, $datePlafond) {
+                $query->whereBetween('date_naissance', [$datePlancher, $datePlafond])->orWhereNull('date_naissance');
             })
             ->whereNull('date_deces')
+            */
             ->orderBy('nom', 'asc')
             ->orderBy('affixe', 'asc')
             ->get();
@@ -86,13 +89,16 @@ class ChienController extends Controller
      */
     public function getFemellesVivantes($request, $response, $args)
     {
-        $datePlafond = date("Y-m-d", strtotime("-420 days"));
+        $datePlafond = date("Y-m-d", strtotime("-14 months"));
+        $datePlancher = date("Y-m-d", strtotime("-16 years"));
         $chiens = Chien::
             where('sexe', 'F')
-            ->where(function($query) use ($datePlafond) {
-                $query->where('date_naissance', '<=', $datePlafond)->orWhereNull('date_naissance');
+            /*
+            ->where(function($query) use ($datePlancher, $datePlafond) {
+                $query->whereBetween('date_naissance', [$datePlancher, $datePlafond])->orWhereNull('date_naissance');
             })
             ->whereNull('date_deces')
+            */
             ->orderBy('nom', 'asc')
             ->orderBy('affixe', 'asc')
             ->get();
