@@ -113,23 +113,23 @@
                                     <!-- .form-group (sexe) -->
 
                                     <div class="form-group">
-                                        <label for="criteriaPresent" class="col-md-3 control-label">Présence</label>
+                                        <label for="criteriaPresent" class="col-md-3 control-label">Présent</label>
                                         <div class="col-md-3 checkbox checkbox-primary">
-                                            <input type="checkbox" id="presentY"> Présent
+                                            <input type="checkbox" id="presentY"> Oui
                                         </div>
                                         <div class="col-md-3 checkbox checkbox-primary">
-                                            <input type="checkbox" id="presentN"> Absent
+                                            <input type="checkbox" id="presentN"> Non
                                         </div>
                                     </div>
                                     <!-- .form-group (présence) -->
 
                                     <div class="form-group">
-                                        <label class="col-md-3 control-label">Production</label>
+                                        <label class="col-md-3 control-label">Produit</label>
                                         <div class="col-md-3 checkbox checkbox-primary">
-                                            <input type="checkbox" id="produitY"> Produit
+                                            <input type="checkbox" id="produitY"> Oui
                                         </div>
                                         <div class="col-md-3 checkbox checkbox-primary">
-                                            <input type="checkbox" id="produitN"> Non produit
+                                            <input type="checkbox" id="produitN"> Non
                                         </div>
                                     </div>
                                     <!-- .form-group (production) -->
@@ -320,9 +320,7 @@
                             </td>
                             <td class="text-center">
                                 <i class="text-primary fa fa-home" ng-show="chien.present == 1"></i>
-                                <i class="text-gray fa fa-home" ng-show="chien.present == 0"></i>
-                            </td>
-                            <td class="text-center">
+                                <i class="text-gray fa fa-home" ng-show="chien.present == 0"></i> &nbsp;&nbsp;&nbsp;
                                 <i class="text-success fa fa-wrench" ng-show="chien.produit == 1"></i>
                                 <i class="text-gray fa fa-wrench" ng-show="chien.produit == 0"></i>
                             </td>
@@ -532,6 +530,72 @@
                             <!--   V I E                     -->
                             <!-- =========================== -->
                             <div class="row" id="tab-vie">
+                                <div class="col-md-6">
+                                    <div class="box box-info box-naissance">
+                                        <div class="box-header with-border">
+                                            <h4 class="box-title">
+                                                Naissance
+                                            </h4>
+                                        </div>
+                                        <!-- .box-header -->
+
+                                        <!-- =============================== -->
+                                        <!--   D A T E   N A I S S A N C E   -->
+                                        <!-- =============================== -->
+                                        <div class="box-body">
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label">Le</label>
+                                                <div class="col-md-9">
+                                                    <component-datepicker ng-model="currentChien.date_naissance" style="width:100%;" empty-to-null />
+                                                </div>
+                                            </div>
+
+                                            <!-- ================================= -->
+                                            <!--   A G E   A U J O U R D ' H U I   -->
+                                            <!-- ================================= -->
+                                            <div class="form-group" ng-show="!currentChien.date_deces">
+                                                <label class="col-md-3 control-label">Age</label>
+                                                <div class="col-md-9">
+                                                    <textarea type="text" class="form-control" ng-bind="ageToday()" rows="1" disabled></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="box box-info box-deces">
+                                        <div class="box-header with-border">
+                                            <h4 class="box-title">
+                                                Décès
+                                            </h4>
+                                        </div>
+                                        <!-- .box-header -->
+                                        <div class="box-body with-border">
+
+                                            <!-- ======================= -->
+                                            <!--   D A T E   D E C E S   -->
+                                            <!-- ======================= -->
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label">Le</label>
+                                                <div class="col-md-9">
+                                                    <component-datepicker ng-model="currentChien.date_deces" style="width:100%;" empty-to-null />
+                                                </div>
+                                            </div>
+
+                                            <!-- =========================== -->
+                                            <!--   A G E   A U   D E C E S   -->
+                                            <!-- =========================== -->
+                                            <div class="form-group" ng-show="currentChien.date_deces">
+                                                <label class="col-md-3 control-label">A vécu</label>
+                                                <div class="col-md-9">
+                                                    <textarea type="text" class="form-control" ng-bind="ageDeath()" rows="1" disabled></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- .box-body -->
+                                    </div>
+                                    <!-- .box-deces -->
+                                </div>
 
                             </div>
 
@@ -539,7 +603,39 @@
                             <!--   I D E N T S               -->
                             <!-- =========================== -->
                             <div class="row" id="tab-idents">
+                                <div class="col-md-6">
 
+                                    <!-- =========== -->
+                                    <!--   P U C E   -->
+                                    <!-- =========== -->
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Puce</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" ng-model="currentChien.puce" empty-to-null>
+                                        </div>
+                                    </div>
+
+                                    <!-- ===================== -->
+                                    <!--   P A S S E P O R T   -->
+                                    <!-- ===================== -->
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Passeport</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" ng-model="currentChien.passeport" empty-to-null>
+                                        </div>
+                                    </div>
+
+                                    <!-- =================== -->
+                                    <!--   T A T O U A G E   -->
+                                    <!-- =================== -->
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Tatouage</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" ng-model="currentChien.tatouage" empty-to-null>
+                                        </div>
+                                    </div>
+
+                                </div>
                             </div>
 
                             <!-- =========================== -->

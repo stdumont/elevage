@@ -30,9 +30,9 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
     $scope.actionAdd = 'Add';
     $scope.actionUpdate = 'Update';
     $scope.title = null;
-    $scope.titleView = 'Visualiser les données d\'un chien';
-    $scope.titleAdd = 'Ajouter un nouveau chien';
-    $scope.titleUpdate = 'Modifier un chien existant';
+    $scope.titleView = 'Visualiser un chien';
+    $scope.titleAdd = 'Ajouter un chien';
+    $scope.titleUpdate = 'Modifier un chien';
 
     // colonnes des résultats de la recherche
     $scope.columns = [{
@@ -42,13 +42,7 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
             class: ''
         },
         {
-            title: 'Présent',
-            field: '',
-            visible: true,
-            class: ''
-        },
-        {
-            title: 'Produit',
+            title: 'Présent-Produit',
             field: '',
             visible: true,
             class: ''
@@ -264,7 +258,7 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
         if (dateAMJ) {
             return moment(dateAMJ, 'YYYY-MM-DD').format('DD/MM/YYYY');
         }
-        return '';
+        return null;
     };
 
     // Transformer une date DD/MM/YYYY en YYYY-MM-DD
@@ -272,18 +266,51 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
         if (dateJMA) {
             return moment(dateJMA, 'DD/MM/YYYY').format('YYYY-MM-DD');
         }
-        return '';
+        return null;
     };
 
+    // Calculer l'âge aujourd'hui
+    $scope.ageToday = function() {
+        if ($scope.currentChien && $scope.currentChien.date_naissance) {
+            var a = moment();
+            var b = moment($scope.currentChien.date_naissance, 'DD/MM/YYYY');
+            var years = a.diff(b, 'year');
+            b.add(years, 'years');
+            var months = a.diff(b, 'months');
+            b.add(months, 'months');
+            var days = a.diff(b, 'days');
+            var result = (years > 0 ? years + ' an(s) ' : '') + (months > 0 ? months + ' mois ' : '') + (days > 0 ? days + ' jour(s) ' : '');
+            return result;
+        } else {
+            return '';
+        };
+    };
+
+    // Calculer l'âge au décès
+    $scope.ageDeath = function() {
+        if ($scope.currentChien && $scope.currentChien.date_naissance && $scope.currentChien.date_deces) {
+            var a = moment($scope.currentChien.date_deces, 'DD/MM/YYYY');
+            var b = moment($scope.currentChien.date_naissance, 'DD/MM/YYYY');
+            var years = a.diff(b, 'year');
+            b.add(years, 'years');
+            var months = a.diff(b, 'months');
+            b.add(months, 'months');
+            var days = a.diff(b, 'days');
+            var result = (years > 0 ? years + ' an(s) ' : '') + (months > 0 ? months + ' mois ' : '') + (days > 0 ? days + ' jour(s) ' : '');
+            return result;
+        } else {
+            return '';
+        };
+    };
     // [buttonSave:onClick] : clic ou validation du bouton sauvegarder
     $scope.onClickSave = function() {
         $scope.saveChien();
 
     };
 
-    // Click sur le bouton permettant de voir toutes les données du chien
+    // Click sur le bouton permettant de voir les données du chien
     $scope.onClickView = function(chien) {
-        $scope.currentChien = chien;
+        $scope.currentChien = jQuery.extend(true, [], chien);
         $scope.action = $scope.actionView;
         $scope.title = $scope.titleView;
         $scope.syncUI();
@@ -332,7 +359,7 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
     $scope.onClickEdit = function(chien) {
         $scope.action = $scope.actionUpdate;
         $scope.title = $scope.titleUpdate;
-        $scope.currentChien = chien;
+        $scope.currentChien = jQuery.extend(true, [], chien);
         $scope.syncUI();
         $('#nomFormGroup').removeClass('has-error');
         $('#nomHelpBlock').addClass('hide');
@@ -379,6 +406,9 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
         } else {
             $('.robes-select-VAU').select2('val', -1);
         };
+        $scope.currentChien.date_naissance = $scope.toJMA($scope.currentChien.date_naissance);
+        $scope.currentChien.date_deces = $scope.toJMA($scope.currentChien.date_deces);
+
     };
     //--------------------------------------------------------------------------
 
@@ -525,10 +555,16 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
                     })
                     .error(function(error) {
                         console.log("Erreur de la recherche du client");
-                        chien['client'] = { nom: '', prenom: '' };
+                        chien['client'] = {
+                            nom: '',
+                            prenom: ''
+                        };
                     });
             } else {
-                chien['client'] = { nom: '', prenom: '' };
+                chien['client'] = {
+                    nom: '',
+                    prenom: ''
+                };
             };
         }
         $scope.initTableChiens($scope.chiens);
