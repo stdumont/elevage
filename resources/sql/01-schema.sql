@@ -226,12 +226,14 @@ CREATE TABLE IF NOT EXISTS `elevage`.`chiens` (
   `mere_id` INT NULL,
   `puce` VARCHAR(255) NULL,
   `passeport` VARCHAR(255) NULL,
+  `pedigree` VARCHAR(255) NULL,
   `tatouage` VARCHAR(255) NULL,
   `client_id` INT NULL,
   `portee_id` INT NULL,
   `chiot_id` INT NULL,
   `present` TINYINT(1) NOT NULL DEFAULT 0,
   `produit` TINYINT(1) NOT NULL DEFAULT 0,
+  `reproducteur` TINYINT(1) NOT NULL DEFAULT 0,
   `remarques` VARCHAR(255) NULL,
   `created_at` DATE NULL,
   `updated_at` DATE NULL,
@@ -304,6 +306,29 @@ CREATE TABLE IF NOT EXISTS `elevage`.`agenda` (
 ENGINE = InnoDB
 AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `elevage`.`mouvements`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `elevage`.`mouvements` ;
+
+CREATE TABLE IF NOT EXISTS `elevage`.`mouvements` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `typeMvt` VARCHAR(45) NOT NULL,
+  `motifMvt` VARCHAR(45) NOT NULL,
+  `dateMvt` DATE NOT NULL,
+  `chien_id` INT NOT NULL,
+  `created_at` DATE NULL,
+  `updated_at` DATE NULL,
+  PRIMARY KEY (`id`),
+  INDEX `Mvt_chien_fk_idx` (`chien_id` ASC),
+  CONSTRAINT `fk_mouvements_chien`
+    FOREIGN KEY (`chien_id`)
+    REFERENCES `elevage`.`chiens` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

@@ -14,6 +14,7 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
     $scope.criteriaRace = null;
     $scope.criteriaRobe = null;
     $scope.criteriaSexe = null;
+    $scope.criteriaReproducteur = null;
     $scope.criteriaPresent = null;
     $scope.criteriaProduit = null;
     $scope.criteriaVivant = null;
@@ -148,6 +149,19 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
             };
         };
 
+        var reproducteurY = $('#reproducteurY').iCheck('update')[0].checked;
+        var reproducteurN = $('#reproducteurN').iCheck('update')[0].checked;
+        if ((reproducteurY && reproducteurN) || (!reproducteurY && !reproducteurN)) {
+            $scope.criteriaReproducteur = null;
+        } else {
+            if (reproducteurY) {
+                $scope.criteriaReproducteur = '1';
+            };
+            if (reproducteurN) {
+                $scope.criteriaReproducteur = '0';
+            };
+        };
+
         var presentY = $('#presentY').iCheck('update')[0].checked;
         var presentN = $('#presentN').iCheck('update')[0].checked;
         if ((presentY && presentN) || (!presentY && !presentN)) {
@@ -219,6 +233,7 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
             $scope.criteriaRace,
             $scope.criteriaRobe,
             $scope.criteriaSexe,
+            $scope.criteriaReproducteur,
             $scope.criteriaPresent,
             $scope.criteriaProduit,
             $scope.criteriaVivant,
@@ -312,7 +327,7 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
     $scope.onClickView = function(chien) {
         $scope.currentChien = jQuery.extend(true, [], chien);
         $scope.action = $scope.actionView;
-        $scope.title = $scope.titleView;
+        $scope.title = $scope.titleView + ' : ' + $scope.currentChien.nom + ' ' + ($scope.currentChien.affixe ? $scope.currentChien.affixe : '');
         $scope.syncUI();
         $('#modalVAU').modal();
     };
@@ -325,6 +340,8 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
         $('#nomHelpBlock').addClass('hide');
         $('#inputSexeM').iCheck('uncheck');
         $('#inputSexeF').iCheck('uncheck');
+        $('#inputReproducteurY').iCheck('uncheck');
+        $('#inputReproducteurN').iCheck('uncheck');
         $('#inputPresentY').iCheck('uncheck');
         $('#inputPresentN').iCheck('uncheck');
         $('#inputProduitY').iCheck('uncheck');
@@ -348,20 +365,25 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
             portee_id: null,
             chiot_id: null,
             present: null,
+            reproducteur: null,
             produit: null,
             remarques: null,
         };
+        $scope.listPeresVAU();
+        $scope.listMeresVAU();
         $('.robes-select-VAU').select2('val', -1);
         $('.peres-select-VAU').select2('val', -1);
         $('.meres-select-VAU').select2('val', -1);
+        $('.clients-select-VAU').select2('val', -1);
+        $('.tabs').tabs({ active: 0 });
         $('#modalVAU').modal();
     };
 
     // Click sur le bouton d'édition d'un élément du tableau
     $scope.onClickEdit = function(chien) {
         $scope.action = $scope.actionUpdate;
-        $scope.title = $scope.titleUpdate;
         $scope.currentChien = jQuery.extend(true, [], chien);
+        $scope.title = $scope.titleUpdate + ' : ' + $scope.currentChien.nom + ' ' + ($scope.currentChien.affixe ? $scope.currentChien.affixe : '');;
         $scope.syncUI();
         $('#nomFormGroup').removeClass('has-error');
         $('#nomHelpBlock').addClass('hide');
@@ -370,8 +392,12 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
 
     // Synchroniser les widgets de l'UI avec la valeur des datas de cuurentChien
     $scope.syncUI = function() {
+        $scope.listPeresVAU();
+        $scope.listMeresVAU();
         $('#inputSexeM').iCheck('uncheck');
         $('#inputSexeF').iCheck('uncheck');
+        $('#inputReproducteurY').iCheck('uncheck');
+        $('#inputReproducteurN').iCheck('uncheck');
         $('#inputPresentY').iCheck('uncheck');
         $('#inputPresentN').iCheck('uncheck');
         $('#inputProduitY').iCheck('uncheck');
@@ -383,6 +409,12 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
         };
         if ($scope.currentChien.sexe == 'F') {
             $('#inputSexeF').iCheck('check');
+        };
+        if ($scope.currentChien.reproducteur == '1') {
+            $('#inputReproducteurY').iCheck('check');
+        };
+        if ($scope.currentChien.reproducteur == '0') {
+            $('#inputReproducteurN').iCheck('check');
         };
         if ($scope.currentChien.present == '1') {
             $('#inputPresentY').iCheck('check');
@@ -419,6 +451,11 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
             $('.meres-select-VAU').select2('val', $scope.currentChien.mere_id);
         } else {
             $('.meres-select-VAU').select2('val', -1);
+        };
+        if ($scope.currentChien.client_id) {
+            $('.clients-select-VAU').select2('val', $scope.currentChien.client_id);
+        } else {
+            $('.clients-select-VAU').select2('val', -1);
         };
 
     };
@@ -558,7 +595,11 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
     // Lister les pères
     $scope.listPeresVAU = function() {
         emptySelect2(".peres-select-VAU");
-        chienFactory.getMalesVivants().success(function(peres) {
+        var exceptId = null;
+        if ($scope.currentChien && $scope.currentChien.id) {
+            exceptId = $scope.currentChien.id;
+        };
+        chienFactory.getPeres(exceptId).success(function(peres) {
             $scope.peresVAU = peres;
             var pereInconnu = {
                 id: -1,
@@ -569,6 +610,7 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
                 if ($scope.currentChien) {
                     if (id == -1) {
                         $scope.currentChien.pere_id = null;
+                        $scope.currentChien.pere = {};
                     } else {
                         $scope.currentChien.pere_id = id;
                     };
@@ -594,7 +636,11 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
     // Lister les mères
     $scope.listMeresVAU = function() {
         emptySelect2(".meres-select-VAU");
-        chienFactory.getFemellesVivantes().success(function(meres) {
+        var exceptId = null;
+        if ($scope.currentChien && $scope.currentChien.id) {
+            exceptId = $scope.currentChien.id;
+        };
+        chienFactory.getMeres(exceptId).success(function(meres) {
             $scope.meresVAU = meres;
             var mereInconnue = {
                 id: -1,
@@ -605,6 +651,7 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
                 if ($scope.currentChien) {
                     if (id == -1) {
                         $scope.currentChien.mere_id = null;
+                        $scope.currentChien.mere = {};
                     } else {
                         $scope.currentChien.mere_id = id;
                     };
@@ -620,6 +667,42 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
             };
 
             setSelect2(".meres-select-VAU", $scope.meresVAU, mereInconnue, mereVAUToSelect2, $scope.select2Template, selectMeresVAUCallBack);
+
+
+        }).error(function() {
+            showMessageInfo("Erreur", "Impossible de récupérer la liste des pères (VAU).");
+        });
+    };
+
+    // Lister les clients
+    $scope.listClientsVAU = function() {
+        emptySelect2(".clients-select-VAU");
+        clientFactory.list().success(function(clients) {
+            $scope.clientsVAU = clients;
+            var clientInconnu = {
+                id: -1,
+                nom: "Inconnu"
+            };
+            $scope.clientsVAU.splice(0, 0, clientInconnu);
+            var selectClientsVAUCallBack = function(id) {
+                if ($scope.currentChien) {
+                    if (id == -1) {
+                        $scope.currentChien.client_id = null;
+                    } else {
+                        $scope.currentChien.client_id = id;
+                    };
+                };
+            };
+
+            // creer les objets UI et initialiser le select2
+            var clientVAUToSelect2 = function(client) {
+                return {
+                    id: client.id,
+                    text: client.nom + ' ' + (client.prenom ? client.prenom : '')
+                };
+            };
+
+            setSelect2(".clients-select-VAU", $scope.clientsVAU, clientInconnu, clientVAUToSelect2, $scope.select2Template, selectClientsVAUCallBack);
 
 
         }).error(function() {
@@ -700,7 +783,7 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
 
 
     //--------------------------------------------------------------------------
-    // Méthodes de manipulation et d'initialisation de formulaire
+    // Contrôles du formulaire
     //--------------------------------------------------------------------------
     $scope.isFillingValid = function() {
         if (!$scope.currentChien.nom) {
@@ -708,6 +791,7 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
         }
         return true;
     };
+
     // initialisation de la table des chiens
     $scope.initTableChiens = function(chiens) {
         $scope.tableParams = new NgTableParams({
@@ -754,6 +838,7 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
     $scope.listRobesVAU();
     $scope.listPeresVAU();
     $scope.listMeresVAU();
+    $scope.listClientsVAU();
     //--------------------------------------------------------------------------
 
 

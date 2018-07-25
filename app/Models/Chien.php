@@ -41,6 +41,7 @@ class Chien extends Model
         'chiot_id',
         'present',
         'produit',
+        'reproducteur',
         'remarques',
     ];
 

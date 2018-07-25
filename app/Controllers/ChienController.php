@@ -62,21 +62,19 @@ class ChienController extends Controller
     }
 
     /**
-     * Retourne les chiens mâles encore vivants (dropdown des pères)
-     * @return json liste de chiens mâles vivants
+     * Retourne les chiens mâles reproducteurs (dropdown des pères)
+     * @return json liste de chiens mâles reproducteurs
      */
-    public function getMalesVivants($request, $response, $args)
+    public function getPeres($request, $response, $args)
     {
-        $datePlafond = date("Y-m-d", strtotime("-14 months"));
-        $datePlancher = date("Y-m-d", strtotime("-16 years"));
+        $exceptId = $request->getParam('exceptId');
+        $restrictById = (is_null($exceptId)) ? false : true;
         $chiens = Chien::
             where('sexe', 'M')
-            /*
-            ->where(function($query) use ($datePlancher, $datePlafond) {
-                $query->whereBetween('date_naissance', [$datePlancher, $datePlafond])->orWhereNull('date_naissance');
+            ->where('reproducteur', 1)
+            ->when($restrictById, function ($query) use ($exceptId) {
+                return $query->where('id', '<>', $exceptId);
             })
-            ->whereNull('date_deces')
-            */
             ->orderBy('nom', 'asc')
             ->orderBy('affixe', 'asc')
             ->get();
@@ -84,21 +82,19 @@ class ChienController extends Controller
     }
 
     /**
-     * Retourne les chiens femelles encore vivantes (dropdown des mères)
-     * @return json liste de chiens femelles vivantes
+     * Retourne les chiens femelles reproductrices (dropdown des mères)
+     * @return json liste de chiens femelles reproductrices
      */
-    public function getFemellesVivantes($request, $response, $args)
+    public function getMeres($request, $response, $args)
     {
-        $datePlafond = date("Y-m-d", strtotime("-14 months"));
-        $datePlancher = date("Y-m-d", strtotime("-16 years"));
+        $exceptId = $request->getParam('exceptId');
+        $restrictById = (is_null($exceptId)) ? false : true;
         $chiens = Chien::
             where('sexe', 'F')
-            /*
-            ->where(function($query) use ($datePlancher, $datePlafond) {
-                $query->whereBetween('date_naissance', [$datePlancher, $datePlafond])->orWhereNull('date_naissance');
+            ->where('reproducteur', 1)
+            ->when($restrictById, function ($query) use ($exceptId) {
+                return $query->where('id', '<>', $exceptId);
             })
-            ->whereNull('date_deces')
-            */
             ->orderBy('nom', 'asc')
             ->orderBy('affixe', 'asc')
             ->get();
@@ -122,6 +118,7 @@ class ChienController extends Controller
         $race = $request->getParam('race');
         $robe = $request->getParam('robe');
         $sexe = $request->getParam('sexe');
+        $reproducteur = $request->getParam('reproducteur');
         $present = $request->getParam('present');
         $produit = $request->getParam('produit');
         $vivant = $request->getParam('vivant');
@@ -139,6 +136,7 @@ class ChienController extends Controller
         $searchByRace = (is_null($race) || $race == -1) ? false : true;
         $searchByRobe = (is_null($robe) || $robe == -1) ? false : true;
         $searchBySexe = (is_null($sexe)) ? false : true;
+        $searchByReproducteur = (is_null($reproducteur)) ? false : true;
         $searchByPresent = (is_null($present)) ? false : true;
         $searchByProduit = (is_null($produit)) ? false : true;
         $searchByVivantY = (!is_null($vivant) && $vivant == '1') ? true : false;
@@ -174,6 +172,8 @@ class ChienController extends Controller
             return $query->where('robe_id', '=', $robe);
         })->when($searchBySexe, function ($query) use ($sexe) {
             return $query->where('sexe', '=', $sexe);
+        })->when($searchByReproducteur, function ($query) use ($reproducteur) {
+            return $query->where('reproducteur', '=', $reproducteur);
         })->when($searchByPresent, function ($query) use ($present) {
             return $query->where('present', '=', $present);
         })->when($searchByProduit, function ($query) use ($produit) {

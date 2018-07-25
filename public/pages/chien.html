@@ -113,6 +113,17 @@
                                     <!-- .form-group (sexe) -->
 
                                     <div class="form-group">
+                                        <label for="criteriaReproducteur" class="col-md-3 control-label">Reproducteur</label>
+                                        <div class="col-md-3 checkbox checkbox-primary">
+                                            <input type="checkbox" id="reproducteurY"> Oui
+                                        </div>
+                                        <div class="col-md-3 checkbox checkbox-primary">
+                                            <input type="checkbox" id="reproducteurN"> Non
+                                        </div>
+                                    </div>
+                                    <!-- .form-group (reproducteur) -->
+
+                                    <div class="form-group">
                                         <label for="criteriaPresent" class="col-md-3 control-label">Présent</label>
                                         <div class="col-md-3 checkbox checkbox-primary">
                                             <input type="checkbox" id="presentY"> Oui
@@ -466,7 +477,7 @@
                                     <!--   S E X E   -->
                                     <!-- =========== -->
                                     <div class="form-group">
-                                        <label class="col-md-3 control-label">Sexe *</label>
+                                        <label class="col-md-4 control-label">Sexe *</label>
                                         <div class="col-md-3 checkbox checkbox-primary">
                                             <input type="checkbox" id="inputSexeM"> Mâle
                                         </div>
@@ -475,11 +486,24 @@
                                         </div>
                                     </div>
 
+                                    <!-- =========================== -->
+                                    <!--   R E P R O D U C T E U R   -->
+                                    <!-- =========================== -->
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">Reproducteur *</label>
+                                        <div class="col-md-3 checkbox checkbox-primary">
+                                            <input type="checkbox" id="inputReproducteurY"> Oui
+                                        </div>
+                                        <div class="col-md-3 checkbox checkbox-primary">
+                                            <input type="checkbox" id="inputReproducteurN"> Non
+                                        </div>
+                                    </div>
+
                                     <!-- =================== -->
                                     <!--   P R E S E N C E   -->
                                     <!-- =================== -->
                                     <div class="form-group">
-                                        <label class="col-md-3 control-label">Présent *</label>
+                                        <label class="col-md-4 control-label">Présent *</label>
                                         <div class="col-md-3 checkbox checkbox-primary">
                                             <input type="checkbox" id="inputPresentY"> Oui
                                         </div>
@@ -492,7 +516,7 @@
                                     <!--   P R O D U C T I O N   -->
                                     <!-- ======================= -->
                                     <div class="form-group">
-                                        <label class="col-md-3 control-label">Produit *</label>
+                                        <label class="col-md-4 control-label">Produit *</label>
                                         <div class="col-md-3 checkbox checkbox-primary">
                                             <input type="checkbox" id="inputProduitY"> Oui
                                         </div>
@@ -505,7 +529,7 @@
                                     <!--   E T A T   -->
                                     <!-- =========== -->
                                     <div class="form-group">
-                                        <label class="col-md-3 control-label">Etat</label>
+                                        <label class="col-md-4 control-label">Etat</label>
                                         <div class="col-md-3 checkbox checkbox-primary">
                                             <input type="checkbox" id="inputVivantY"> Vivant
                                         </div>
@@ -540,7 +564,7 @@
                                             <div class="form-group">
                                                 <label class="col-md-3 control-label">Nom</label>
                                                 <div class="col-md-9">
-                                                    <select class="peres-select-VAU" style="width:100%;"></select>
+                                                    <select class="peres-select-VAU" style="width:100%;"></select><br>
                                                 </div>
                                             </div>
 
@@ -690,6 +714,19 @@
                             <!--   C L I E N T               -->
                             <!-- =========================== -->
                             <div class="row" id="tab-client">
+                                <div class="col-md-6">
+
+                                    <!-- ======================= -->
+                                    <!--   N O M   C L I E N T   -->
+                                    <!-- ======================= -->
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Nom client</label>
+                                        <div class="col-md-9">
+                                            <select class="clients-select-VAU" style="width:100%;"></select><br>
+                                        </div>
+                                    </div>
+
+                                </div>
 
                             </div>
                         </form>

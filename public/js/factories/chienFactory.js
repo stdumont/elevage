@@ -11,6 +11,7 @@ angular.module('elevageApp')
             criteriaRace,
             criteriaRobe,
             criteriaSexe,
+            criteriaReproducteur,
             criteriaPresent,
             criteriaProduit,
             criteriaVivant,
@@ -30,6 +31,7 @@ angular.module('elevageApp')
                     race: criteriaRace,
                     robe: criteriaRobe,
                     sexe: criteriaSexe,
+                    reproducteur: criteriaReproducteur,
                     present: criteriaPresent,
                     produit: criteriaProduit,
                     vivant: criteriaVivant,
@@ -45,14 +47,22 @@ angular.module('elevageApp')
             });
         };
 
-        // renvoi la liste des mâles vivants
-        chienFactory.getMalesVivants = function() {
-            return $http.get(urlBase + 'get-males-vivants');
+        // renvoi la liste des pères
+        chienFactory.getPeres = function(exceptId) {
+            return $http.get(urlBase + 'get-peres', {
+                params: {
+                    exceptId: exceptId
+                }
+            });
         };
 
-        // renvoi la liste des femelles vivantes
-        chienFactory.getFemellesVivantes = function() {
-            return $http.get(urlBase + 'get-femelles-vivantes');
+        // renvoi la liste des mères
+        chienFactory.getMeres = function(exceptId) {
+            return $http.get(urlBase + 'get-meres', {
+                params: {
+                    exceptId: exceptId
+                }
+            });
         };
 
         // renvoi le nombre de chiens
