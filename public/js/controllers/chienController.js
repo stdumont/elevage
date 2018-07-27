@@ -1,4 +1,4 @@
-angular.module('elevageApp').controller('chienController', ['$scope', '$route', '$http', 'chienFactory', 'raceFactory', 'robeFactory', 'clientFactory', 'NgTableParams', '$sce', function($scope, $route, $http, chienFactory, raceFactory, robeFactory, clientFactory, NgTableParams, $sce) {
+angular.module('elevageApp').controller('chienController', ['$scope', '$route', '$http', '$timeout', 'chienFactory', 'raceFactory', 'robeFactory', 'clientFactory', 'NgTableParams', '$sce', function($scope, $route, $http, $timeout, chienFactory, raceFactory, robeFactory, clientFactory, NgTableParams, $sce) {
 
     // Mettre à jour le menu de navigation avec le lien courant.
     refreshCurrentLink($route.current.activeTab);
@@ -681,15 +681,36 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
             $scope.clientsVAU = clients;
             var clientInconnu = {
                 id: -1,
-                nom: "Inconnu"
+                nom: "Inconnu",
+                rue: '',
+                numero: '',
+                code_postal: '',
+                localite: '',
             };
             $scope.clientsVAU.splice(0, 0, clientInconnu);
             var selectClientsVAUCallBack = function(id) {
                 if ($scope.currentChien) {
                     if (id == -1) {
                         $scope.currentChien.client_id = null;
+                        $scope.clientInfos = '';
+                        $timeout(function() {
+                            $scope.$apply();
+                        });
                     } else {
                         $scope.currentChien.client_id = id;
+                        $.each($scope.clientsVAU, function(key, client) {
+                            if (id == client.id) {
+                                $scope.clientInfos = (client.rue ? client.rue : '');
+                                $scope.clientInfos += (client.numero ? ', ' + client.numero : '') + '\n';
+                                $scope.clientInfos += (client.code_postal ? client.code_postal : '');
+                                $scope.clientInfos += (client.localite ? ' ' + client.localite : '') + '\n';
+                                $scope.clientInfos += (client.pays ? client.pays : '') + '\n';
+                                $scope.clientInfos += (client.email ? client.email : '') + '\n';
+                                $scope.clientInfos += (client.tel1 ? client.tel1 : '') + '';
+                                $scope.clientInfos += (client.tel2 ? ' ' + client.tel2 : '');
+                                $scope.$apply();
+                            };
+                        });
                     };
                 };
             };
