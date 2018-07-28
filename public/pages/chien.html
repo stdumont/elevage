@@ -412,6 +412,9 @@
                                 <a href="#tab-parents">Parents</a>
                             </li>
                             <li>
+                                <a href="#tab-enfants">Enfants</a>
+                            </li>
+                            <li>
                                 <a href="#tab-vie">Naissance - Décès</a>
                             </li>
                             <li>
@@ -419,6 +422,9 @@
                             </li>
                             <li>
                                 <a href="#tab-client">Client</a>
+                            </li>
+                            <li>
+                                <a href="#tab-documents">Documents</a>
                             </li>
                         </ul>
                         <form class="form-horizontal">
@@ -468,6 +474,16 @@
                                         </div>
                                     </div>
 
+                                    <!-- ===================== -->
+                                    <!--   R E M A R Q U E S   -->
+                                    <!-- ===================== -->
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Remarques</label>
+                                        <div class="col-md-9">
+                                            <textarea class="form-control" style="width:100%;" rows="5" ng-model="currentChien.remarques" empty-to-null></textarea>
+                                        </div>
+                                    </div>
+
                                 </div>
                                 <!-- .col-md-6 -->
 
@@ -478,11 +494,11 @@
                                     <!-- =========== -->
                                     <div class="form-group">
                                         <label class="col-md-4 control-label">Sexe *</label>
-                                        <div class="col-md-3 checkbox checkbox-primary">
-                                            <input type="checkbox" id="inputSexeM"> Mâle
+                                        <div class="col-md-3 radio radio-primary">
+                                            <input type="radio" name="inputSexe" id="inputSexeM"> Mâle
                                         </div>
-                                        <div class="col-md-3 checkbox checkbox-primary">
-                                            <input type="checkbox" id="inputSexeF"> Femelle
+                                        <div class="col-md-3 radio radio-primary">
+                                            <input type="radio" name="inputSexe" id="inputSexeF"> Femelle
                                         </div>
                                     </div>
 
@@ -491,11 +507,11 @@
                                     <!-- =========================== -->
                                     <div class="form-group">
                                         <label class="col-md-4 control-label">Reproducteur *</label>
-                                        <div class="col-md-3 checkbox checkbox-primary">
-                                            <input type="checkbox" id="inputReproducteurY"> Oui
+                                        <div class="col-md-3 radio radio-primary">
+                                            <input type="radio" name="inputReproducteur" id="inputReproducteurY"> Oui
                                         </div>
-                                        <div class="col-md-3 checkbox checkbox-primary">
-                                            <input type="checkbox" id="inputReproducteurN"> Non
+                                        <div class="col-md-3 radio radio-primary">
+                                            <input type="radio" name="inputReproducteur" id="inputReproducteurN"> Non
                                         </div>
                                     </div>
 
@@ -504,11 +520,11 @@
                                     <!-- =================== -->
                                     <div class="form-group">
                                         <label class="col-md-4 control-label">Présent *</label>
-                                        <div class="col-md-3 checkbox checkbox-primary">
-                                            <input type="checkbox" id="inputPresentY"> Oui
+                                        <div class="col-md-3 radio radio-primary">
+                                            <input type="radio" name="inputPresent" id="inputPresentY"> Oui
                                         </div>
-                                        <div class="col-md-3 checkbox checkbox-primary">
-                                            <input type="checkbox" id="inputPresentN"> Non
+                                        <div class="col-md-3 radio radio-primary">
+                                            <input type="radio" name="inputPresent" id="inputPresentN"> Non
                                         </div>
                                     </div>
 
@@ -517,24 +533,11 @@
                                     <!-- ======================= -->
                                     <div class="form-group">
                                         <label class="col-md-4 control-label">Produit *</label>
-                                        <div class="col-md-3 checkbox checkbox-primary">
-                                            <input type="checkbox" id="inputProduitY"> Oui
+                                        <div class="col-md-3 radio radio-primary">
+                                            <input type="radio" name="inputProduit" id="inputProduitY"> Oui
                                         </div>
-                                        <div class="col-md-3 checkbox checkbox-primary">
-                                            <input type="checkbox" id="inputProduitN"> Non
-                                        </div>
-                                    </div>
-
-                                    <!-- =========== -->
-                                    <!--   E T A T   -->
-                                    <!-- =========== -->
-                                    <div class="form-group">
-                                        <label class="col-md-4 control-label">Etat</label>
-                                        <div class="col-md-3 checkbox checkbox-primary">
-                                            <input type="checkbox" id="inputVivantY"> Vivant
-                                        </div>
-                                        <div class="col-md-3 checkbox checkbox-primary">
-                                            <input type="checkbox" id="inputVivantN"> Décédé
+                                        <div class="col-md-3 radio radio-primary">
+                                            <input type="radio" name="inputProduit" id="inputProduitN"> Non
                                         </div>
                                     </div>
 
@@ -569,6 +572,15 @@
                                                 </div>
                                             </div>
 
+                                            <!-- =========================== -->
+                                            <!--   D E T A I L S   P E R E   -->
+                                            <!-- =========================== -->
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label"></label>
+                                                <div class="col-md-9">
+                                                    <textarea class="form-control" rows="5" disabled>{{pereInfos}}</textarea>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -592,10 +604,27 @@
                                                 </div>
                                             </div>
 
+                                            <!-- =========================== -->
+                                            <!--   D E T A I L S   M E R E   -->
+                                            <!-- =========================== -->
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label"></label>
+                                                <div class="col-md-9">
+                                                    <textarea class="form-control" rows="5" disabled>{{mereInfos}}</textarea>
+                                                </div>
+                                            </div>
                                         </div>
                                         <!-- .box-body -->
                                     </div>
                                     <!-- .box-deces -->
+                                </div>
+                            </div>
+
+                            <!-- =========================== -->
+                            <!--   E N F A N T S             -->
+                            <!-- =========================== -->
+                            <div class="row" id="tab-enfants">
+                                <div class="col-md-12">
                                 </div>
                             </div>
 
@@ -655,9 +684,9 @@
                                                 </div>
                                             </div>
 
-                                            <!-- =========================== -->
-                                            <!--   A G E   A U   D E C E S   -->
-                                            <!-- =========================== -->
+                                            <!-- =============== -->
+                                            <!--   A   V E C U   -->
+                                            <!-- =============== -->
                                             <div class="form-group" ng-show="currentChien.date_deces">
                                                 <label class="col-md-3 control-label">A vécu</label>
                                                 <div class="col-md-9">
@@ -695,6 +724,16 @@
                                         <label class="col-md-3 control-label">Passeport</label>
                                         <div class="col-md-9">
                                             <input type="text" class="form-control" ng-model="currentChien.passeport" empty-to-null>
+                                        </div>
+                                    </div>
+
+                                    <!-- =================== -->
+                                    <!--   P E D I G R E E   -->
+                                    <!-- =================== -->
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Pedigree</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" ng-model="currentChien.pedigree" empty-to-null placeholder="Format LOSH 123456789">
                                         </div>
                                     </div>
 
@@ -737,6 +776,15 @@
                                 </div>
 
                             </div>
+
+                            <!-- ===================== -->
+                            <!--   D O C U M E N T S   -->
+                            <!-- ===================== -->
+                            <div class="row" id="tab-documents">
+                                <div class="col-md-12">
+                                </div>
+                            </div>
+
                         </form>
                     </div>
                     <!-- .row -->

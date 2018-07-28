@@ -346,8 +346,6 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
         $('#inputPresentN').iCheck('uncheck');
         $('#inputProduitY').iCheck('uncheck');
         $('#inputProduitN').iCheck('uncheck');
-        $('#inputVivantY').iCheck('uncheck');
-        $('#inputVivantN').iCheck('uncheck');
         $scope.currentChien = {
             id: null,
             nom: null,
@@ -360,6 +358,7 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
             mere_id: null,
             puce: null,
             passeport: null,
+            pedigree: null,
             tatouage: null,
             client_id: null,
             portee_id: null,
@@ -369,8 +368,6 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
             produit: null,
             remarques: null,
         };
-        $scope.listPeresVAU();
-        $scope.listMeresVAU();
         $('.robes-select-VAU').select2('val', -1);
         $('.peres-select-VAU').select2('val', -1);
         $('.meres-select-VAU').select2('val', -1);
@@ -392,8 +389,6 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
 
     // Synchroniser les widgets de l'UI avec la valeur des datas de cuurentChien
     $scope.syncUI = function() {
-        $scope.listPeresVAU();
-        $scope.listMeresVAU();
         $('#inputSexeM').iCheck('uncheck');
         $('#inputSexeF').iCheck('uncheck');
         $('#inputReproducteurY').iCheck('uncheck');
@@ -428,12 +423,6 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
         if ($scope.currentChien.produit == '0') {
             $('#inputProduitN').iCheck('check');
         };
-        if (!$scope.currentChien.date_deces) {
-            $('#inputVivantY').iCheck('check');
-        };
-        if ($scope.currentChien.date_deces) {
-            $('#inputVivantN').iCheck('check');
-        };
         $('.races-select-VAU').select2('val', $scope.currentChien.race_id);
         if ($scope.currentChien.robe_id) {
             $('.robes-select-VAU').select2('val', $scope.currentChien.robe_id);
@@ -442,7 +431,10 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
         };
         $scope.currentChien.date_naissance = $scope.toJMA($scope.currentChien.date_naissance);
         $scope.currentChien.date_deces = $scope.toJMA($scope.currentChien.date_deces);
+
+
         if ($scope.currentChien.pere_id) {
+            console.log($scope.currentChien.pere_id);
             $('.peres-select-VAU').select2('val', $scope.currentChien.pere_id);
         } else {
             $('.peres-select-VAU').select2('val', -1);
@@ -610,9 +602,21 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
                 if ($scope.currentChien) {
                     if (id == -1) {
                         $scope.currentChien.pere_id = null;
-                        $scope.currentChien.pere = {};
+                        $scope.pereInfos = '';
+                        $timeout(function() {
+                            $scope.$apply();
+                        });
                     } else {
                         $scope.currentChien.pere_id = id;
+                        $.each($scope.peresVAU, function(key, pere) {
+                            if (id == pere.id) {
+                                $scope.pereInfos = (pere.race.nom ? pere.race.nom : '') + '\n';
+                                $scope.pereInfos += (pere.robe.nom ? pere.robe.nom : '') + '\n';
+                                $scope.pereInfos += (pere.date_naissance ? $scope.toJMA(pere.date_naissance) : '');
+                                $scope.pereInfos += (pere.date_deces ? ' - ' + $scope.toJMA(pere.date_deces) : '');
+                                $scope.$apply();
+                            };
+                        });
                     };
                 };
             };
@@ -651,9 +655,23 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
                 if ($scope.currentChien) {
                     if (id == -1) {
                         $scope.currentChien.mere_id = null;
-                        $scope.currentChien.mere = {};
+                        $scope.mereInfos = '';
+                        $timeout(function() {
+                            $scope.$apply();
+                        });
+
                     } else {
                         $scope.currentChien.mere_id = id;
+                        $.each($scope.meresVAU, function(key, mere) {
+                            if (id == mere.id) {
+                                $scope.mereInfos = (mere.race.nom ? mere.race.nom : '') + '\n';
+                                $scope.mereInfos += (mere.robe.nom ? mere.robe.nom : '') + '\n';
+                                $scope.mereInfos += (mere.date_naissance ? $scope.toJMA(mere.date_naissance) : '');
+                                $scope.mereInfos += (mere.date_deces ? ' - ' + $scope.toJMA(mere.date_deces) : '');
+                                $scope.$apply();
+                            };
+                        });
+
                     };
                 };
             };
@@ -670,7 +688,7 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
 
 
         }).error(function() {
-            showMessageInfo("Erreur", "Impossible de récupérer la liste des pères (VAU).");
+            showMessageInfo("Erreur", "Impossible de récupérer la liste des mères (VAU).");
         });
     };
 
@@ -842,14 +860,15 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
     // MAIN
     //--------------------------------------------------------------------------
     $(".tabs").tabs();
-    $('input[type=checkbox]').iCheck({
-        checkboxClass: 'icheckbox_flat-blue'
+    $('input').iCheck({
+        checkboxClass: 'icheckbox_flat-blue',
+        radioClass: 'iradio_flat-blue',
     });
-    $('input[type=checkbox]').iCheck('check');
+    $('input').iCheck('check');
     $('#criteriaNom').keyup(function(event) {
         var keycode = (event.keyCode ? event.keyCode : event.which);
         if (keycode == '13') {
-            $scope.onClickStartSearchStandard();
+            $scope.onClickStartSearch();
         }
     });
 
