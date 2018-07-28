@@ -5,8 +5,8 @@ namespace App\Controllers;
 class HomeController extends Controller {
 
     public function index($request, $response) {
-        
-        return $this->view->render($response, 'home.twig');
+        $data = ['version' => '1.0'];
+        return $this->view->render($response, 'home.twig', $data);
     }
 
 }
