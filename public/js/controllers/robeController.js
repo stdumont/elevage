@@ -107,6 +107,12 @@ angular.module('elevageApp').controller('robeController', ['$scope', '$route', '
     $scope.listRaces = function() {
         raceFactory.list().success(function(races) {
             $scope.races = races;
+            var noChoice = {
+                id: -1,
+                text: 'Choisissez une race'
+            };
+            $scope.races.splice(0, 0, noChoice);
+            /*
             var selectCallBack = function(id) {
                 $scope.currentRobe.race_id = id;
             };
@@ -117,6 +123,18 @@ angular.module('elevageApp').controller('robeController', ['$scope', '$route', '
             };
 
             setSelect2(".races-select", races, null, raceToSelect2, $scope.select2Template, selectCallBack);
+            */
+
+            $(".races-select").select2({
+                language: "fr",
+                data: $scope.races
+            });
+
+            $('.races-select').on('select2:select', function(e) {
+                $scope.currentRobe.race_id = e.params.data.id;
+            });
+
+            $(".races-select").val(-1).trigger('change');
 
         }).error(function() {});
     };
@@ -178,6 +196,7 @@ angular.module('elevageApp').controller('robeController', ['$scope', '$route', '
             race_id: null,
             nom: ''
         };
+        $(".races-select").val(-1).trigger('change');
         // Indiquer au scope qu'on revient en mode ajout, et donc le titre du formulaire va changer
         $scope.editionMode = false;
         // Mise à zéro du formulaire donc tout message d'erreur actuellement affiché est retiré
@@ -185,11 +204,17 @@ angular.module('elevageApp').controller('robeController', ['$scope', '$route', '
     };
     $scope.setCurrentRobe = function(robe) {
         $scope.currentRobe = robe;
-        $('.races-select').select2('val', robe.race.id);
+        $('.races-select').val(robe.race.id).trigger('change');
+        //$('.races-select').trigger('change');
         // Indiquer au scope qu'on revient en mode ajout, et donc le titre du formulaire va changer
         $scope.editionMode = true;
     };
     $scope.isFillingValid = function() {
+        if ($scope.currentRobe.race_id === null || $scope.currentRobe.race_id === -1) {
+            $scope.robeFormError = true;
+            $scope.robeFormErrorMessage = 'Le champ race est obligatoire.';
+            return false;
+        }
         if ($scope.currentRobe.nom === null || $scope.currentRobe.nom === '') {
             $scope.robeFormError = true;
             $scope.robeFormErrorMessage = 'Le champ nom est obligatoire.';
@@ -231,7 +256,7 @@ angular.module('elevageApp').controller('robeController', ['$scope', '$route', '
     // Récupérer les robes pour initialiser la ng-table
     $scope.listRobes();
     // Récupérer les races pour le select du formulaire
-    emptySelect2(".races-select");
+    //emptySelect2(".races-select");
     $scope.listRaces();
 
     //--------------------------------------------------------------------------

@@ -14,7 +14,25 @@ class ClientController extends Controller
     public function getAll()
     {
         $clients = Client::orderBy('nom', 'asc')->get();
-        return json_encode($clients, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        $clientsToSelect = array();
+        foreach ($clients as $key => $client) {
+            $clientsToSelect[] = array(
+                'id' => $client->id,
+                'text' => $client->nom . (!is_null($client->prenom) ? ' ' . $client->prenom : ''),
+                'nom' => $client->nom,
+                'prenom' => $client->prenom,
+                'rue' => $client->rue,
+                'numero' => $client->numero,
+                'code_postal' => $client->code_postal,
+                'localite' => $client->localite,
+                'pays' => $client->pays,
+                'email' => $client->email,
+                'tel1' => $client->tel1,
+                'tel2' => $client->tel2,
+            );
+        }
+
+        return json_encode($clientsToSelect, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     }
 
     /**

@@ -14,7 +14,11 @@ class RobeController extends Controller
     public function getAll()
     {
         $robes = Robe::orderBy('nom', 'asc')->get();
-        return json_encode($robes, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        $robesToSelect = array();
+        foreach ($robes as $key => $robe){
+            $robesToSelect[] = array('id' => $robe->id, 'text' => $robe->nom);
+        }
+        return json_encode($robesToSelect, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     }
 
     /**

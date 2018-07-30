@@ -14,7 +14,11 @@ class RaceController extends Controller
     public function getAll()
     {
         $races = Race::orderBy('nom', 'asc')->get();
-        return json_encode($races, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        $racesToSelect = array();
+        foreach ($races as $key => $race){
+            $racesToSelect[] = array('id' => $race->id, 'text' => $race->nom);
+        }
+        return json_encode($racesToSelect, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     }
 
     /**

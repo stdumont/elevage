@@ -71,14 +71,28 @@ class ChienController extends Controller
         $restrictById = (is_null($exceptId)) ? false : true;
         $chiens = Chien::
             where('sexe', 'M')
-            ->where('reproducteur', 1)
             ->when($restrictById, function ($query) use ($exceptId) {
                 return $query->where('id', '<>', $exceptId);
             })
             ->orderBy('nom', 'asc')
             ->orderBy('affixe', 'asc')
             ->get();
-        return json_encode($chiens, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        $chiensToSelect = array();
+        foreach ($chiens as $key => $chien) {
+            $chiensToSelect[] = array(
+                'id' => $chien->id,
+                'text' => $chien->nom . (!is_null($chien->affixe) ? ' ' . $chien->affixe : ''),
+                'date_naissance' => $chien->date_naissance,
+                'date_deces' => $chien->date_deces,
+                'race' => array(
+                    'nom' => $chien->race->nom,
+                ),
+                'robe' => array(
+                    'nom' => $chien->robe->nom,
+                ),
+            );
+        };
+        return json_encode($chiensToSelect, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     }
 
     /**
@@ -91,14 +105,28 @@ class ChienController extends Controller
         $restrictById = (is_null($exceptId)) ? false : true;
         $chiens = Chien::
             where('sexe', 'F')
-            ->where('reproducteur', 1)
             ->when($restrictById, function ($query) use ($exceptId) {
                 return $query->where('id', '<>', $exceptId);
             })
             ->orderBy('nom', 'asc')
             ->orderBy('affixe', 'asc')
             ->get();
-        return json_encode($chiens, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        $chiensToSelect = array();
+        foreach ($chiens as $key => $chien) {
+            $chiensToSelect[] = array(
+                'id' => $chien->id,
+                'text' => $chien->nom . (!is_null($chien->affixe) ? ' ' . $chien->affixe : ''),
+                'date_naissance' => $chien->date_naissance,
+                'date_deces' => $chien->date_deces,
+                'race' => array(
+                    'nom' => $chien->race->nom,
+                ),
+                'robe' => array(
+                    'nom' => $chien->robe->nom,
+                ),
+            );
+        };
+        return json_encode($chiensToSelect, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     }
 
     /**
