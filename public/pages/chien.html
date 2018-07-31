@@ -411,7 +411,7 @@
                             <li>
                                 <a href="#tab-parents">Parents</a>
                             </li>
-                            <li>
+                            <li ng-hide="action == actionAdd">
                                 <a href="#tab-enfants">Enfants</a>
                             </li>
                             <li>
@@ -423,7 +423,7 @@
                             <li>
                                 <a href="#tab-client">Client</a>
                             </li>
-                            <li>
+                            <li ng-hide="action == actionAdd">
                                 <a href="#tab-documents">Documents</a>
                             </li>
                         </ul>
@@ -625,6 +625,52 @@
                             <!-- =========================== -->
                             <div class="row" id="tab-enfants">
                                 <div class="col-md-12">
+                                    <script id="enfant_ng_header" type="text/ng-template">
+                                        <tr>
+                                            <th ng-repeat="column in columnsEnfants" ng-show="column.visible" class="text-center" style="display: table-cell;">
+                                                {{column.title}}
+                                            </th>
+                                        </tr>
+                                    </script>
+
+                                    <table ng-table="tableEnfants" template-header="enfant_ng_header" class="table table-condensed table-bordered table-striped table-with-tooltip">
+                                        <tr ng-repeat="chien in $data">
+                                            <td class="text-center">
+                                                <i class="text-primary fa fa-home" ng-show="chien.present == 1"></i>
+                                                <i class="text-gray fa fa-home" ng-show="chien.present == 0"></i> &nbsp;&nbsp;&nbsp;
+                                                <i class="text-success fa fa-wrench" ng-show="chien.produit == 1"></i>
+                                                <i class="text-gray fa fa-wrench" ng-show="chien.produit == 0"></i>
+                                            </td>
+                                            <td>
+                                                <span ng-bind="chien.nom" class="small"></span>
+                                                <span ng-bind="chien.affixe" class="small"></span>
+                                            </td>
+                                            <td class="text-center">
+                                                <span ng-show="chien.sexe == 'M'">
+                                                    <i class="fa fa-mars"></i>
+                                                </span>
+                                                <span ng-show="chien.sexe == 'F'">
+                                                    <i class="fa fa-venus"></i>
+                                                </span>
+                                            </td>
+                                            <td class="text-center">
+                                                <span ng-bind="chien.race.nom" class="small"></span>
+                                            </td>
+                                            <td class="text-center">
+                                                <span ng-bind="chien.robe.nom" class="small"></span>
+                                            </td>
+                                            <td class="text-center">
+                                                <span ng-bind="toJMA(chien.date_naissance)" class="small"></span>
+                                            </td>
+                                            <td class="text-center">
+                                                <span ng-bind="toJMA(chien.date_deces)" class="small"></span>
+                                            </td>
+                                            <td>
+                                                <span ng-bind="chien.client.nom" class="small"></span>
+                                                <span ng-bind="chien.client.prenom" class="small"></span>
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </div>
                             </div>
 

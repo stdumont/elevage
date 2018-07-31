@@ -27,6 +27,7 @@ $app->get('/api/chien/get-count-by-race/{race_id}', 'ChienController:getCountByR
 $app->get('/api/chien/get-count-by-robe/{robe_id}', 'ChienController:getCountByRobe');
 $app->get('/api/chien/get-count-by-client/{client_id}', 'ChienController:getCountByClient');
 $app->get('/api/chien/get-by-criteria', 'ChienController:getByCriteria');
+$app->get('/api/chien/get-enfants', 'ChienController:getEnfants');
 $app->get('/api/chien/get-peres', 'ChienController:getPeres');
 $app->get('/api/chien/get-meres', 'ChienController:getMeres');
 $app->get('/api/chien/find/{id}', 'ChienController:find');

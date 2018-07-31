@@ -47,6 +47,15 @@ angular.module('elevageApp')
             });
         };
 
+        // renvoi la liste des enfants
+        chienFactory.getEnfants = function(id) {
+            return $http.get(urlBase + 'get-enfants', {
+                params: {
+                    id: id
+                }
+            });
+        };
+
         // renvoi la liste des pères
         chienFactory.getPeres = function(exceptId) {
             return $http.get(urlBase + 'get-peres', {

@@ -62,6 +62,22 @@ class ChienController extends Controller
     }
 
     /**
+     * Retourne la liste des enfants d'un chien donné
+     * @return json enfants (chiens)
+     */
+    public function getEnfants($request, $response, $args)
+    {
+        $id = $request->getParam('id');
+        $chiens = Chien::
+            where('pere_id', $id)
+            ->orWhere('mere_id', $id)
+            ->orderBy('nom', 'asc')
+            ->orderBy('affixe', 'asc')
+            ->get();
+        return json_encode($chiens, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    }
+
+    /**
      * Retourne les chiens mâles reproducteurs (dropdown des pères)
      * @return json liste de chiens mâles reproducteurs
      */
