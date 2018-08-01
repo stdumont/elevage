@@ -35,6 +35,20 @@ $app->post('/api/chien/save', 'ChienController:save');
 $app->delete('/api/chien/delete/{id}', 'ChienController:delete');
 
 /**
+ * Routes vers les types de documents
+ */
+$app->get('/api/typedoc/get-all', 'TypeDocumentController:getAll');
+$app->get('/api/typedoc/find/{id}', 'TypeDocumentController:find');
+$app->post('/api/typedoc/insert', 'TypeDocumentController:insert');
+$app->post('/api/typedoc/update', 'TypeDocumentController:update');
+$app->delete('/api/typedoc/delete/{id}', 'TypeDocumentController:delete');
+
+/**
+ * Routes vers les documents
+ */
+$app->get('/api/document/get-count-by-typedoc/{id}','DocumentController:getCountByTypedoc');
+
+/**
  * Routes vers les portées
  */ 
 $app->get('/api/portee/get-count', 'PorteeController:getCount');

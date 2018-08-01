@@ -67,12 +67,14 @@ CREATE TABLE `chiens` (
   `mere_id` int(11) DEFAULT NULL,
   `puce` varchar(255) DEFAULT NULL,
   `passeport` varchar(255) DEFAULT NULL,
+  `pedigree` varchar(255) DEFAULT NULL,
   `tatouage` varchar(255) DEFAULT NULL,
   `client_id` int(11) DEFAULT NULL,
   `portee_id` int(11) DEFAULT NULL,
   `chiot_id` int(11) DEFAULT NULL,
   `present` tinyint(1) NOT NULL DEFAULT '0',
   `produit` tinyint(1) NOT NULL DEFAULT '0',
+  `reproducteur` tinyint(1) NOT NULL DEFAULT '0',
   `remarques` varchar(255) DEFAULT NULL,
   `created_at` date DEFAULT NULL,
   `updated_at` date DEFAULT NULL,
@@ -93,7 +95,7 @@ CREATE TABLE `chiens` (
   CONSTRAINT `fk_chien_portee` FOREIGN KEY (`portee_id`) REFERENCES `portees` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_chien_race` FOREIGN KEY (`race_id`) REFERENCES `races` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_chien_robe` FOREIGN KEY (`robe_id`) REFERENCES `robes` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -102,7 +104,7 @@ CREATE TABLE `chiens` (
 
 LOCK TABLES `chiens` WRITE;
 /*!40000 ALTER TABLE `chiens` DISABLE KEYS */;
-INSERT INTO `chiens` VALUES (1,'Moi',NULL,'M',1,3,NULL,NULL,2,3,NULL,NULL,NULL,NULL,NULL,NULL,0,0,NULL,NULL,NULL),(2,'Pere Moi',NULL,'M',1,3,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,NULL,NULL,NULL),(3,'Mere Moi',NULL,'F',1,4,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,NULL,NULL,NULL);
+INSERT INTO `chiens` VALUES (1,'Follow Me','des Marais de Brêmes','M',1,3,'2010-09-16',NULL,NULL,NULL,'250269500380256',NULL,'LOSH 9140430',NULL,NULL,NULL,NULL,1,0,0,NULL,NULL,NULL),(2,'Justin','of Impsland','M',1,2,'2014-01-21',NULL,NULL,NULL,'250269500631365',NULL,'LOSH 9159119',NULL,NULL,NULL,NULL,1,0,1,NULL,NULL,NULL),(3,'Moon Light','des Rubis de Lady C','F',1,4,'2013-12-23',NULL,1,NULL,NULL,NULL,'LOSH 1138682',NULL,NULL,NULL,NULL,1,1,1,NULL,NULL,NULL),(4,'Netty','des Rubis de Lady C','F',1,3,'2014-06-21',NULL,1,NULL,'947000000461961',NULL,'LOSH 1147753',NULL,NULL,NULL,NULL,1,1,1,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `chiens` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -165,7 +167,7 @@ CREATE TABLE `clients` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -174,7 +176,41 @@ CREATE TABLE `clients` (
 
 LOCK TABLES `clients` WRITE;
 /*!40000 ALTER TABLE `clients` DISABLE KEYS */;
+INSERT INTO `clients` VALUES (1,'De Pauw','Sébastien','Faubourg de Bruxelles','89/12','6041','Gosselies','Belgique','0468/530816',NULL,NULL,NULL,'2018-07-25 20:08:06','2018-07-25 20:08:06'),(2,'Scrufari','Chlöe','Place Deflinne','7','7600','Perwez','Belgique','0492/986267',NULL,NULL,NULL,'2018-07-25 20:09:11','2018-07-25 20:09:11'),(3,'Doumont','Bernadette','Tienne Calbalasse','23','5020','Malonne','Belgique','0478/270009',NULL,NULL,NULL,'2018-07-25 20:10:09','2018-07-25 20:10:29'),(4,'Cremer','Alice','Rechter Strassens','82','4470','Born (Amel)','Belgique','080/349964',NULL,NULL,NULL,'2018-07-25 20:14:38','2018-07-25 20:14:38'),(5,'Nasri','Aline','Bey de Foer','8','1370','Jodoigne','Belgique','0497/554006',NULL,NULL,NULL,'2018-07-25 20:15:30','2018-07-25 20:15:30');
 /*!40000 ALTER TABLE `clients` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `documents`
+--
+
+DROP TABLE IF EXISTS `documents`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `documents` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `typedoc_id` int(11) NOT NULL,
+  `chien_id` int(11) NOT NULL,
+  `nom` varchar(255) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `date_document` date DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_document_typedoc_idx` (`typedoc_id`),
+  KEY `fk_document_chien_idx` (`chien_id`),
+  CONSTRAINT `fk_document_chien` FOREIGN KEY (`chien_id`) REFERENCES `chiens` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_document_typedoc` FOREIGN KEY (`typedoc_id`) REFERENCES `typedocs` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `documents`
+--
+
+LOCK TABLES `documents` WRITE;
+/*!40000 ALTER TABLE `documents` DISABLE KEYS */;
+/*!40000 ALTER TABLE `documents` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -211,6 +247,67 @@ LOCK TABLES `elevages` WRITE;
 /*!40000 ALTER TABLE `elevages` DISABLE KEYS */;
 INSERT INTO `elevages` VALUES (1,'Elevage canin des Rubis de Lady C','des Rubis de Lady C','Stéphane-Catherine Dumont-Delange','Rue Favauche','1','5150','Floriffoux','Belgique','BE 0690.365.232','+32 81 44 68 68','info@lesrubis.com',NULL,NULL);
 /*!40000 ALTER TABLE `elevages` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `fichiers`
+--
+
+DROP TABLE IF EXISTS `fichiers`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `fichiers` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `document_id` int(11) NOT NULL,
+  `nomFichier` varchar(255) NOT NULL,
+  `contentType` varchar(255) NOT NULL,
+  `taille` int(11) NOT NULL,
+  `donnee` mediumblob NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_fichier_document_idx` (`document_id`),
+  CONSTRAINT `fk_fichier_document` FOREIGN KEY (`document_id`) REFERENCES `documents` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `fichiers`
+--
+
+LOCK TABLES `fichiers` WRITE;
+/*!40000 ALTER TABLE `fichiers` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fichiers` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `mouvements`
+--
+
+DROP TABLE IF EXISTS `mouvements`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `mouvements` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `typeMvt` varchar(45) NOT NULL,
+  `motifMvt` varchar(45) NOT NULL,
+  `dateMvt` date NOT NULL,
+  `chien_id` int(11) NOT NULL,
+  `created_at` date DEFAULT NULL,
+  `updated_at` date DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `Mvt_chien_fk_idx` (`chien_id`),
+  CONSTRAINT `fk_mouvements_chien` FOREIGN KEY (`chien_id`) REFERENCES `chiens` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `mouvements`
+--
+
+LOCK TABLES `mouvements` WRITE;
+/*!40000 ALTER TABLE `mouvements` DISABLE KEYS */;
+/*!40000 ALTER TABLE `mouvements` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -334,6 +431,31 @@ INSERT INTO `robes` VALUES (1,1,'Blenheïm',NULL,NULL),(2,1,'Tricolore',NULL,NUL
 UNLOCK TABLES;
 
 --
+-- Table structure for table `typedocs`
+--
+
+DROP TABLE IF EXISTS `typedocs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `typedocs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nom` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `typedocs`
+--
+
+LOCK TABLES `typedocs` WRITE;
+/*!40000 ALTER TABLE `typedocs` DISABLE KEYS */;
+/*!40000 ALTER TABLE `typedocs` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `users`
 --
 
@@ -371,4 +493,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-07-15 22:56:10
+-- Dump completed on 2018-08-01 21:40:16

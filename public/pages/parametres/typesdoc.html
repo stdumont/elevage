@@ -1,12 +1,12 @@
 <section class="content-header">
 
     <h1>
-        Races
-        <small>Gestion des races de chiens</small>
+        Types de documents
+        <small>Gestion des types de documents attachés aux chiens</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="javascript:void(0);"><i class="fa fa-cog"></i> Paramètres</a></li>
-        <li class="active">Races</li>
+        <li class="active">Types de documents</li>
     </ol>
 
 </section>
@@ -16,33 +16,33 @@
 
     <div class="row">
         <div class="col-lg-6 col-xs-12">
-            <div class="box box-info box-list-races">
+            <div class="box box-info box-list-typesdoc">
 
                 <div class="box-body no-padding">
 
                     <!-- search form -->
                     <form action="#" method="get" class="search-form-allin">
                         <div class="input-group">
-                            <input type="text" class="form-control" ng-model="inputFilterRace" ng-model-options="{ debounce: 300 }" placeholder="Filtrer" />
+                            <input type="text" class="form-control" ng-model="inputFilterTypesdoc" ng-model-options="{ debounce: 300 }" placeholder="Filtrer" />
                             <span class="input-group-btn">
                       <button type='submit' name='search' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
                     </span>
                         </div>
                     </form>
 
-                    <table ng-table="tableParams" show-filter="false" class="table table-condensed table-striped ng-table-no-header ng-table-race">
-                        <tr ng-repeat="race in $data | filter:inputFilterRace">
-                            <td data-title="'Races'" filter="{nom: 'text'}" sortable="'nom'" style="padding-left:10px;width:100%;cursor: pointer;" ng-click="onClickEdit(race)">
-                                <span ng-bind="race.text"></span>
+                    <table ng-table="tableParams" show-filter="false" class="table table-condensed table-striped ng-table-no-header ng-table-typesdoc">
+                        <tr ng-repeat="typedoc in $data | filter:inputFilterTypesdoc">
+                            <td data-title="'Types'" filter="{nom: 'text'}" sortable="'nom'" style="padding-left:10px;width:100%;cursor: pointer;" ng-click="onClickEdit(typedoc)">
+                                <span ng-bind="typedoc.text"></span>
                             </td>
                             <td>
                                 <div class="divButton" style="width:40px;padding-right:5px;">
-                                    <button style="margin-right:6px;" class="btn btn-default btn-sm" ng-click="onClickEdit(race)"><span class="glyphicon glyphicon-pencil"></span></button>
+                                    <button style="margin-right:6px;" class="btn btn-default btn-sm" ng-click="onClickEdit(typedoc)"><span class="glyphicon glyphicon-pencil"></span></button>
                                 </div>
                             </td>
                             <td>
                                 <div class="divButton" style="width:40px;padding-right:5px;">
-                                    <button class="btn btn-danger btn-sm" ng-confirm-click="Voulez-vous supprimer cette race ?" confirmed-click="onClickDelete(race)" ng-show="isDeletable(race)"><span class="glyphicon glyphicon-trash"></span></button>
+                                    <button class="btn btn-danger btn-sm" ng-confirm-click="Voulez-vous supprimer ce type de document ?" confirmed-click="onClickDelete(typedoc)" ng-show="isDeletable(typedoc)"><span class="glyphicon glyphicon-trash"></span></button>
                                 </div>
                             </td>
                         </tr>
@@ -64,7 +64,7 @@
         <div class="col-lg-6 col-xs-12">
 
 
-            <div class="box box-info form-race">
+            <div class="box box-info form-typedoc">
 
                 <div class="box-header with-border">
                     <h3 class="box-title" ng-hide="editionMode">
@@ -88,15 +88,15 @@
 
                     <div class="box-body">
 
-                        <div class="box callout callout-danger" ng-show="raceFormError">
+                        <div class="box callout callout-danger" ng-show="typedocFormError">
                             <h4><i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;Enregistrement annulé</h4>
-                            <p ng-bind="raceFormErrorMessage"></p>
+                            <p ng-bind="typedocFormErrorMessage"></p>
                         </div>
 
                         <div class="form-group">
                             <label for="inputLibelle" class="col-md-3 control-label">Nom*</label>
                             <div class="col-md-9">
-                                <input type="text" class="form-control" id="inputNom" ng-model="currentRace.nom" placeholder="Dénomination de la race">
+                                <input type="text" class="form-control" id="inputNom" ng-model="currentTypedoc.nom" placeholder="Nom du type de document">
                             </div>
                         </div>
 

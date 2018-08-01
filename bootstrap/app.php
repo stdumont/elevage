@@ -68,26 +68,32 @@ $container['validator'] = function ($container) {
     return new App\Validation\Validator();
 };
 
-$container['HomeController'] = function ($container) {
-    return new \App\Controllers\HomeController($container);
+$container['AgendaController'] = function ($container) {
+    return new \App\Controllers\AgendaController($container);
 };
 $container['AuthController'] = function ($container) {
     return new \App\Controllers\AuthController($container);
 };
-$container['ParameterController'] = function ($container) {
-    return new \App\Controllers\ParameterController($container);
-};
 $container['ChienController'] = function ($container) {
     return new \App\Controllers\ChienController($container);
-};
-$container['PorteeController'] = function ($container) {
-    return new \App\Controllers\PorteeController($container);
 };
 $container['ClientController'] = function ($container) {
     return new \App\Controllers\ClientController($container);
 };
+$container['DocumentController'] = function ($container) {
+    return new \App\Controllers\DocumentController($container);
+};
 $container['ElevageController'] = function ($container) {
     return new \App\Controllers\ElevageController($container);
+};
+$container['HomeController'] = function ($container) {
+    return new \App\Controllers\HomeController($container);
+};
+$container['ParameterController'] = function ($container) {
+    return new \App\Controllers\ParameterController($container);
+};
+$container['PorteeController'] = function ($container) {
+    return new \App\Controllers\PorteeController($container);
 };
 $container['RaceController'] = function ($container) {
     return new \App\Controllers\RaceController($container);
@@ -95,8 +101,8 @@ $container['RaceController'] = function ($container) {
 $container['RobeController'] = function ($container) {
     return new \App\Controllers\RobeController($container);
 };
-$container['AgendaController'] = function ($container) {
-    return new \App\Controllers\AgendaController($container);
+$container['TypeDocumentController'] = function ($container) {
+    return new \App\Controllers\TypeDocumentController($container);
 };
 
 $container['auth'] = function ($container) {

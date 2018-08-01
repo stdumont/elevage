@@ -4,28 +4,9 @@ angular.module('elevageApp')
         var urlBase = '/api/document/';
         var documentFactory = {};
 
-        // renvoi les documents sur base de critères de recherche
-        documentFactory.getByCriterias = function(filter, typedoc_id, fournisseur_id, client_id, dated, datef) {
-            return $http.get(urlBase + 'get-by-criterias', {
-                params: {
-                    filter: filter,
-                    typedoc_id: typedoc_id,
-                    fournisseur_id: fournisseur_id,
-                    client_id: client_id,
-                    dated: dated,
-                    datef: datef
-                }
-            });
-        };
-
         // renvoi le nombre de documents pour un type de document donné
         documentFactory.countByTypedoc = function(id) {
             return $http.get(urlBase + 'get-count-by-typedoc/' + id);
-        };
-
-        // renvoi un fichier binaire sur base de l'id de la piece
-        documentFactory.getFichierByPieceId = function(id) {
-            return $http.get(urlBase + 'get-fichier-by-piece/' + id);
         };
 
         // renvoi un fichier binaire sur base de son id
@@ -64,27 +45,9 @@ angular.module('elevageApp')
             return $http.delete(urlBase + 'delete/' + id);
         };
 
-        // ajout d'une pièce à un document
-        documentFactory.addPiece = function(piece) {
-            let params = {
-                piece: piece
-            };
-            return $http.post(urlBase + 'insertPiece', params);
-        };
-
-        // suppression d'une pièce d'un document sur base de son id
-        documentFactory.deletePiece = function(id) {
-            return $http.delete(urlBase + 'deletePiece/' + id);
-        };
-
-        // renvoi le nombre de documents pour un fournisseur donné
-        documentFactory.countByFournisseur = function(id) {
-            return $http.get(urlBase + 'get-count-by-fournisseur/' + id);
-        };
-
-        // renvoi le nombre de documents pour un client donné
-        documentFactory.countByClient = function(id) {
-            return $http.get(urlBase + 'get-count-by-client/' + id);
+        // renvoi le nombre de documents pour un chien donné
+        documentFactory.countByChien = function(id) {
+            return $http.get(urlBase + 'get-count-by-chien/' + id);
         };
 
         return documentFactory;

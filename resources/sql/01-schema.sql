@@ -331,6 +331,74 @@ CREATE TABLE IF NOT EXISTS `elevage`.`mouvements` (
 ENGINE = InnoDB;
 
 
+-- -----------------------------------------------------
+-- Table `elevage`.`typedocs`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `elevage`.`typedocs` ;
+
+CREATE TABLE IF NOT EXISTS `elevage`.`typedocs` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nom` VARCHAR(255) NOT NULL,
+  `created_at` TIMESTAMP NULL,
+  `updated_at` TIMESTAMP NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `elevage`.`documents`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `elevage`.`documents` ;
+
+CREATE TABLE IF NOT EXISTS `elevage`.`documents` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `typedoc_id` INT NOT NULL,
+  `chien_id` INT NOT NULL,
+  `nom` VARCHAR(255) NOT NULL,
+  `description` VARCHAR(255) NULL,
+  `date_document` DATE NULL,
+  `created_at` TIMESTAMP NULL,
+  `updated_at` TIMESTAMP NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_document_typedoc_idx` (`typedoc_id` ASC),
+  INDEX `fk_document_chien_idx` (`chien_id` ASC),
+  CONSTRAINT `fk_document_typedoc`
+    FOREIGN KEY (`typedoc_id`)
+    REFERENCES `elevage`.`typedocs` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_document_chien`
+    FOREIGN KEY (`chien_id`)
+    REFERENCES `elevage`.`chiens` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `elevage`.`fichiers`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `elevage`.`fichiers` ;
+
+CREATE TABLE IF NOT EXISTS `elevage`.`fichiers` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `document_id` INT NOT NULL,
+  `nomFichier` VARCHAR(255) NOT NULL,
+  `contentType` VARCHAR(255) NOT NULL,
+  `taille` INT NOT NULL,
+  `donnee` MEDIUMBLOB NOT NULL,
+  `created_at` TIMESTAMP NULL,
+  `updated_at` TIMESTAMP NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_fichier_document_idx` (`document_id` ASC),
+  CONSTRAINT `fk_fichier_document`
+    FOREIGN KEY (`document_id`)
+    REFERENCES `elevage`.`documents` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

@@ -64,6 +64,13 @@ angular.module('elevageApp').config(['$routeProvider', function($routeProvider) 
         activeTab: 'page-parametres-robes'
     })
 
+    // page : paramètres : types de documents
+    .when('/page-parametres-typesdoc', {
+        templateUrl: 'pages/parametres/typesdoc.html',
+        controller: 'typeDocumentController',
+        activeTab: 'page-parametres-typesdoc'
+    })
+
     ;
 
 }]);
