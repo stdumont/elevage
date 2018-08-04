@@ -16,7 +16,7 @@ class RobeController extends Controller
         $robes = Robe::orderBy('nom', 'asc')->get();
         $robesToSelect = array();
         foreach ($robes as $key => $robe){
-            $robesToSelect[] = array('id' => $robe->id, 'text' => $robe->nom);
+            $robesToSelect[] = array('id' => $robe->id, 'text' => $robe->nom, 'race' => array('text' => $robe->race->nom));
         }
         return json_encode($robesToSelect, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     }

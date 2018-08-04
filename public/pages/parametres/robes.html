@@ -38,10 +38,10 @@
                     <table ng-table="tableParams" show-filter="false" class="table table-condensed table-striped ng-table-no-header ng-table-robe">
                         <tr ng-repeat="robe in $data | filter:inputFilterRobe">
                             <td data-title="'Races'" style="padding-left:10px;width:40%;cursor: pointer;" ng-click="onClickEdit(robe)">
-                                <span ng-bind="robe.race.nom"></span>
+                                <span ng-bind="robe.race.text"></span>
                             </td>
                             <td data-title="'Robes'" filter="{nom: 'text'}" sortable="'nom'" style="padding-left:10px;width:40%;cursor: pointer;" ng-click="onClickEdit(robe)">
-                                <span ng-bind="robe.nom"></span>
+                                <span ng-bind="robe.text"></span>
                             </td>
                             <td>
                                 <div class="divButton" style="width:40px;padding-right:5px;">

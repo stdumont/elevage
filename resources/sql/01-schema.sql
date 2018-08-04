@@ -5,22 +5,11 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 -- -----------------------------------------------------
--- Schema elevage
+-- Table `users`
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `elevage` ;
+DROP TABLE IF EXISTS `users` ;
 
--- -----------------------------------------------------
--- Schema elevage
--- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `elevage` DEFAULT CHARACTER SET utf8 ;
-USE `elevage` ;
-
--- -----------------------------------------------------
--- Table `elevage`.`users`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `elevage`.`users` ;
-
-CREATE TABLE IF NOT EXISTS `elevage`.`users` (
+CREATE TABLE IF NOT EXISTS `users` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NOT NULL,
   `email` VARCHAR(255) NOT NULL,
@@ -35,11 +24,11 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `elevage`.`parameters`
+-- Table `parameters`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `elevage`.`parameters` ;
+DROP TABLE IF EXISTS `parameters` ;
 
-CREATE TABLE IF NOT EXISTS `elevage`.`parameters` (
+CREATE TABLE IF NOT EXISTS `parameters` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nom` VARCHAR(255) NOT NULL,
   `valeur` VARCHAR(255) NOT NULL,
@@ -50,11 +39,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `elevage`.`elevages`
+-- Table `elevages`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `elevage`.`elevages` ;
+DROP TABLE IF EXISTS `elevages` ;
 
-CREATE TABLE IF NOT EXISTS `elevage`.`elevages` (
+CREATE TABLE IF NOT EXISTS `elevages` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nom` VARCHAR(255) NOT NULL,
   `affixe` VARCHAR(255) NULL,
@@ -74,11 +63,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `elevage`.`races`
+-- Table `races`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `elevage`.`races` ;
+DROP TABLE IF EXISTS `races` ;
 
-CREATE TABLE IF NOT EXISTS `elevage`.`races` (
+CREATE TABLE IF NOT EXISTS `races` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nom` VARCHAR(255) NOT NULL,
   `created_at` TIMESTAMP NULL,
@@ -88,11 +77,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `elevage`.`robes`
+-- Table `robes`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `elevage`.`robes` ;
+DROP TABLE IF EXISTS `robes` ;
 
-CREATE TABLE IF NOT EXISTS `elevage`.`robes` (
+CREATE TABLE IF NOT EXISTS `robes` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `race_id` INT NOT NULL,
   `nom` VARCHAR(255) NOT NULL,
@@ -102,18 +91,18 @@ CREATE TABLE IF NOT EXISTS `elevage`.`robes` (
   INDEX `fk_robe_race_idx` (`race_id` ASC),
   CONSTRAINT `fk_robe_race`
     FOREIGN KEY (`race_id`)
-    REFERENCES `elevage`.`races` (`id`)
+    REFERENCES `races` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `elevage`.`clients`
+-- Table `clients`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `elevage`.`clients` ;
+DROP TABLE IF EXISTS `clients` ;
 
-CREATE TABLE IF NOT EXISTS `elevage`.`clients` (
+CREATE TABLE IF NOT EXISTS `clients` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nom` VARCHAR(255) NOT NULL,
   `prenom` VARCHAR(255) NULL,
@@ -133,11 +122,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `elevage`.`portees`
+-- Table `portees`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `elevage`.`portees` ;
+DROP TABLE IF EXISTS `portees` ;
 
-CREATE TABLE IF NOT EXISTS `elevage`.`portees` (
+CREATE TABLE IF NOT EXISTS `portees` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `numero` INT NOT NULL,
   `pere_id` INT NOT NULL,
@@ -155,28 +144,28 @@ CREATE TABLE IF NOT EXISTS `elevage`.`portees` (
   INDEX `fk_portee_race_idx` (`race_id` ASC),
   CONSTRAINT `fk_portee_pere`
     FOREIGN KEY (`pere_id`)
-    REFERENCES `elevage`.`chiens` (`id`)
+    REFERENCES `chiens` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_portee_mere`
     FOREIGN KEY (`mere_id`)
-    REFERENCES `elevage`.`chiens` (`id`)
+    REFERENCES `chiens` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_portee_race`
     FOREIGN KEY (`race_id`)
-    REFERENCES `elevage`.`races` (`id`)
+    REFERENCES `races` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `elevage`.`chiots`
+-- Table `chiots`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `elevage`.`chiots` ;
+DROP TABLE IF EXISTS `chiots` ;
 
-CREATE TABLE IF NOT EXISTS `elevage`.`chiots` (
+CREATE TABLE IF NOT EXISTS `chiots` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `portee_id` INT NOT NULL,
   `nom` VARCHAR(255) NOT NULL,
@@ -192,28 +181,28 @@ CREATE TABLE IF NOT EXISTS `elevage`.`chiots` (
   INDEX `fk_chiot_chien_idx` (`chien_id` ASC),
   CONSTRAINT `fk_chiot_portee`
     FOREIGN KEY (`portee_id`)
-    REFERENCES `elevage`.`portees` (`id`)
+    REFERENCES `portees` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_chiot_robe`
     FOREIGN KEY (`robe_id`)
-    REFERENCES `elevage`.`robes` (`id`)
+    REFERENCES `robes` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_chiot_chien`
     FOREIGN KEY (`chien_id`)
-    REFERENCES `elevage`.`chiens` (`id`)
+    REFERENCES `chiens` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `elevage`.`chiens`
+-- Table `chiens`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `elevage`.`chiens` ;
+DROP TABLE IF EXISTS `chiens` ;
 
-CREATE TABLE IF NOT EXISTS `elevage`.`chiens` (
+CREATE TABLE IF NOT EXISTS `chiens` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nom` VARCHAR(255) NOT NULL,
   `affixe` VARCHAR(255) NULL,
@@ -249,48 +238,48 @@ CREATE TABLE IF NOT EXISTS `elevage`.`chiens` (
   INDEX `fk_chien_chiot_idx` (`chiot_id` ASC),
   CONSTRAINT `fk_chien_race`
     FOREIGN KEY (`race_id`)
-    REFERENCES `elevage`.`races` (`id`)
+    REFERENCES `races` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_chien_robe`
     FOREIGN KEY (`robe_id`)
-    REFERENCES `elevage`.`robes` (`id`)
+    REFERENCES `robes` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_chien_pere`
     FOREIGN KEY (`pere_id`)
-    REFERENCES `elevage`.`chiens` (`id`)
+    REFERENCES `chiens` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_chien_mere`
     FOREIGN KEY (`mere_id`)
-    REFERENCES `elevage`.`chiens` (`id`)
+    REFERENCES `chiens` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_chien_client`
     FOREIGN KEY (`client_id`)
-    REFERENCES `elevage`.`clients` (`id`)
+    REFERENCES `clients` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_chien_portee`
     FOREIGN KEY (`portee_id`)
-    REFERENCES `elevage`.`portees` (`id`)
+    REFERENCES `portees` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_chien_chiot`
     FOREIGN KEY (`chiot_id`)
-    REFERENCES `elevage`.`chiots` (`id`)
+    REFERENCES `chiots` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `elevage`.`agenda`
+-- Table `agenda`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `elevage`.`agenda` ;
+DROP TABLE IF EXISTS `agenda` ;
 
-CREATE TABLE IF NOT EXISTS `elevage`.`agenda` (
+CREATE TABLE IF NOT EXISTS `agenda` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(255) NOT NULL,
   `description` VARCHAR(255) NULL DEFAULT NULL,
@@ -309,11 +298,11 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `elevage`.`mouvements`
+-- Table `mouvements`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `elevage`.`mouvements` ;
+DROP TABLE IF EXISTS `mouvements` ;
 
-CREATE TABLE IF NOT EXISTS `elevage`.`mouvements` (
+CREATE TABLE IF NOT EXISTS `mouvements` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `typeMvt` VARCHAR(45) NOT NULL,
   `motifMvt` VARCHAR(45) NOT NULL,
@@ -325,18 +314,18 @@ CREATE TABLE IF NOT EXISTS `elevage`.`mouvements` (
   INDEX `Mvt_chien_fk_idx` (`chien_id` ASC),
   CONSTRAINT `fk_mouvements_chien`
     FOREIGN KEY (`chien_id`)
-    REFERENCES `elevage`.`chiens` (`id`)
+    REFERENCES `chiens` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `elevage`.`typedocs`
+-- Table `typedocs`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `elevage`.`typedocs` ;
+DROP TABLE IF EXISTS `typedocs` ;
 
-CREATE TABLE IF NOT EXISTS `elevage`.`typedocs` (
+CREATE TABLE IF NOT EXISTS `typedocs` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nom` VARCHAR(255) NOT NULL,
   `created_at` TIMESTAMP NULL,
@@ -346,11 +335,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `elevage`.`documents`
+-- Table `documents`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `elevage`.`documents` ;
+DROP TABLE IF EXISTS `documents` ;
 
-CREATE TABLE IF NOT EXISTS `elevage`.`documents` (
+CREATE TABLE IF NOT EXISTS `documents` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `typedoc_id` INT NOT NULL,
   `chien_id` INT NOT NULL,
@@ -364,23 +353,23 @@ CREATE TABLE IF NOT EXISTS `elevage`.`documents` (
   INDEX `fk_document_chien_idx` (`chien_id` ASC),
   CONSTRAINT `fk_document_typedoc`
     FOREIGN KEY (`typedoc_id`)
-    REFERENCES `elevage`.`typedocs` (`id`)
+    REFERENCES `typedocs` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_document_chien`
     FOREIGN KEY (`chien_id`)
-    REFERENCES `elevage`.`chiens` (`id`)
+    REFERENCES `chiens` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `elevage`.`fichiers`
+-- Table `fichiers`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `elevage`.`fichiers` ;
+DROP TABLE IF EXISTS `fichiers` ;
 
-CREATE TABLE IF NOT EXISTS `elevage`.`fichiers` (
+CREATE TABLE IF NOT EXISTS `fichiers` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `document_id` INT NOT NULL,
   `nomFichier` VARCHAR(255) NOT NULL,
@@ -393,7 +382,7 @@ CREATE TABLE IF NOT EXISTS `elevage`.`fichiers` (
   INDEX `fk_fichier_document_idx` (`document_id` ASC),
   CONSTRAINT `fk_fichier_document`
     FOREIGN KEY (`document_id`)
-    REFERENCES `elevage`.`documents` (`id`)
+    REFERENCES `documents` (`id`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

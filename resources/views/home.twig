@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr" ng-app="elevageApp">
     <head>
+        
         <!-- Meta's -->
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -15,23 +16,23 @@
         <title>Elevage canin</title>
 
         <!-- Stylesheets -->
-        <link href="adminlte/bootstrap/css/bootstrap.min.css?version={{version}}" rel="stylesheet" type="text/css"/>
-        <link href="plugins/font-awesome/css/font-awesome.css?version={{version}}" rel="stylesheet" type="text/css"/>
-        <link href="plugins/font-awesome-animation/dist/font-awesome-animation.min.css?version={{version}}" rel="stylesheet" type="text/css"/>
-        <link href="plugins/ionicons/css/ionicons.min.css?version={{version}}" rel="stylesheet" type="text/css"/>
-        <link href="adminlte/plugins/iCheck/flat/blue.css?version={{version}}" rel="stylesheet" type="text/css"/>
-        <link href="adminlte/plugins/colorpicker/bootstrap-colorpicker.min.css?version={{version}}" rel="stylesheet" type="text/css"/>
+        <link href="public/adminlte/bootstrap/css/bootstrap.min.css?version={{version}}" rel="stylesheet" type="text/css"/>
+        <link href="public/plugins/font-awesome/css/font-awesome.css?version={{version}}" rel="stylesheet" type="text/css"/>
+        <link href="public/plugins/font-awesome-animation/dist/font-awesome-animation.min.css?version={{version}}" rel="stylesheet" type="text/css"/>
+        <link href="public/plugins/ionicons/css/ionicons.min.css?version={{version}}" rel="stylesheet" type="text/css"/>
+        <link href="public/adminlte/plugins/iCheck/flat/blue.css?version={{version}}" rel="stylesheet" type="text/css"/>
+        <link href="public/adminlte/plugins/colorpicker/bootstrap-colorpicker.min.css?version={{version}}" rel="stylesheet" type="text/css"/>
         <!-- <link href="adminlte/plugins/select2/select2.min.css?version={{version}}" rel="stylesheet" type="text/css"/> -->
-        <link href="plugins/select2.4.0.6-rc.1/css/select2.min.css?version={{version}}" rel="stylesheet" type="text/css"/>
-        <link href="adminlte/dist/css/AdminLTE.min.css?version={{version}}" rel="stylesheet" type="text/css"/>
-        <link href="adminlte/dist/css/skins/skin-blue.min.css?version={{version}}" rel="stylesheet" type="text/css"/>
-        <link href="plugins/ng-table-master/dist/ng-table.min.css?version={{version}}" rel="stylesheet" type="text/css">
-        <link href="plugins/fullcalendar-3.9.0/fullcalendar.min.css?version={{version}}" rel="stylesheet" type="text/css"/>
-        <link href="plugins/fullcalendar-3.9.0/fullcalendar.print.min.css?version={{version}}" media="print" rel="stylesheet" type="text/css"/>
-        <link href="css/elevage.css?version={{version}}" rel="stylesheet" type="text/css"/>
-        <link href="plugins/qtip2/jquery.qtip.min.css?version={{version}}" rel="stylesheet" type="text/css"/>
-        <link href="plugins/jquery-ui/themes/base/jquery-ui.min.css?version={{version}}" rel="stylesheet" type="text/css"/>
-        <link href="plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.standalone.min.css?version={{version}}" rel="stylesheet" type="text/css"/>
+        <link href="public/plugins/select2.4.0.6-rc.1/css/select2.min.css?version={{version}}" rel="stylesheet" type="text/css"/>
+        <link href="public/adminlte/dist/css/AdminLTE.min.css?version={{version}}" rel="stylesheet" type="text/css"/>
+        <link href="public/adminlte/dist/css/skins/skin-blue.min.css?version={{version}}" rel="stylesheet" type="text/css"/>
+        <link href="public/plugins/ng-table-master/dist/ng-table.min.css?version={{version}}" rel="stylesheet" type="text/css">
+        <link href="public/plugins/fullcalendar-3.9.0/fullcalendar.min.css?version={{version}}" rel="stylesheet" type="text/css"/>
+        <link href="public/plugins/fullcalendar-3.9.0/fullcalendar.print.min.css?version={{version}}" media="print" rel="stylesheet" type="text/css"/>
+        <link href="public/css/elevage.css?version={{version}}" rel="stylesheet" type="text/css"/>
+        <link href="public/plugins/qtip2/jquery.qtip.min.css?version={{version}}" rel="stylesheet" type="text/css"/>
+        <link href="public/plugins/jquery-ui/themes/base/jquery-ui.min.css?version={{version}}" rel="stylesheet" type="text/css"/>
+        <link href="public/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.standalone.min.css?version={{version}}" rel="stylesheet" type="text/css"/>
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -84,7 +85,7 @@
             <!-- Left side column. -->
 
             <aside class="main-sidebar">
-                <div ng-include src="'pages/menu.html'"></div>
+                <div ng-include src="'public/pages/menu.html'"></div>
             </aside>
 
             <!-- Content Wrapper. Contains page content -->
@@ -101,92 +102,92 @@
         </div>
         <!-- ./wrapper -->
      <!-- jQuery -->
-    <script src="plugins/jquery/dist/jquery.min.js?version={{version}}" type="text/javascript"></script>
+    <script src="public/plugins/jquery/dist/jquery.min.js?version={{version}}" type="text/javascript"></script>
      <!-- jQuery ui -->
-    <script src="plugins/jquery-ui/jquery-ui.min.js?version={{version}}" type="text/javascript"></script>
+    <script src="public/plugins/jquery-ui/jquery-ui.min.js?version={{version}}" type="text/javascript"></script>
     <!-- Moment JS -->
-    <script src="plugins/moment/min/moment.min.js?version={{version}}" type="text/javascript"></script>
-    <script src="plugins/moment/locale/fr.js?version={{version}}" type="text/javascript"></script>
+    <script src="public/plugins/moment/min/moment.min.js?version={{version}}" type="text/javascript"></script>
+    <script src="public/plugins/moment/locale/fr.js?version={{version}}" type="text/javascript"></script>
 
      <!-- Bootstrap 3.3.5 -->
-    <script src="adminlte/bootstrap/js/bootstrap.min.js?version={{version}}"></script>
-    <script src="plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js?version={{version}}" type="text/javascript"></script>
-    <script src="adminlte/plugins/colorpicker/bootstrap-colorpicker.min.js?version={{version}}" type="text/javascript"></script>
+    <script src="public/adminlte/bootstrap/js/bootstrap.min.js?version={{version}}"></script>
+    <script src="public/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js?version={{version}}" type="text/javascript"></script>
+    <script src="public/adminlte/plugins/colorpicker/bootstrap-colorpicker.min.js?version={{version}}" type="text/javascript"></script>
      <!-- InputMask -->
-    <script src="adminlte/plugins/input-mask/jquery.inputmask.js?version={{version}}"></script>
-    <script src="adminlte/plugins/input-mask/jquery.inputmask.date.extensions.js?version={{version}}"></script>
-    <script src="adminlte/plugins/input-mask/jquery.inputmask.extensions.js?version={{version}}"></script>
+    <script src="public/adminlte/plugins/input-mask/jquery.inputmask.js?version={{version}}"></script>
+    <script src="public/adminlte/plugins/input-mask/jquery.inputmask.date.extensions.js?version={{version}}"></script>
+    <script src="public/adminlte/plugins/input-mask/jquery.inputmask.extensions.js?version={{version}}"></script>
      <!-- iCheck -->
-    <script src="adminlte/plugins/iCheck/icheck.min.js?version={{version}}" type="text/javascript"></script>
+    <script src="public/adminlte/plugins/iCheck/icheck.min.js?version={{version}}" type="text/javascript"></script>
      <!-- select2 -->
     <!-- <script src="adminlte/plugins/select2/select2.full.min.js?version={{version}}" type="text/javascript"></script> -->
-    <script src="plugins/select2.4.0.6-rc.1/js/select2.min.js?version={{version}}" type="text/javascript"></script>
-    <script src="plugins/select2.4.0.6-rc.1/js/i18n/fr.js?version={{version}}" type="text/javascript"></script>
+    <script src="public/plugins/select2.4.0.6-rc.1/js/select2.min.js?version={{version}}" type="text/javascript"></script>
+    <script src="public/plugins/select2.4.0.6-rc.1/js/i18n/fr.js?version={{version}}" type="text/javascript"></script>
      <!-- AdminLTE App -->
-    <script src="adminlte/dist/js/app.min.js?version={{version}}"></script>
+    <script src="public/adminlte/dist/js/app.min.js?version={{version}}"></script>
      <!-- Angular JS -->
-    <script src="plugins/angular/angular.min.js?version={{version}}" type="text/javascript"></script>
-    <script src="plugins/angular-route/angular-route.min.js?version={{version}}" type="text/javascript"></script>
-    <script src="plugins/angular-file-upload/dist/angular-file-upload.min.js?version={{version}}" type="text/javascript"></script>
-    <script src="js/elevage.js?version={{version}}" type="text/javascript"></script>
+    <script src="public/plugins/angular/angular.min.js?version={{version}}" type="text/javascript"></script>
+    <script src="public/plugins/angular-route/angular-route.min.js?version={{version}}" type="text/javascript"></script>
+    <script src="public/plugins/angular-file-upload/dist/angular-file-upload.min.js?version={{version}}" type="text/javascript"></script>
+    <script src="public/js/elevage.js?version={{version}}" type="text/javascript"></script>
 
      <!-- Fichiers Javascript utilitaires -->
-    <script src="js/utils/navigationUtils.js?version={{version}}" type="text/javascript"></script>
+    <script src="public/js/utils/navigationUtils.js?version={{version}}" type="text/javascript"></script>
     <!-- <script src="js/utils/select2Utils.js?version={{version}}" type="text/javascript"></script> -->
     <!-- <script src="js/utils/select2Civadis.js?version={{version}}" type="text/javascript"></script> -->
-    <script src="js/utils/validationUtils.js?version={{version}}" type="text/javascript"></script>
-    <script src="js/utils/dirPagination.js?version={{version}}" type="text/javascript"></script> <!-- TBO -->
+    <script src="public/js/utils/validationUtils.js?version={{version}}" type="text/javascript"></script>
+    <script src="public/js/utils/dirPagination.js?version={{version}}" type="text/javascript"></script> <!-- TBO -->
 
      <!-- Fichiers Javascript de configuration (angular)-->
-    <script src="js/angular/config/navigationAngular.js?version={{version}}" type="text/javascript"></script>
+    <script src="public/js/angular/config/navigationAngular.js?version={{version}}" type="text/javascript"></script>
 
      <!-- Fichiers Javascript de communication REST (factories)-->
-    <script src="js/factories/agendaFactory.js?version={{version}}" type="text/javascript"></script>
-    <script src="js/factories/applicationFactory.js?version={{version}}" type="text/javascript"></script>
-    <script src="js/factories/chienFactory.js?version={{version}}" type="text/javascript"></script>
-    <script src="js/factories/clientFactory.js?version={{version}}" type="text/javascript"></script>
-    <script src="js/factories/documentFactory.js?version={{version}}" type="text/javascript"></script>
-    <script src="js/factories/elevageFactory.js?version={{version}}" type="text/javascript"></script>
-    <script src="js/factories/fichierFactory.js?version={{version}}" type="text/javascript"></script>
-    <script src="js/factories/fournisseurFactory.js?version={{version}}" type="text/javascript"></script>
-    <script src="js/factories/raceFactory.js?version={{version}}" type="text/javascript"></script>
-    <script src="js/factories/robeFactory.js?version={{version}}" type="text/javascript"></script>
-    <script src="js/factories/tableauBordFactory.js?version={{version}}" type="text/javascript"></script>
-    <script src="js/factories/typeDocumentFactory.js?version={{version}}" type="text/javascript"></script>
+    <script src="public/js/factories/agendaFactory.js?version={{version}}" type="text/javascript"></script>
+    <script src="public/js/factories/applicationFactory.js?version={{version}}" type="text/javascript"></script>
+    <script src="public/js/factories/chienFactory.js?version={{version}}" type="text/javascript"></script>
+    <script src="public/js/factories/clientFactory.js?version={{version}}" type="text/javascript"></script>
+    <script src="public/js/factories/documentFactory.js?version={{version}}" type="text/javascript"></script>
+    <script src="public/js/factories/elevageFactory.js?version={{version}}" type="text/javascript"></script>
+    <script src="public/js/factories/fichierFactory.js?version={{version}}" type="text/javascript"></script>
+    <script src="public/js/factories/fournisseurFactory.js?version={{version}}" type="text/javascript"></script>
+    <script src="public/js/factories/raceFactory.js?version={{version}}" type="text/javascript"></script>
+    <script src="public/js/factories/robeFactory.js?version={{version}}" type="text/javascript"></script>
+    <script src="public/js/factories/tableauBordFactory.js?version={{version}}" type="text/javascript"></script>
+    <script src="public/js/factories/typeDocumentFactory.js?version={{version}}" type="text/javascript"></script>
 
      <!-- Fichiers Javascript controlleurs-->
-    <script src="js/controllers/agendaController.js?version={{version}}" type="text/javascript"></script>
-    <script src="js/controllers/calculDatesController.js?version={{version}}" type="text/javascript"></script>
-    <script src="js/controllers/chienController.js?version={{version}}" type="text/javascript"></script>
-    <script src="js/controllers/clientController.js?version={{version}}" type="text/javascript"></script>
-    <script src="js/controllers/elevageController.js?version={{version}}" type="text/javascript"></script>
-    <script src="js/controllers/mainController.js?version={{version}}" type="text/javascript"></script>
-    <script src="js/controllers/raceController.js?version={{version}}" type="text/javascript"></script>
-    <script src="js/controllers/robeController.js?version={{version}}" type="text/javascript"></script>
-    <script src="js/controllers/tableauBordController.js?version={{version}}" type="text/javascript"></script>
-    <script src="js/controllers/typeDocumentController.js?version={{version}}" type="text/javascript"></script>
+    <script src="public/js/controllers/agendaController.js?version={{version}}" type="text/javascript"></script>
+    <script src="public/js/controllers/calculDatesController.js?version={{version}}" type="text/javascript"></script>
+    <script src="public/js/controllers/chienController.js?version={{version}}" type="text/javascript"></script>
+    <script src="public/js/controllers/clientController.js?version={{version}}" type="text/javascript"></script>
+    <script src="public/js/controllers/elevageController.js?version={{version}}" type="text/javascript"></script>
+    <script src="public/js/controllers/mainController.js?version={{version}}" type="text/javascript"></script>
+    <script src="public/js/controllers/raceController.js?version={{version}}" type="text/javascript"></script>
+    <script src="public/js/controllers/robeController.js?version={{version}}" type="text/javascript"></script>
+    <script src="public/js/controllers/tableauBordController.js?version={{version}}" type="text/javascript"></script>
+    <script src="public/js/controllers/typeDocumentController.js?version={{version}}" type="text/javascript"></script>
 
     <!-- Fichiers Javascript directives -->
-    <script src="js/directive/checkboxDirective.js?version={{version}}" type="text/javascript"></script>
-    <script src="js/directive/colorPickerDirective.js?version={{version}}" type="text/javascript"></script>
-    <script src="js/directive/componentLoadable.js?version={{version}}" type="text/javascript"></script>
+    <script src="public/js/directive/checkboxDirective.js?version={{version}}" type="text/javascript"></script>
+    <script src="public/js/directive/colorPickerDirective.js?version={{version}}" type="text/javascript"></script>
+    <script src="public/js/directive/componentLoadable.js?version={{version}}" type="text/javascript"></script>
     <!-- <script src="js/directive/componentSelect2.js?version={{version}}" type="text/javascript"></script> -->
-    <script src="js/directive/componentTab.js?version={{version}}" type="text/javascript"></script>
-    <script src="js/directive/datePickerDirective.js?version={{version}}" type="text/javascript"></script>
-    <script src="js/directive/emptyToNull.js?version={{version}}" type="text/javascript"></script>
-    <script src="js/directive/ngConfirmClick.js?version={{version}}" type="text/javascript"></script>
-    <script src="js/directive/timePickerDirective.js?version={{version}}" type="text/javascript"></script>
-    <script src="js/directive/uppercased.js?version={{version}}" type="text/javascript"></script>
+    <script src="public/js/directive/componentTab.js?version={{version}}" type="text/javascript"></script>
+    <script src="public/js/directive/datePickerDirective.js?version={{version}}" type="text/javascript"></script>
+    <script src="public/js/directive/emptyToNull.js?version={{version}}" type="text/javascript"></script>
+    <script src="public/js/directive/ngConfirmClick.js?version={{version}}" type="text/javascript"></script>
+    <script src="public/js/directive/timePickerDirective.js?version={{version}}" type="text/javascript"></script>
+    <script src="public/js/directive/uppercased.js?version={{version}}" type="text/javascript"></script>
 
      <!-- Calendrier Full Calendar -->
-    <script src="plugins/fullcalendar-3.9.0/fullcalendar.min.js?version={{version}}" type="text/javascript"></script>
-    <script src="plugins/fullcalendar-3.9.0/locale-all.js?version={{version}}" type="text/javascript"></script>
+    <script src="public/plugins/fullcalendar-3.9.0/fullcalendar.min.js?version={{version}}" type="text/javascript"></script>
+    <script src="public/plugins/fullcalendar-3.9.0/locale-all.js?version={{version}}" type="text/javascript"></script>
 
      <!-- Ng Table -->
-    <script src="plugins/ng-table-master/dist/ng-table.min.js?version={{version}}" type="text/javascript"></script>
+    <script src="public/plugins/ng-table-master/dist/ng-table.min.js?version={{version}}" type="text/javascript"></script>
 
     <!-- qTip 2 -->
-    <script src="plugins/qtip2/jquery.qtip.min.js?version={{version}}" type="text/javascript"></script>
+    <script src="public/plugins/qtip2/jquery.qtip.min.js?version={{version}}" type="text/javascript"></script>
 
     </body>
 </html>
