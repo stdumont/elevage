@@ -1,6 +1,36 @@
 angular.module('elevageApp').controller('chienController', ['$scope', '$window', 'FileUploader', '$route', '$http', '$timeout', 'chienFactory', 'raceFactory', 'robeFactory', 'clientFactory', 'documentFactory', 'typeDocumentFactory', 'NgTableParams', '$sce', function(
     $scope, $window, FileUploader, $route, $http, $timeout, chienFactory, raceFactory, robeFactory, clientFactory, documentFactory, typeDocumentFactory, NgTableParams, $sce) {
 
+    // File upload provenant de https://github.com/nervgh/angular-file-upload
+    var uploader = $scope.uploader = new FileUploader({
+        url: '/api/document/insert-fichier',
+        removeAfterUpload: true
+    });
+
+    // FILTERS
+
+    uploader.filters.push({
+        name: 'customFilter',
+        fn: function(item /*{File|FileLikeObject}*/ , options) {
+            return this.queue.length < 2;
+        }
+    });
+
+    // CALLBACKS
+
+    uploader.onBeforeUploadItem = function(fileItem) {
+        fileItem.formData.push({
+            id: null,
+            document_id: null,
+            nomFichier: fileItem.file.name,
+            contentType: fileItem.file.type,
+            taille: fileItem.file.size
+        });
+    };
+
+    uploader.onSuccessItem = function(fileItem, response, status, headers) {};
+    //-- File upload
+
     // Mettre à jour le menu de navigation avec le lien courant.
     refreshCurrentLink($route.current.activeTab);
 
@@ -170,18 +200,6 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$window',
         },
         {
             title: 'Nom',
-            field: '',
-            visible: true,
-            class: ''
-        },
-        {
-            title: 'Description',
-            field: '',
-            visible: true,
-            class: ''
-        },
-        {
-            title: 'Date',
             field: '',
             visible: true,
             class: ''
@@ -508,15 +526,12 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$window',
         $('.documents-list').addClass('hidden');
         $('.btn-add-document').addClass('hidden');
         $('.modalVAU-footer').addClass('hidden');
-        $('.div-file-input').removeClass('hidden');
         $(".typedocs-select-VAU").val(-1).trigger('change');
         $scope.currentDocument = {
             id: null,
             typedoc_id: null,
             chien_id: $scope.currentChien.id,
-            nom: null,
-            description: null,
-            date_document: null
+            nom: null
         };
         $scope.currentFichier = {
             id: null,
@@ -526,40 +541,24 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$window',
             taille: null,
             donnee: null
         };
+        $scope.documentStep = 1;
     };
 
     // Click sur le bouton valider du formulaire d'ajout d'un document
     $scope.onAcceptAddDocument = function() {
-        var fichier = document.getElementById('fichier').files[0];
-        var lecture = new FileReader();
-        lecture.onload = function(e) {
-            var nomFichier = fichier.name;
-            var contentType = fichier.type;
-            var datedoc = moment(fichier.lastModifiedDate).format('YYYY-MM-DD');
-            var donnee = lecture.result;
-            console.log(donnee);
-            var taille = fichier.size;
-            $scope.currentDocument.nom = nomFichier;
-            $scope.currentDocument.date_document = datedoc;
-            $scope.currentFichier.nomFichier = nomFichier;
-            $scope.currentFichier.contentType = contentType;
-            $scope.currentFichier.taille = taille;
-            $scope.currentFichier.donnee = donnee;
-            documentFactory.insert($scope.currentDocument)
-                .success(function(document) {
-                    $scope.currentFichier.document_id = document.id;
-                    documentFactory.insertFichier($scope.currentFichier);
-                });
-            $('.documents-list').removeClass('hidden');
-            $('.btn-add-document').removeClass('hidden');
-            $('.modalVAU-footer').removeClass('hidden');
-            $('.div-file-input').addClass('hidden');
-        }
-        if (fichier) {
-            lecture.readAsDataURL(fichier);
-        } else {
-            alert('Veuillez choisir un fichier');
+        if (!$scope.currentDocument.typedoc_id) {
+            alert("Veuillez choisir un type de document");
+            return;
         };
+        if (!$scope.currentDocument.nom) {
+            alert("Veuillez donner un nom au document");
+            return;
+        };
+        documentFactory.insert($scope.currentDocument)
+            .success(function(document) {
+                $scope.currentFichier.document_id = document.id;
+            });
+        $scope.documentStep = 2;
     };
 
     // Click sur le bouton annuler du formulaire d'ajout d'un document
@@ -567,8 +566,16 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$window',
         $('.documents-list').removeClass('hidden');
         $('.btn-add-document').removeClass('hidden');
         $('.modalVAU-footer').removeClass('hidden');
-        $('.div-file-input').addClass('hidden');
+        $scope.documentStep = null;
+    };
 
+    // Click sur le bouton terminer à la fin de l'ajout d'un fichier
+    $scope.onAcceptAddFile = function() {
+        $('.documents-list').removeClass('hidden');
+        $('.btn-add-document').removeClass('hidden');
+        $('.modalVAU-footer').removeClass('hidden');
+        $scope.documentStep = null;
+        $scope.listDocumentsVAU();
     };
 
     // Synchroniser les widgets de l'UI avec la valeur des datas de cuurentChien
@@ -1147,6 +1154,14 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$window',
     $scope.listRobesVAU();
     $scope.listClientsVAU();
     $scope.listTypedocsVAU();
+
+    var uploadField = document.getElementById("file");
+    uploadField.onchange = function() {
+        if (this.files[0].size > 307200) {
+            alert("Le fichier ne peut dépasser 300 Ko");
+            this.value = "";
+        };
+    };
     //--------------------------------------------------------------------------
 
 

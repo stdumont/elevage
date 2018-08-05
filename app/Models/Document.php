@@ -13,9 +13,7 @@ class Document extends Model
     protected $fillable = [
         'typedoc_id',
         'chien_id',
-        'nom',
-        'description',
-        'date_document'
+        'nom'
     ];
 
     protected $with = ['typedoc', 'chien'];

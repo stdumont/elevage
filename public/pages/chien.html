@@ -826,89 +826,151 @@
                             <!-- ===================== -->
                             <!--   D O C U M E N T S   -->
                             <!-- ===================== -->
-                            <div class="row" id="tab-documents">
-                                <div class="col-md-12 documents-list">
-                                    <script id="document_ng_header" type="text/ng-template">
-                                        <tr>
-                                            <th ng-repeat="column in columnsDocuments" ng-show="column.visible" class="text-center" style="display: table-cell;">
-                                                {{column.title}}
-                                            </th>
-                                        </tr>
-                                    </script>
+                            <div id="tab-documents">
+                                <div class="row">
+                                    <div class="col-md-8 col-md-offset-2 documents-list">
+                                        <script id="document_ng_header" type="text/ng-template">
+                                            <tr>
+                                                <th ng-repeat="column in columnsDocuments" ng-show="column.visible" class="text-center" style="display: table-cell;">
+                                                    {{column.title}}
+                                                </th>
+                                            </tr>
+                                        </script>
 
-                                    <table ng-table="tableDocuments" template-header="document_ng_header" class="table table-condensed table-bordered table-striped table-with-tooltip">
-                                        <tr ng-repeat="document in $data">
-                                            <td>
-                                                <span ng-bind="document.typedoc.nom" class="small"></span>
-                                            </td>
-                                            <td>
-                                                <span ng-bind="document.nom" class="small"></span>
-                                            </td>
-                                            <td>
-                                                <span ng-bind="document.description" class="small"></span>
-                                            </td>
-                                            <td class="text-center">
-                                                <span ng-bind="toJMA(document.date_document)" class="small"></span>
-                                            </td>
-                                            <td class="text-center" style="cursor: pointer" ng-click="onClickViewDocument(document)">
-                                                <i class="fa fa-eye"></i>
-                                            </td>
-                                            <td class="text-center" style="cursor: pointer" ng-click="onClickDeleteDocument(document)" ng-hide="action == actionView">
-                                                <i class="fa fa-remove text-danger"></i>
-                                            </td>
-                                            <td class="text-center" ng-show="action == actionView">
-                                                <i class="fa fa-remove text-gray"></i>
-                                            </td>
-                                        </tr>
-                                    </table>
+                                        <table ng-table="tableDocuments" template-header="document_ng_header" class="table table-condensed table-bordered table-striped table-with-tooltip">
+                                            <tr ng-repeat="document in $data">
+                                                <td>
+                                                    <span ng-bind="document.typedoc.nom" class="small"></span>
+                                                </td>
+                                                <td>
+                                                    <span ng-bind="document.nom" class="small"></span>
+                                                </td>
+                                                <td class="text-center" style="cursor: pointer" ng-click="onClickViewDocument(document)">
+                                                    <i class="fa fa-eye"></i>
+                                                </td>
+                                                <td class="text-center" style="cursor: pointer" ng-click="onClickDeleteDocument(document)" ng-hide="action == actionView">
+                                                    <i class="fa fa-remove text-danger"></i>
+                                                </td>
+                                                <td class="text-center" ng-show="action == actionView">
+                                                    <i class="fa fa-remove text-gray"></i>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
                                 </div>
-                                <div class="col-md-12 btn-add-document" style="margin-top: 1em;" ng-hide="action == actionView">
-                                    <button class="btn btn-info pull-right" ng-click="onClickAddDocument()">
-                                        <i class="fa fa-plus"></i>&nbsp;Ajouter un document
-                                    </button>
+                                <div class="row">
+                                    <div class="col-md-12 btn-add-document" style="margin-top: 1em;">
+                                        <button class="btn btn-info pull-right" ng-click="onClickAddDocument()">
+                                            <i class="fa fa-plus"></i>&nbsp;Ajouter un document
+                                        </button>
+                                    </div>
                                 </div>
-                                <div class="col-md-12 div-file-input hidden" style="margin-top: 1em;" ng-hide="action == actionView">
-                                    <div class="panel panel-info" style="margin-top: 0.5em; width: 80%; margin-left: 10%;">
-                                        <div class="panel-heading">
-                                            <h5 class="text-bold">Ajouter un document</h5>
-                                        </div>
-                                        <div class="panel-body">
-                                            <div class="col-md-10">
+                                <div class="row" ng-show="documentStep == 1">
+                                    <div class="col-md-12 div-doc-input" style="margin-top: 1em;" ng-hide="action == actionView">
+                                        <div class="panel panel-info" style="margin-top: 0.5em; width: 80%; margin-left: 10%;">
+                                            <div class="panel-heading">
+                                                <h5 class="text-bold">Ajouter un document</h5>
+                                            </div>
+                                            <div class="panel-body">
+                                                <div class="col-md-10">
 
-                                                <!-- ============================= -->
-                                                <!--   T Y P E   D O C U M E N T   -->
-                                                <!-- ============================= -->
-                                                <div class="form-group">
-                                                    <label class="col-md-3 control-label">Type *</label>
-                                                    <div class="col-md-9">
-                                                        <select class="typedocs-select-VAU" style="width:100%;"></select>
+                                                    <!-- ============================= -->
+                                                    <!--   T Y P E   D O C U M E N T   -->
+                                                    <!-- ============================= -->
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">Type *</label>
+                                                        <div class="col-md-9">
+                                                            <select class="typedocs-select-VAU" style="width:100%;"></select>
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                                <!-- =========================================== -->
-                                                <!--   D E S C R I P T I O N   D O C U M E N T   -->
-                                                <!-- =========================================== -->
-                                                <div class="form-group">
-                                                    <label class="col-md-3 control-label">Description</label>
-                                                    <div class="col-md-9">
-                                                        <textarea rows="5" class="form-control" ng-model="currentDocument.description" empty-to-null></textarea>
+                                                    <!-- =========================== -->
+                                                    <!--   N O M   D O C U M E N T   -->
+                                                    <!-- =========================== -->
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">Nom *</label>
+                                                        <div class="col-md-9">
+                                                            <input type="text" class="form-control" ng-model="currentDocument.nom" empty-to-null/>
+                                                        </div>
                                                     </div>
+
                                                 </div>
 
                                             </div>
-
+                                            <div class="panel-footer" style="height: 55px">
+                                                <div class="col-md-12">
+                                                    <!-- ================= -->
+                                                    <!--   B O U T O N S   -->
+                                                    <!-- ================= -->
+                                                    <button class="btn btn-default pull-left" ng-click="onCancelAddDocument()">
+                                                        <i class="fa fa-ban"></i>&nbsp;Annuler
+                                                    </button>
+                                                    <button class="btn btn-info pull-right" ng-click="onAcceptAddDocument()">
+                                                        <i class="fa fa-check"></i>&nbsp;Continuer
+                                                    </button>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="panel-footer" style="height: 55px">
-                                            <div class="col-md-12">
-                                                <!-- ================= -->
-                                                <!--   B O U T O N S   -->
-                                                <!-- ================= -->
-                                                <button class="btn btn-default pull-left" ng-click="onCancelAddDocument()">
-                                                    <i class="fa fa-ban"></i>&nbsp;Annuler
-                                                </button>
-                                                <button class="btn btn-info pull-right" ng-click="onAcceptAddDocument()">
-                                                    <i class="fa fa-check"></i>&nbsp;Sauvegarder
-                                                </button>
+                                    </div>
+                                </div>
+                                <div class="row" ng-show="documentStep == 2" nv-file-drop="" uploader="uploader" filters="queueLimit, customFilter">
+                                    <div class="col-md-12 div-doc-input" style="margin-top: 1em;">
+                                        <div class="panel panel-info" style="margin-top: 0.5em; width: 80%; margin-left: 10%;">
+                                            <div class="panel-heading">
+                                                <h5 class="text-bold">Ajouter un fichier au document</h5>
+                                            </div>
+                                            <div class="panel-body">
+                                                <input type="file" id="file" nv-file-select="" uploader="uploader" style="width: 100%;" />
+                                                <div>
+
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th width="80%">Nom</th>
+                                                                <th class="text-center">Actions</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="item in uploader.queue">
+                                                                <td>
+                                                                    <strong>{{ item.file.name }}</strong>
+                                                                </td>
+                                                                <td nowrap>
+                                                                    <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                                                                        <span class="glyphicon glyphicon-upload"></span> Charger
+                                                                    </button>
+                                                                    <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
+                                                                        <span class="glyphicon glyphicon-trash"></span> Supprimer
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+
+                                                </div>
+
+                                                <div>
+                                                    <div>
+                                                        Avancement:
+                                                        <div class="progress">
+                                                            <div class="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
+                                                        </div>
+                                                    </div>
+                                                    <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">
+                                                        <span class="glyphicon glyphicon-trash"></span> Tout supprimer
+                                                    </button>
+                                                </div>
+
+                                            </div>
+                                            <div class="panel-footer" style="height: 55px">
+                                                <div class="col-md-12">
+                                                    <!-- ================= -->
+                                                    <!--   B O U T O N S   -->
+                                                    <!-- ================= -->
+                                                    <button class="btn btn-info pull-right" ng-click="onAcceptAddFile()">
+                                                        <i class="fa fa-check"></i>&nbsp;Terminer
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

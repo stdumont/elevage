@@ -66,21 +66,26 @@ class DocumentController extends Controller
         $document = Document::create([
             'typedoc_id' => $this->container->request->getParam('typedoc_id'),
             'chien_id' => $this->container->request->getParam('chien_id'),
-            'nom' => $this->container->request->getParam('nom'),
-            'description' => $this->container->request->getParam('description'),
-            'date_document' => $this->container->request->getParam('date_document')
+            'nom' => $this->container->request->getParam('nom')
         ]);
         return json_encode($document, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     }
 
     public function insertFichier($request, $response, $args)
     {
+        $doc_max_id = Document::max('id');
+
+        $tmpName  = $_FILES['file']['tmp_name'];
+        $fp      = fopen($tmpName, 'r');
+        $content = fread($fp, filesize($tmpName));
+        fclose($fp);
+
         $fichier = Fichier::create([
-            'document_id' => $this->container->request->getParam('document_id'),
+            'document_id' => $doc_max_id,
             'nomFichier' => $this->container->request->getParam('nomFichier'),
             'contentType' => $this->container->request->getParam('contentType'),
             'taille' => $this->container->request->getParam('taille'),
-            'donnee' => base64_decode($this->container->request->getParam('donnee'))
+            'donnee' => $content
         ]);
         return json_encode($fichier, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     }
