@@ -827,16 +827,98 @@
                             <!--   D O C U M E N T S   -->
                             <!-- ===================== -->
                             <div class="row" id="tab-documents">
-                                <div class="col-md-12">
+                                <div class="col-md-12 documents-list">
+                                    <script id="document_ng_header" type="text/ng-template">
+                                        <tr>
+                                            <th ng-repeat="column in columnsDocuments" ng-show="column.visible" class="text-center" style="display: table-cell;">
+                                                {{column.title}}
+                                            </th>
+                                        </tr>
+                                    </script>
+
+                                    <table ng-table="tableDocuments" template-header="document_ng_header" class="table table-condensed table-bordered table-striped table-with-tooltip">
+                                        <tr ng-repeat="document in $data">
+                                            <td>
+                                                <span ng-bind="document.typedoc.nom" class="small"></span>
+                                            </td>
+                                            <td>
+                                                <span ng-bind="document.nom" class="small"></span>
+                                            </td>
+                                            <td>
+                                                <span ng-bind="document.description" class="small"></span>
+                                            </td>
+                                            <td class="text-center">
+                                                <span ng-bind="toJMA(document.date_document)" class="small"></span>
+                                            </td>
+                                            <td class="text-center" style="cursor: pointer" ng-click="onClickViewDocument(document)">
+                                                <i class="fa fa-eye"></i>
+                                            </td>
+                                            <td class="text-center" style="cursor: pointer" ng-click="onClickDeleteDocument(document)" ng-hide="action == actionView">
+                                                <i class="fa fa-remove text-danger"></i>
+                                            </td>
+                                            <td class="text-center" ng-show="action == actionView">
+                                                <i class="fa fa-remove text-gray"></i>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="col-md-12 btn-add-document" style="margin-top: 1em;" ng-hide="action == actionView">
+                                    <button class="btn btn-info pull-right" ng-click="onClickAddDocument()">
+                                        <i class="fa fa-plus"></i>&nbsp;Ajouter un document
+                                    </button>
+                                </div>
+                                <div class="col-md-12 div-file-input hidden" style="margin-top: 1em;" ng-hide="action == actionView">
+                                    <div class="panel panel-info" style="margin-top: 0.5em; width: 80%; margin-left: 10%;">
+                                        <div class="panel-heading">
+                                            <h5 class="text-bold">Ajouter un document</h5>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="col-md-10">
+
+                                                <!-- ============================= -->
+                                                <!--   T Y P E   D O C U M E N T   -->
+                                                <!-- ============================= -->
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label">Type *</label>
+                                                    <div class="col-md-9">
+                                                        <select class="typedocs-select-VAU" style="width:100%;"></select>
+                                                    </div>
+                                                </div>
+
+                                                <!-- =========================================== -->
+                                                <!--   D E S C R I P T I O N   D O C U M E N T   -->
+                                                <!-- =========================================== -->
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label">Description</label>
+                                                    <div class="col-md-9">
+                                                        <textarea rows="5" class="form-control" ng-model="currentDocument.description" empty-to-null></textarea>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                        <div class="panel-footer" style="height: 55px">
+                                            <div class="col-md-12">
+                                                <!-- ================= -->
+                                                <!--   B O U T O N S   -->
+                                                <!-- ================= -->
+                                                <button class="btn btn-default pull-left" ng-click="onCancelAddDocument()">
+                                                    <i class="fa fa-ban"></i>&nbsp;Annuler
+                                                </button>
+                                                <button class="btn btn-info pull-right" ng-click="onAcceptAddDocument()">
+                                                    <i class="fa fa-check"></i>&nbsp;Sauvegarder
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-
-                        </form>
                     </div>
-                    <!-- .row -->
+
+                    </form>
                 </div>
-                <!-- .modal-body -->
-                <div class="modal-footer">
+                <div class="modal-footer modalVAU-footer">
                     <button type="button" class="btn pull-left" data-dismiss="modal" ng-hide="action == actionView">
                         <i class="fa fa-ban"></i>&nbsp;Annuler</button>
                     <button type="button" class="btn btn-primary pull-right" data-dismiss="modal" ng-show="action == actionView">
@@ -844,11 +926,14 @@
                     <button type="button" class="btn btn-primary pull-right" ng-click="onClickSave()" ng-hide="action == actionView">
                         <i class="fa fa-check"></i>&nbsp;Sauvegarder</button>
                 </div>
-                <!-- .modal-footer -->
+                <!-- .row -->
             </div>
-            <!-- .modal-content -->
+            <!-- .modal-body -->
+            <!-- .modal-footer -->
         </div>
-        <!-- .modal-dialog -->
+        <!-- .modal-content -->
+    </div>
+    <!-- .modal-dialog -->
     </div>
     <!-- .modal -->
 

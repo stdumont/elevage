@@ -47,6 +47,11 @@ $app->delete('/api/typedoc/delete/{id}', 'TypeDocumentController:delete');
  * Routes vers les documents
  */
 $app->get('/api/document/get-count-by-typedoc/{id}','DocumentController:getCountByTypedoc');
+$app->get('/api/document/get-by-chien/{id}','DocumentController:getByChien');
+$app->get('/api/document/get-fichier/{id}','DocumentController:getFichier');
+$app->post('/api/document/insert', 'DocumentController:insert');
+$app->post('/api/document/insert-fichier', 'DocumentController:insertFichier');
+$app->delete('/api/document/delete/{id}','DocumentController:delete');
 
 /**
  * Routes vers les portées

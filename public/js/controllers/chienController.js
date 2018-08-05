@@ -1,4 +1,5 @@
-angular.module('elevageApp').controller('chienController', ['$scope', '$route', '$http', '$timeout', 'chienFactory', 'raceFactory', 'robeFactory', 'clientFactory', 'NgTableParams', '$sce', function($scope, $route, $http, $timeout, chienFactory, raceFactory, robeFactory, clientFactory, NgTableParams, $sce) {
+angular.module('elevageApp').controller('chienController', ['$scope', '$window', 'FileUploader', '$route', '$http', '$timeout', 'chienFactory', 'raceFactory', 'robeFactory', 'clientFactory', 'documentFactory', 'typeDocumentFactory', 'NgTableParams', '$sce', function(
+    $scope, $window, FileUploader, $route, $http, $timeout, chienFactory, raceFactory, robeFactory, clientFactory, documentFactory, typeDocumentFactory, NgTableParams, $sce) {
 
     // Mettre à jour le menu de navigation avec le lien courant.
     refreshCurrentLink($route.current.activeTab);
@@ -8,6 +9,8 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
     //--------------------------------------------------------------------------
     $scope.chiens = null;
     $scope.currentChien = null;
+    $scope.currentDocument = null;
+    $scope.currentFichier = null;
     $scope.searchResultsTitle = "Résultats de la recherche";
     $scope.criteriaNom = null;
     $scope.criteriaAffixe = null;
@@ -152,6 +155,45 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
         },
         {
             title: 'Client',
+            field: '',
+            visible: true,
+            class: ''
+        }
+    ];
+
+    // colonnes de la table des documents
+    $scope.columnsDocuments = [{
+            title: 'Type',
+            field: '',
+            visible: true,
+            class: ''
+        },
+        {
+            title: 'Nom',
+            field: '',
+            visible: true,
+            class: ''
+        },
+        {
+            title: 'Description',
+            field: '',
+            visible: true,
+            class: ''
+        },
+        {
+            title: 'Date',
+            field: '',
+            visible: true,
+            class: ''
+        },
+        {
+            title: 'Voir',
+            field: '',
+            visible: true,
+            class: ''
+        },
+        {
+            title: 'Supprimer',
             field: '',
             visible: true,
             class: ''
@@ -446,9 +488,93 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
         $('#modalVAU').modal();
     };
 
+    // Click sur le bouton permettant de voir un document (ouvre un nouvel onglet)
+    $scope.onClickViewDocument = function(document) {
+        $window.open('/api/document/get-fichier/' + document.id, '_blank');
+    };
+
+    // Click sur le bouton de suppression d'un document (efface aussi le fichier binaire attaché)
+    $scope.onClickDeleteDocument = function(document) {
+        documentFactory.delete(document.id)
+            .success(function() {
+                    $scope.listDocumentsVAU();
+                }
+
+            );
+    };
+
+    // Click sur le bouton ajout d'un document
+    $scope.onClickAddDocument = function() {
+        $('.documents-list').addClass('hidden');
+        $('.btn-add-document').addClass('hidden');
+        $('.modalVAU-footer').addClass('hidden');
+        $('.div-file-input').removeClass('hidden');
+        $(".typedocs-select-VAU").val(-1).trigger('change');
+        $scope.currentDocument = {
+            id: null,
+            typedoc_id: null,
+            chien_id: $scope.currentChien.id,
+            nom: null,
+            description: null,
+            date_document: null
+        };
+        $scope.currentFichier = {
+            id: null,
+            document_id: null,
+            nomFichier: null,
+            contentType: null,
+            taille: null,
+            donnee: null
+        };
+    };
+
+    // Click sur le bouton valider du formulaire d'ajout d'un document
+    $scope.onAcceptAddDocument = function() {
+        var fichier = document.getElementById('fichier').files[0];
+        var lecture = new FileReader();
+        lecture.onload = function(e) {
+            var nomFichier = fichier.name;
+            var contentType = fichier.type;
+            var datedoc = moment(fichier.lastModifiedDate).format('YYYY-MM-DD');
+            var donnee = lecture.result;
+            console.log(donnee);
+            var taille = fichier.size;
+            $scope.currentDocument.nom = nomFichier;
+            $scope.currentDocument.date_document = datedoc;
+            $scope.currentFichier.nomFichier = nomFichier;
+            $scope.currentFichier.contentType = contentType;
+            $scope.currentFichier.taille = taille;
+            $scope.currentFichier.donnee = donnee;
+            documentFactory.insert($scope.currentDocument)
+                .success(function(document) {
+                    $scope.currentFichier.document_id = document.id;
+                    documentFactory.insertFichier($scope.currentFichier);
+                });
+            $('.documents-list').removeClass('hidden');
+            $('.btn-add-document').removeClass('hidden');
+            $('.modalVAU-footer').removeClass('hidden');
+            $('.div-file-input').addClass('hidden');
+        }
+        if (fichier) {
+            lecture.readAsDataURL(fichier);
+        } else {
+            alert('Veuillez choisir un fichier');
+        };
+    };
+
+    // Click sur le bouton annuler du formulaire d'ajout d'un document
+    $scope.onCancelAddDocument = function() {
+        $('.documents-list').removeClass('hidden');
+        $('.btn-add-document').removeClass('hidden');
+        $('.modalVAU-footer').removeClass('hidden');
+        $('.div-file-input').addClass('hidden');
+
+    };
+
     // Synchroniser les widgets de l'UI avec la valeur des datas de cuurentChien
     $scope.syncUI = function() {
         $scope.listEnfantsVAU();
+        $scope.listDocumentsVAU();
         $scope.listPeresVAU();
         $scope.listMeresVAU();
         $('#inputSexeM').iCheck('uncheck');
@@ -630,6 +756,21 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
         };
     };
 
+    // Lister les documents
+    $scope.listDocumentsVAU = function() {
+        if ($scope.currentChien && $scope.currentChien.id) {
+            documentFactory.getByChien($scope.currentChien.id)
+                .success(function(documents) {
+                    $scope.listDocuments(documents);
+                })
+                .error(function() {
+                    showMessageInfo("Erreur", "Impossible de récupérer la liste des documents (VAU).");
+                });
+        } else {
+            $scope.listDocuments([]);
+        };
+    };
+
     // Lister les pères
     $scope.listPeresVAU = function() {
         var exceptId = null;
@@ -782,6 +923,38 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
         });
     };
 
+    // Lister les types de document
+    $scope.listTypedocsVAU = function() {
+        typeDocumentFactory.list().success(function(types) {
+            $scope.typesDocumentVAU = types;
+            var typeInconnu = {
+                id: -1,
+                text: "Inconnu",
+            };
+            $scope.typesDocumentVAU.splice(0, 0, typeInconnu);
+            $(".typedocs-select-VAU").select2({
+                language: "fr",
+                data: $scope.typesDocumentVAU
+            });
+
+            $('.typedocs-select-VAU').on('change', function(e) {
+                var datas = $('.typedocs-select-VAU').select2('data');
+                var data = datas[0];
+                if ($scope.currentChien && $scope.currentDocument && data) {
+                    if (data.id == -1) {
+                        $scope.currentDocument.typedoc_id = null;
+                    } else {
+                        $scope.currentDocument.typedoc_id = data.id;
+                    };
+                };
+            });
+            $(".typedocs-select-VAU").val(-1).trigger('change');
+
+        }).error(function() {
+            showMessageInfo("Erreur", "Impossible de récupérer la liste des types de document (VAU).");
+        });
+    };
+
     // Lister les chiens
     $scope.listChiens = function(chiens) {
         $scope.searchResultsTitle = "Résultats de la recherche (" + chiens.length + ")";
@@ -835,6 +1008,12 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
 
         });
         $scope.initTableEnfants($scope.enfants);
+    };
+
+    // Lister les documents
+    $scope.listDocuments = function(documents) {
+        $scope.documents = documents;
+        $scope.initTableDocuments($scope.documents);
     };
 
     // ->Chiens : Appel REST vers Factory : créer ou mettre à jour un chien
@@ -920,6 +1099,21 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
         });
     };
 
+    // initialisation de la table des documents
+    $scope.initTableDocuments = function(documents) {
+        $scope.tableDocuments = new NgTableParams({
+            // PARAMETRES
+            sorting: {
+                nom: "asc"
+            },
+            count: 15
+        }, {
+            // DONNEES
+            counts: [5, 10, 15, 20, 50], // choix d'affichage du nombre d elements par page. tableau vide = absence de choix d elements par page
+            dataset: documents
+        });
+    };
+
     $scope.setFormLoading = function(loading) {
         setLoading('.form-chien', loading);
     };
@@ -952,6 +1146,7 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$route', 
     $scope.listRacesVAU();
     $scope.listRobesVAU();
     $scope.listClientsVAU();
+    $scope.listTypedocsVAU();
     //--------------------------------------------------------------------------
 
 
