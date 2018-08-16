@@ -36,6 +36,7 @@ class Chien extends Model
         'puce',
         'passeport',
         'tatouage',
+        'pedigree',
         'client_id',
         'portee_id',
         'chiot_id',

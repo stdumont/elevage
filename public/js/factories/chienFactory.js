@@ -99,14 +99,32 @@ angular.module('elevageApp')
             return $http.get(urlBase + 'find' + '/' + id);
         };
 
-        // insère une chien
-        chienFactory.insert = function(chien) {
-            return $http.post(urlBase + 'insert', chien);
-        };
-
-        // met à jour une chien
-        chienFactory.update = function(chien) {
-            return $http.post(urlBase + 'update', chien);
+        // insère ou met à jour un chien
+        chienFactory.save = function(chien) {
+            var params = {
+                id: chien.id,
+                nom: chien.nom,
+                affixe: chien.affixe,
+                sexe: chien.sexe,
+                race_id: chien.race_id,
+                robe_id: chien.robe_id,
+                date_naissance: chien.date_naissance,
+                date_deces: chien.date_deces,
+                pere_id: chien.pere_id,
+                mere_id: chien.mere_id,
+                puce: chien.puce,
+                passeport: chien.passeport,
+                pedigree: chien.pedigree,
+                tatouage: chien.tatouage,
+                client_id: chien.client_id,
+                portee_id: chien.portee_id,
+                chiot_id: chien.chiot_id,
+                present: chien.present,
+                produit: chien.produit,
+                reproducteur: chien.reproducteur,
+                remarques: chien.remarques
+            };
+            return $http.post(urlBase + 'save', params);
         };
 
         // supprime une chien

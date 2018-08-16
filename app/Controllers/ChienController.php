@@ -252,31 +252,54 @@ class ChienController extends Controller
     public function save($request, $response, $args)
     {
         $id = $this->container->request->getParam('id');
-        if ($id) {
+        if (!is_null($id)) {
             $chien = Chien::find($id);
+            $chien->update([
+                'nom' => $this->container->request->getParam('nom'),
+                'affixe' => $this->container->request->getParam('affixe'),
+                'sexe' => $this->container->request->getParam('sexe'),
+                'race_id' => $this->container->request->getParam('race_id'),
+                'robe_id' => $this->container->request->getParam('robe_id'),
+                'date_naissance' => $this->container->request->getParam('date_naissance'),
+                'date_deces' => $this->container->request->getParam('date_deces'),
+                'pere_id' => $this->container->request->getParam('pere_id'),
+                'mere_id' => $this->container->request->getParam('mere_id'),
+                'puce' => $this->container->request->getParam('puce'),
+                'passeport' => $this->container->request->getParam('passeport'),
+                'tatouage' => $this->container->request->getParam('tatouage'),
+                'pedigree' => $this->container->request->getParam('pedigree'),
+                'client_id' => $this->container->request->getParam('client_id'),
+                'portee_id' => $this->container->request->getParam('portee_id'),
+                'chiot_id' => $this->container->request->getParam('chiot_id'),
+                'present' => $this->container->request->getParam('present'),
+                'produit' => $this->container->request->getParam('produit'),
+                'reproducteur' => $this->container->request->getParam('reproducteur'),
+                'remarques' => $this->container->request->getParam('remarques'),
+            ]);
         } else {
-            $chien = new Chien;
+            $chien = Chien::create([
+                'nom' => $this->container->request->getParam('nom'),
+                'affixe' => $this->container->request->getParam('affixe'),
+                'sexe' => $this->container->request->getParam('sexe'),
+                'race_id' => $this->container->request->getParam('race_id'),
+                'robe_id' => $this->container->request->getParam('robe_id'),
+                'date_naissance' => $this->container->request->getParam('date_naissance'),
+                'date_deces' => $this->container->request->getParam('date_deces'),
+                'pere_id' => $this->container->request->getParam('pere_id'),
+                'mere_id' => $this->container->request->getParam('mere_id'),
+                'puce' => $this->container->request->getParam('puce'),
+                'passeport' => $this->container->request->getParam('passeport'),
+                'tatouage' => $this->container->request->getParam('tatouage'),
+                'pedigree' => $this->container->request->getParam('pedigree'),
+                'client_id' => $this->container->request->getParam('client_id'),
+                'portee_id' => $this->container->request->getParam('portee_id'),
+                'chiot_id' => $this->container->request->getParam('chiot_id'),
+                'present' => $this->container->request->getParam('present'),
+                'produit' => $this->container->request->getParam('produit'),
+                'reproducteur' => $this->container->request->getParam('reproducteur'),
+                'remarques' => $this->container->request->getParam('remarques'),
+            ]);
         };
-        $chien->save([
-            'nom' => $this->container->request->getParam('nom'),
-            'affixe' => $this->container->request->getParam('affixe'),
-            'sexe' => $this->container->request->getParam('sexe'),
-            'race_id' => $this->container->request->getParam('race_id'),
-            'robe_id' => $this->container->request->getParam('robe_id'),
-            'date_naissance' => $this->container->request->getParam('date_naissance'),
-            'date_deces' => $this->container->request->getParam('date_deces'),
-            'pere_id' => $this->container->request->getParam('pere_id'),
-            'mere_id' => $this->container->request->getParam('mere_id'),
-            'puce' => $this->container->request->getParam('puce'),
-            'passeport' => $this->container->request->getParam('passeport'),
-            'tatouage' => $this->container->request->getParam('tatouage'),
-            'client_id' => $this->container->request->getParam('client_id'),
-            'portee_id' => $this->container->request->getParam('portee_id'),
-            'chiot_id' => $this->container->request->getParam('chiot_id'),
-            'present' => $this->container->request->getParam('present'),
-            'produit' => $this->container->request->getParam('produit'),
-            'remarques' => $this->container->request->getParam('remarques'),
-        ]);
         return json_encode($chien, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     }
 

@@ -431,11 +431,116 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$window',
             return '';
         };
     };
-    // [buttonSave:onClick] : clic ou validation du bouton sauvegarder
-    $scope.onClickSave = function() {
-        $scope.saveChien();
 
+    // clic sur le bouton sauvegarder
+    $scope.onClickSave = function() {
+        if ($scope.isFillingValid()) {
+            chienFactory.save($scope.currentChien).success(function() {
+                $('#modalVAU').modal('hide');
+                $scope.afterCUD();
+            }).error(function(err) {
+                showMessageInfo("Erreur", "La création/mise à jour n'a pas fonctionné correctement. " + err);
+            });
+        }
     };
+
+    //--------------------------------------------------------------------------
+    // Contrôles du formulaire en cas d'ajout ou de mise à jour
+    //--------------------------------------------------------------------------
+    $scope.isFillingValid = function() {
+        var resultat = true;
+        $scope.errorMessage = '<ul>';
+
+        // Nom obligatoire
+        if (!$scope.currentChien.nom) {
+            $scope.errorMessage += '<li>Le nom du chien est obligatoire.</li>'
+            resultat = false;
+        }
+
+        // Race obligatoire
+        if (!$scope.currentChien.race_id || $scope.currentChien.race_id == -1) {
+            $scope.errorMessage += '<li>La race du chien est obligatoire.</li>'
+            resultat = false;
+        };
+
+
+        // Sexe : un choix effectué ?
+        var sexeM = $('#inputSexeM').iCheck('update')[0].checked;
+        var sexeF = $('#inputSexeF').iCheck('update')[0].checked;
+        if (!sexeM && !sexeF) {
+            $scope.errorMessage += '<li>Le sexe du chien est obligatoire.</li>'
+            resultat = false;
+        };
+
+        // Reproducteur : un choix effectué ?
+        var reproY = $('#inputReproducteurY').iCheck('update')[0].checked;
+        var reproN = $('#inputReproducteurN').iCheck('update')[0].checked;
+        if (!reproY && !reproN) {
+            $scope.errorMessage += '<li>Le statut "reproducteur" du chien est obligatoire.</li>'
+            resultat = false;
+        };
+
+        // Présent : un choix effectué ?
+        var presentY = $('#inputPresentY').iCheck('update')[0].checked;
+        var presentN = $('#inputPresentN').iCheck('update')[0].checked;
+        if (!presentY && !presentN) {
+            $scope.errorMessage += '<li>Le statut "présent" du chien est obligatoire.</li>'
+            resultat = false;
+        };
+
+        // Produit : un choix effectué ?
+        var produitY = $('#inputProduitY').iCheck('update')[0].checked;
+        var produitN = $('#inputProduitN').iCheck('update')[0].checked;
+        if (!produitY && !produitN) {
+            $scope.errorMessage += '<li>Le statut "produit" du chien est obligatoire.</li>'
+            resultat = false;
+        };
+
+        if (resultat) {
+            // Correction sur l'id de la robe
+            if ($scope.currentChien.robe_id && $scope.currentChien.robe_id == -1) {
+                $scope.currentChien.robe_id = null;
+            };
+            if (sexeM) {
+                $scope.currentChien.sexe = 'M';
+            };
+            if (sexeF) {
+                $scope.currentChien.sexe = 'F';
+            };
+            if (presentY) {
+                $scope.currentChien.present = 1;
+            };
+            if (presentN) {
+                $scope.currentChien.present = 0;
+            };
+            if (produitY) {
+                $scope.currentChien.produit = 1;
+            };
+            if (produitN) {
+                $scope.currentChien.produit = 0;
+            };
+            if (reproY) {
+                $scope.currentChien.reproducteur = 1;
+            };
+            if (reproN) {
+                $scope.currentChien.reproducteur = 0;
+            };
+            if ($scope.currentChien.date_naissance) {
+                $scope.currentChien.date_naissance = $scope.toAMJ($scope.currentChien.date_naissance);
+            };
+            if ($scope.currentChien.date_deces) {
+                $scope.currentChien.date_deces = $scope.toAMJ($scope.currentChien.date_deces);
+            };
+        };
+
+        $scope.errorMessage += '</ul>';
+        if (!resultat) {
+            $('.errorsDiv').html($scope.errorMessage);
+        };
+
+        return resultat;
+    };
+
 
     // Click sur le bouton permettant de voir les données du chien
     $scope.onClickView = function(chien) {
@@ -450,8 +555,7 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$window',
     $scope.onClickAdd = function() {
         $scope.action = $scope.actionAdd;
         $scope.title = $scope.titleAdd;
-        $('#nomFormGroup').removeClass('has-error');
-        $('#nomHelpBlock').addClass('hide');
+        $scope.errorMessage = '';
         $('#inputSexeM').iCheck('uncheck');
         $('#inputSexeF').iCheck('uncheck');
         $('#inputReproducteurY').iCheck('uncheck');
@@ -477,6 +581,7 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$window',
             client_id: null,
             portee_id: null,
             chiot_id: null,
+            sexe: null,
             present: null,
             reproducteur: null,
             produit: null,
@@ -487,6 +592,7 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$window',
         $scope.clientInfos = '';
         $scope.listPeresVAU();
         $scope.listMeresVAU();
+        $('.races-select-VAU').val(-1).trigger('change');
         $('.robes-select-VAU').val(-1).trigger('change');
         $('.clients-select-VAU').val(-1).trigger('change');
         $('.tabs').tabs({
@@ -580,6 +686,7 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$window',
 
     // Synchroniser les widgets de l'UI avec la valeur des datas de cuurentChien
     $scope.syncUI = function() {
+        $scope.errorMessage = '';
         $scope.listEnfantsVAU();
         $scope.listDocumentsVAU();
         $scope.listPeresVAU();
@@ -707,10 +814,28 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$window',
     $scope.listRacesVAU = function() {
         raceFactory.list().success(function(races) {
             $scope.racesVAU = races;
+            var raceInconnue = {
+                id: -1,
+                text: "Inconnue"
+            };
+            $scope.racesVAU.splice(0, 0, raceInconnue);
             $(".races-select-VAU").select2({
                 language: "fr",
                 data: $scope.racesVAU
             });
+            $('.races-select-VAU').on('change', function(e) {
+                var datas = $('.races-select-VAU').select2('data');
+                var data = datas[0];
+                if ($scope.currentChien) {
+                    if (data.id === -1) {
+                        $scope.currentChien.race_id = null;
+                    } else {
+                        $scope.currentChien.race_id = data.id;
+                    };
+                };
+            });
+
+            $(".robes-select-VAU").val(-1).trigger('change');
 
         }).error(function() {
             showMessageInfo("Erreur", "Impossible de récupérer la liste des races (VAU).");
@@ -731,12 +856,14 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$window',
                 data: $scope.robesVAU
             });
 
-            $('.robes-select-VAU').on('select2:select', function(e) {
+            $('.robes-select-VAU').on('change', function(e) {
+                var datas = $('.robes-select-VAU').select2('data');
+                var data = datas[0];
                 if ($scope.currentChien) {
-                    if (e.params.data.id === -1) {
+                    if (data.id === -1) {
                         $scope.currentChien.robe_id = null;
                     } else {
-                        $scope.currentChien.robe_id = e.params.data.id;
+                        $scope.currentChien.robe_id = data.id;
                     };
                 };
             });
@@ -1023,58 +1150,12 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$window',
         $scope.initTableDocuments($scope.documents);
     };
 
-    // ->Chiens : Appel REST vers Factory : créer ou mettre à jour un chien
-    $scope.saveChien = function() {
-        if ($scope.isFillingValid()) {
-            if ($scope.currentChien.id === null) {
-                chienFactory.insert($scope.currentChien).success(function() {
-                    $scope.afterCUD();
-                }).error(function(err) {
-                    showMessageInfo("Erreur", "La création n'a pas fonctionné correctement.");
-                });
-            } else {
-                chienFactory.update($scope.currentChien).success(function() {
-                    $scope.afterCUD();
-                }).error(function(err) {
-                    showMessageInfo("Erreur", "La mise à jour n'a pas fonctionné correctement.");
-                });
-            };
-            $('#modalAddUpdate').modal('hide');
-
-        } else {
-            $('#nomFormGroup').addClass('has-error');
-            $('#nomHelpBlock').removeClass('hide');
-        }
-    };
-    // ->Chiens : Appel REST vers Factory : supprimer un chien
-    $scope.deleteChien = function(id) {
-        chienFactory.delete(id).success(function() {
-            $scope.afterCUD();
-        }).error(function(err) {
-            showMessageInfo("Erreur", "La suppression n'a pas fonctionné correctement.");
-        });
-    };
     //
     $scope.afterCUD = function() {
-        if ($scope.typeRecherche === 'Standard') {
-            $scope.onClickStartSearchStandard();
-        } else {
-            $scope.onClickStartSearchByDog();
-        };
+        $scope.onClickStartSearch();
     };
     //--------------------------------------------------------------------------
 
-
-
-    //--------------------------------------------------------------------------
-    // Contrôles du formulaire
-    //--------------------------------------------------------------------------
-    $scope.isFillingValid = function() {
-        if (!$scope.currentChien.nom) {
-            return false;
-        }
-        return true;
-    };
 
     // initialisation de la table des chiens
     $scope.initTableChiens = function(chiens) {
