@@ -1238,8 +1238,8 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$window',
 
     var uploadField = document.getElementById("file");
     uploadField.onchange = function() {
-        if (this.files[0].size > 307200) {
-            alert("Le fichier ne peut dépasser 300 Ko");
+        if (this.files[0].size > 921600) {
+            alert("Le fichier ne peut dépasser 900 Ko");
             this.value = "";
         };
     };
