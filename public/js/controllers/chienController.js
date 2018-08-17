@@ -432,7 +432,7 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$window',
         };
     };
 
-    // clic sur le bouton sauvegarder
+    // clic sur le bouton sauvegarder dans la modale VAU
     $scope.onClickSave = function() {
         if ($scope.isFillingValid()) {
             chienFactory.save($scope.currentChien).success(function() {
