@@ -851,7 +851,7 @@
                                                 <td class="text-center" style="cursor: pointer" ng-click="onClickDeleteDocument(document)" ng-hide="action == actionView">
                                                     <i class="fa fa-remove text-danger"></i>
                                                 </td>
-                                                <td class="text-center" ng-show="action == actionView">
+                                                <td class="text-center" *>
                                                     <i class="fa fa-remove text-gray"></i>
                                                 </td>
                                             </tr>
@@ -859,7 +859,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-12 btn-add-document" style="margin-top: 1em;">
+                                    <div class="col-md-12 btn-add-document" style="margin-top: 1em;" ng-hide="action == actionView">
                                         <button class="btn btn-info pull-right" ng-click="onClickAddDocument()">
                                             <i class="fa fa-plus"></i>&nbsp;Ajouter un document
                                         </button>
