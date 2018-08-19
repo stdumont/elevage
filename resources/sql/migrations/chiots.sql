@@ -1,0 +1,1 @@
+ALTER TABLE `chiots` ADD `date_sortie` DATE NULL AFTER `chien_id`;

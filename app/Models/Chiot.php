@@ -29,6 +29,7 @@ class Chiot extends Model
         'sexe',
         'robe_id',
         'chien_id',
+        'date_sortie',
         'remarques',
     ];
 
