@@ -662,8 +662,8 @@
                                             <td class="text-center">
                                                 <span ng-bind="toJMA(chien.date_naissance)" class="small"></span>
                                             </td>
-                                            <td class="text-center">
-                                                <span ng-bind="toJMA(chien.date_deces)" class="small"></span>
+                                            <td>
+                                                <span ng-bind="getAutreParent(chien)" class="small"></span>
                                             </td>
                                             <td>
                                                 <span ng-bind="chien.client.nom" class="small"></span>

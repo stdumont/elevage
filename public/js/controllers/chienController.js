@@ -178,7 +178,7 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$window',
             class: ''
         },
         {
-            title: 'Décès',
+            title: 'Partenaire',
             field: '',
             visible: true,
             class: ''
@@ -379,7 +379,22 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$window',
         var div = $('#' + id);
         $('html,body').animate({
             scrollTop: div.offset().top - 10
-        }, 'slow');
+        }, 'fast');
+    };
+
+    // Pour la liste des enfants, retourne l'autre parent du chien listé dans la table
+    $scope.getAutreParent = function(chien) {
+        var valeur = '';
+        if ($scope.currentChien) {
+            if ($scope.currentChien.sexe == 'M' && chien.mere) {
+                valeur = chien.mere.nom;
+            };
+            if ($scope.currentChien.sexe == 'F' && chien.pere) {
+                valeur = chien.pere.nom;
+            };
+        };
+        return valeur;
+
     };
 
     // Transformer une date YYYY-MM-DD en DD/MM/YYYY

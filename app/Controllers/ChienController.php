@@ -104,7 +104,7 @@ class ChienController extends Controller
                     'nom' => $chien->race->nom,
                 ),
                 'robe' => array(
-                    'nom' => $chien->robe->nom,
+                    'nom' => (!is_null($chien->robe) ? $chien->robe->nom : ''),
                 ),
             );
         };
@@ -138,7 +138,7 @@ class ChienController extends Controller
                     'nom' => $chien->race->nom,
                 ),
                 'robe' => array(
-                    'nom' => $chien->robe->nom,
+                    'nom' => (!is_null($chien->robe) ? $chien->robe->nom : ''),
                 ),
             );
         };
