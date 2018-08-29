@@ -58,6 +58,8 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$window',
     $scope.criteriaPasseport = null;
     $scope.criteriaPuce = null;
     $scope.criteriaTatouage = null;
+    $scope.criteriaPere = null;
+    $scope.criteriaMere = null;
     $scope.criteriaNomClient = null;
     $scope.action = null;
     $scope.actionView = 'View';
@@ -233,6 +235,8 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$window',
         $scope.criteriaAffixe = null;
         $('.races-select').val('-1').trigger('change');
         $('.robes-select').val('-1').trigger('change');
+        $('.peres-select').val('-1').trigger('change');
+        $('.meres-select').val('-1').trigger('change');
         $('.box-search-criterias input[type=checkbox]').iCheck('check');
         $scope.criteriaNaissanceDu = null;
         $scope.criteriaNaissanceAu = null;
@@ -358,6 +362,8 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$window',
             $scope.criteriaPasseport,
             $scope.criteriaPuce,
             $scope.criteriaTatouage,
+            $scope.criteriaPere,
+            $scope.criteriaMere,
             $scope.criteriaNomClient
         )
 
@@ -780,11 +786,13 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$window',
                 data: $scope.races
             });
 
-            $('.races-select').on('select2:select', function(e) {
-                if (e.params.data.id === -1) {
+            $('.races-select').on('change', function(e) {
+                var datas = $('.races-select').select2('data');
+                var data = datas[0];
+                if (data.id === -1) {
                     $scope.criteriaRace = null;
                 } else {
-                    $scope.criteriaRace = e.params.data.id;
+                    $scope.criteriaRace = data.id;
                 };
             });
 
@@ -810,11 +818,13 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$window',
                 data: $scope.robes
             });
 
-            $('.robes-select').on('select2:select', function(e) {
-                if (e.params.data.id === -1) {
+            $('.robes-select').on('change', function(e) {
+                var datas = $('.robes-select').select2('data');
+                var data = datas[0];
+                if (data.id === -1) {
                     $scope.criteriaRobe = null;
                 } else {
-                    $scope.criteriaRobe = e.params.data.id;
+                    $scope.criteriaRobe = data.id;
                 };
             });
 
@@ -825,6 +835,71 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$window',
             showMessageInfo("Erreur", "Impossible de récupérer la liste des robes.");
         });
     };
+
+    // Lister les pères
+    $scope.listPeres = function() {
+        chienFactory.getPeres(null).success(function(peres) {
+            $scope.peres = peres;
+            var tousPeres = {
+                id: -1,
+                text: "Tous les pères"
+            };
+            $scope.peres.splice(0, 0, tousPeres);
+            $(".peres-select").select2({
+                language: "fr",
+                data: $scope.peres
+            });
+
+            $('.peres-select').on('change', function(e) {
+                var datas = $('.peres-select').select2('data');
+                var data = datas[0];
+                if (data.id === -1) {
+                    $scope.criteriaPere = null;
+                } else {
+                    $scope.criteriaPere = data.id;
+                };
+            });
+
+            $(".peres-select").val(-1).trigger('change');
+
+
+        }).error(function() {
+            showMessageInfo("Erreur", "Impossible de récupérer la liste des pères.");
+        });
+    };
+
+    // Lister les mères
+    $scope.listMeres = function() {
+        chienFactory.getMeres(null).success(function(meres) {
+            $scope.meres = meres;
+            var toutesMeres = {
+                id: -1,
+                text: "Toutes les mères"
+            };
+            $scope.meres.splice(0, 0, toutesMeres);
+            $(".meres-select").select2({
+                language: "fr",
+                data: $scope.meres
+            });
+
+            $('.meres-select').on('change', function(e) {
+                var datas = $('.meres-select').select2('data');
+                var data = datas[0];
+                if (data.id === -1) {
+                    $scope.criteriaMere = null;
+                } else {
+                    $scope.criteriaMere = data.id;
+                };
+            });
+
+            $(".meres-select").val(-1).trigger('change');
+
+
+        }).error(function() {
+            showMessageInfo("Erreur", "Impossible de récupérer la liste des mères.");
+        });
+    };
+
     // Lister les races (VAU)
     $scope.listRacesVAU = function() {
         raceFactory.list().success(function(races) {
@@ -1168,6 +1243,8 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$window',
     //
     $scope.afterCUD = function() {
         $scope.onClickStartSearch();
+        $scope.listPeres();
+        $scope.listMeres();
     };
     //--------------------------------------------------------------------------
 
@@ -1246,6 +1323,8 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$window',
 
     $scope.listRaces();
     $scope.listRobes();
+    $scope.listPeres();
+    $scope.listMeres();
     $scope.listRacesVAU();
     $scope.listRobesVAU();
     $scope.listClientsVAU();

@@ -22,6 +22,8 @@ angular.module('elevageApp')
             criteriaPasseport,
             criteriaPuce,
             criteriaTatouage,
+            criteriaPere,
+            criteriaMere,
             criteriaNomClient
         ) {
             return $http.get(urlBase + 'get-by-criteria', {
@@ -42,6 +44,8 @@ angular.module('elevageApp')
                     passeport: criteriaPasseport,
                     puce: criteriaPuce,
                     tatouage: criteriaTatouage,
+                    pere: criteriaPere,
+                    mere: criteriaMere,
                     nomClient: criteriaNomClient
                 }
             });

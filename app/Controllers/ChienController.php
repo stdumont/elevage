@@ -173,6 +173,8 @@ class ChienController extends Controller
         $passeport = $request->getParam('passeport');
         $puce = $request->getParam('puce');
         $tatouage = $request->getParam('tatouage');
+        $pere = $request->getParam('pere');
+        $mere = $request->getParam('mere');
         $nomClient = $request->getParam('nomClient');
 
         $searchByNom = (is_null($nom) || $nom == 'null') ? false : true;
@@ -192,6 +194,8 @@ class ChienController extends Controller
         $searchByPasseport = (is_null($passeport)) ? false : true;
         $searchByPuce = (is_null($puce)) ? false : true;
         $searchByTatouage = (is_null($tatouage)) ? false : true;
+        $searchByPere = (is_null($pere) || $pere == -1) ? false : true;
+        $searchByMere = (is_null($mere) || $mere == -1) ? false : true;
         $searchByNomClient = (is_null($nomClient)) ? false : true;
 
         if ($searchByNomClient) {
@@ -214,6 +218,10 @@ class ChienController extends Controller
             return $query->where('race_id', '=', $race);
         })->when($searchByRobe, function ($query) use ($robe) {
             return $query->where('robe_id', '=', $robe);
+        })->when($searchByPere, function ($query) use ($pere) {
+            return $query->where('pere_id', '=', $pere);
+        })->when($searchByMere, function ($query) use ($mere) {
+            return $query->where('mere_id', '=', $mere);
         })->when($searchBySexe, function ($query) use ($sexe) {
             return $query->where('sexe', '=', $sexe);
         })->when($searchByReproducteur, function ($query) use ($reproducteur) {
