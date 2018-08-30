@@ -772,7 +772,7 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$window',
     // Accès vers la couche REST (lien avec les factories Angular)
     //--------------------------------------------------------------------------
 
-    // Lister les races
+    // Lister les races (critères)
     $scope.listRaces = function() {
         raceFactory.list().success(function(races) {
             $scope.races = races;
@@ -804,7 +804,7 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$window',
         });
     };
 
-    // Lister les robes
+    // Lister les robes (critères)
     $scope.listRobes = function() {
         robeFactory.list().success(function(robes) {
             $scope.robes = robes;
@@ -836,7 +836,7 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$window',
         });
     };
 
-    // Lister les pères
+    // Lister les pères (critères)
     $scope.listPeres = function() {
         chienFactory.getPeres(null).success(function(peres) {
             $scope.peres = peres;
@@ -868,7 +868,7 @@ angular.module('elevageApp').controller('chienController', ['$scope', '$window',
         });
     };
 
-    // Lister les mères
+    // Lister les mères (critères)
     $scope.listMeres = function() {
         chienFactory.getMeres(null).success(function(meres) {
             $scope.meres = meres;
