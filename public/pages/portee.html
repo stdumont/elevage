@@ -1,0 +1,252 @@
+<section class="content-header">
+
+    <h1>
+        Portées
+        <small>Gestion des portées</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li>
+            <a href="javascript:void(0);">
+                <i class="fa fa-paw"></i> Accueil</a>
+        </li>
+        <li class="active">Portées</li>
+    </ol>
+
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+    <!--                       -->
+    <!-- Critères de recherche -->
+    <!--                       -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-info box-search-criterias">
+                <div class="box-header with-border">
+                    <h3 class="box-title">
+                        <i class="fa fa-search"></i>&nbsp;Critères de recherche
+                    </h3>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                    <!-- .box-tools -->
+                </div>
+                <!-- .box-header -->
+
+                <div class="box-body">
+                    <!--      -->
+                    <!-- Tabs -->
+                    <!--      -->
+                    <div class="row tabs" style="padding-top:1em; padding-bottom:1em;">
+                        <ul>
+                            <li>
+                                <a href="#tab-parents">Parents</a>
+                            </li>
+                            <li>
+                                <a href="#tab-date-naissance">Date de naissance</a>
+                            </li>
+                        </ul>
+
+                        <form class="form-horizontal">
+
+                            <!--                       -->
+                            <!-- Recherche par parents -->
+                            <!--                       -->
+                            <div class="row" id="tab-parents">
+                                <div class="col-md-6">
+                                    <div class="box box-info box-pere">
+                                        <div class="box-header with-border">
+                                            <h4 class="box-title">
+                                                Père
+                                            </h4>
+                                        </div>
+                                        <!-- .box-header -->
+                                        <div class="box-body">
+                                            <div class="form-group">
+                                                <label for="criteriaPere" class="col-md-3 control-label">Nom</label>
+                                                <div class="col-md-9">
+                                                    <select name="criteriaPere" class="peres-select" style="width:100%;"></select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- .box-body -->
+                                    </div>
+                                    <!-- .box-pere -->
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="box box-info box-mere">
+                                        <div class="box-header with-border">
+                                            <h4 class="box-title">
+                                                Mère
+                                            </h4>
+                                        </div>
+                                        <!-- .box-header -->
+                                        <div class="box-body with-border">
+                                            <div class="form-group">
+                                                <label for="criteriaMere" class="col-md-3 control-label">Nom</label>
+                                                <div class="col-md-9">
+                                                    <select name="criteriaMere" class="meres-select" style="width:100%;"></select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- .box-body -->
+                                    </div>
+                                    <!-- .box-mere -->
+                                </div>
+                            </div>
+                            <!-- .row -->
+
+                            <div class="row" id="tab-date-naissance">
+                                <div class="col-md-6">
+                                    <div class="box box-info box-naissance">
+                                        <div class="box-header with-border">
+                                            <h4 class="box-title">
+                                                Naissance
+                                            </h4>
+                                        </div>
+                                        <!-- .box-header -->
+                                        <div class="box-body">
+                                            <div class="form-group">
+                                                <label for="criteriaNaissanceDu" class="col-md-3 control-label">Du</label>
+                                                <div class="col-md-9">
+                                                    <component-datepicker ng-model="criteriaNaissanceDu" style="width:100%;" empty-to-null />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="criteriaNaissanceAu" class="col-md-3 control-label">Au</label>
+                                                <div class="col-md-9">
+                                                    <component-datepicker ng-model="criteriaNaissanceAu" style="width:100%;" empty-to-null />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- .box-body -->
+                                    </div>
+                                    <!-- .box-naissance -->
+                                </div>
+
+                            </div>
+                            <!-- .row -->
+                        </form>
+                    </div>
+                    <!-- .row -->
+                </div>
+                <!-- .row -->
+            </div>
+            <!-- .box-body -->
+
+            <div class="box-footer">
+                <div class="col-md-12">
+                    <button class="btn pull-left" ng-click="onClickClearSearch()">
+                        <i class="fa fa-ban"></i>&nbsp;Effacer les critères
+                    </button>
+                    <button type="submit" class="btn btn-info pull-right" ng-click="onClickStartSearch()">
+                        <i class="fa fa-search"></i>&nbsp;Rechercher
+                    </button>
+                </div>
+                <!-- .col-md-12 -->
+
+            </div>
+        </div>
+    </div>
+
+    <!--                           -->
+    <!-- Résultats de la recherche -->
+    <!--                           -->
+    <div class="row" id="searchResultsDiv">
+        <div class="col-md-12">
+            <div class="box box-info box-search-results">
+                <div class="box-header with-border">
+                    <h3 class="box-title">
+                        <i class="fa fa-bell"></i>
+                        <span ng-bind="searchResultsTitle"></span>
+                    </h3>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body no-padding">
+
+                    <!--                    -->
+                    <!-- Table de Résultats -->
+                    <!--                    -->
+                    <script id="chien_ng_header" type="text/ng-template">
+                        <tr>
+                            <th ng-repeat="column in columns" ng-show="column.visible" class="text-center" style="display: table-cell;">
+                                {{column.title}}
+                            </th>
+                        </tr>
+                    </script>
+
+                    <table ng-table="tableParams" template-header="chien_ng_header" class="table table-condensed table-bordered table-striped table-with-tooltip">
+                        <tr ng-repeat="chien in $data">
+                            <td class="text-center">
+                                <span ng-bind="chien.id"></span>
+                            </td>
+                            <td class="text-center">
+                                <i class="text-primary fa fa-home" ng-show="chien.present == 1"></i>
+                                <i class="text-gray fa fa-home" ng-show="chien.present == 0"></i> &nbsp;&nbsp;&nbsp;
+                                <i class="text-success fa fa-wrench" ng-show="chien.produit == 1"></i>
+                                <i class="text-gray fa fa-wrench" ng-show="chien.produit == 0"></i>
+                            </td>
+                            <td style="width: 20%;">
+                                <b>
+                                    <span ng-bind="chien.nom"></span>&nbsp;
+                                    <span ng-bind="chien.affixe"></span>
+                                </b>
+                            </td>
+                            <td class="text-center">
+                                <span ng-show="chien.sexe == 'M'">
+                                    <i class="fa fa-mars"></i>
+                                </span>
+                                <span ng-show="chien.sexe == 'F'">
+                                    <i class="fa fa-venus"></i>
+                                </span>
+                            </td>
+                            <td class="text-center">
+                                <span ng-bind="chien.race.nom"></span>
+                            </td>
+                            <td class="text-center">
+                                <span ng-bind="chien.robe.nom"></span>
+                            </td>
+                            <td class="text-center">
+                                <span ng-bind="toJMA(chien.date_naissance)"></span>
+                            </td>
+                            <td class="text-center">
+                                <span ng-bind="toJMA(chien.date_deces)"></span>
+                            </td>
+                            <td style="width: 15%;">
+                                <span ng-bind="chien.client.nom"></span>&nbsp;
+                                <span ng-bind="chien.client.prenom"></span>
+                            </td>
+                            <td class=" text-center">
+                                <div class="divButton" style="width:40px;padding-right:5px;">
+                                    <button class="btn btn-default btn-sm" title="Voir les données de ce chien" ng-click="onClickView(chien)">
+                                        <span class="glyphicon glyphicon-eye-open"></span>
+                                    </button>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="divButton" style="width:40px;padding-right:5px;">
+                                    <button class="btn btn-default btn-sm" title="Modifier ce chien" ng-click="onClickEdit(chien)">
+                                        <span class="glyphicon glyphicon-pencil"></span>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="box-footer clearfix">
+                    <button class="btn btn-info pull-right" ng-click="onClickAdd()">
+                        <i class="fa fa-plus"></i>&nbsp;Ajouter un chien
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>

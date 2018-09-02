@@ -33,19 +33,16 @@ class Chiot extends Model
         'remarques',
     ];
 
-     protected $with = ['portee', 'robe', 'chien'];
+    protected $with = ['robe', 'chien'];
 
-    public function portee() {
-        return $this->belongsTo('App\Models\Portee');
-    }
-
-    public function robe() {
+    public function robe()
+    {
         return $this->belongsTo('App\Models\Robe');
     }
 
-    public function chien() {
+    public function chien()
+    {
         return $this->belongsTo('App\Models\Chien');
     }
-
 
 }

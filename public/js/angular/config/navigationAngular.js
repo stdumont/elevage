@@ -22,6 +22,13 @@ angular.module('elevageApp').config(['$routeProvider', function($routeProvider) 
         activeTab: 'page-chiens'
     })
 
+    // page : portées
+    .when('/page-portees', {
+        templateUrl: 'public/pages/portee.html',
+        controller: 'porteeController',
+        activeTab: 'page-portees'
+    })
+
     // page : clients
     .when('/page-clients', {
         templateUrl: 'public/pages/client.html',

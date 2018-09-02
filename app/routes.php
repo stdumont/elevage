@@ -57,6 +57,7 @@ $app->delete('/api/document/delete/{id}','DocumentController:delete');
  * Routes vers les portées
  */ 
 $app->get('/api/portee/get-count', 'PorteeController:getCount');
+$app->get('/api/portee/get-by-criteria', 'PorteeController:getByCriteria');
 
 /**
  * Routes vers les clients

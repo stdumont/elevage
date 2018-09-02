@@ -8,16 +8,6 @@ class PorteeController extends Controller
 {
 
     /**
-     * Retourne toutes les portees
-     * @return json portees
-     */
-    public function getAll()
-    {
-        $portees = Portee::orderBy('numero', 'desc')->get();
-        return json_encode($portees, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-    }
-
-    /**
      * Retourne le nombre de portees
      * @return json le nombre de portees
      */
@@ -28,14 +18,35 @@ class PorteeController extends Controller
     }
 
     /**
-     * Retourne une Portee sur base de son id
-     * @return json Portee
+     * Retourne une liste de portées sur base de critères de recherche
+     * @return json liste de portées
      */
-    public function find($request, $response, $args)
+    public function getByCriteria($request, $response)
     {
-        $id = $args['id'];
-        $portee = Portee::find($id);
-        return json_encode($portee, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        $pere = $request->getParam('pere');
+        $mere = $request->getParam('mere');
+        $naissanceDu = $request->getParam('naissanceDu');
+        $naissanceAu = $request->getParam('naissanceAu');
+
+        $searchByPere = (is_null($pere) || $pere == -1) ? false : true;
+        $searchByMere = (is_null($mere) || $mere == -1) ? false : true;
+        $searchByNaissanceDu = (is_null($naissanceDu)) ? false : true;
+        $searchByNaissanceAu = (is_null($naissanceAu)) ? false : true;
+
+        $portees = Portee::
+            when($searchByPere, function ($query) use ($pere) {
+            return $query->where('pere_id', '=', $pere);
+        })->when($searchByMere, function ($query) use ($mere) {
+            return $query->where('mere_id', '=', $mere);
+        })->when($searchByNaissanceDu, function ($query) use ($naissanceDu) {
+            return $query->where('date_naissance', '>=', $naissanceDu);
+        })->when($searchByNaissanceAu, function ($query) use ($naissanceAu) {
+            return $query->where('date_naissance', '<=', $naissanceAu);
+        })
+            ->orderBy('date_naissance', 'desc')
+            ->get();
+
+        return json_encode($portees, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     }
 
 }

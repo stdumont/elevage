@@ -31,22 +31,35 @@ class Portee extends Model
         'date_saillie_1',
         'date_saillie_2',
         'date_naissance',
+        'nbr_chiots_viv',
+        'nbr_males_viv',
+        'nbr_femelles_viv',
+        'nbr_chiots_dcd',
+        'nbr_males_dcd',
+        'nbr_femelles_dcd',
         'remarques',
     ];
 
-     protected $with = ['race', 'pere', 'mere'];
+    protected $with = ['race', 'pere', 'mere', 'chiots'];
 
-    public function race() {
+    public function race()
+    {
         return $this->belongsTo('App\Models\Race');
     }
 
-    public function pere() {
+    public function pere()
+    {
         return $this->belongsTo('App\Models\Chien');
     }
 
-    public function mere() {
+    public function mere()
+    {
         return $this->belongsTo('App\Models\Chien');
     }
 
+    public function chiots()
+    {
+        return $this->hasMany('App\Models\Chiot');
+    }
 
 }
