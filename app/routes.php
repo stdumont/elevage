@@ -54,7 +54,7 @@ $app->post('/api/document/insert-fichier', 'DocumentController:insertFichier');
 $app->delete('/api/document/delete/{id}','DocumentController:delete');
 
 /**
- * Routes vers les portées
+ * Routes vers les portées et les chiots
  */ 
 $app->get('/api/portee/get-count', 'PorteeController:getCount');
 $app->get('/api/portee/get-by-criteria', 'PorteeController:getByCriteria');
