@@ -133,22 +133,22 @@
                     </div>
                     <!-- .row -->
                 </div>
+                <div class="box-footer">
+                    <div class="col-md-12">
+                        <button class="btn pull-left" ng-click="onClickClearSearch()">
+                            <i class="fa fa-ban"></i>&nbsp;Effacer les critères
+                        </button>
+                        <button type="submit" class="btn btn-info pull-right" ng-click="onClickStartSearch()">
+                            <i class="fa fa-search"></i>&nbsp;Rechercher
+                        </button>
+                    </div>
+                    <!-- .col-md-12 -->
+
+                </div>
                 <!-- .row -->
             </div>
             <!-- .box-body -->
 
-            <div class="box-footer">
-                <div class="col-md-12">
-                    <button class="btn pull-left" ng-click="onClickClearSearch()">
-                        <i class="fa fa-ban"></i>&nbsp;Effacer les critères
-                    </button>
-                    <button type="submit" class="btn btn-info pull-right" ng-click="onClickStartSearch()">
-                        <i class="fa fa-search"></i>&nbsp;Rechercher
-                    </button>
-                </div>
-                <!-- .col-md-12 -->
-
-            </div>
         </div>
     </div>
 
@@ -174,7 +174,7 @@
                     <!--                    -->
                     <!-- Table de Résultats -->
                     <!--                    -->
-                    <script id="chien_ng_header" type="text/ng-template">
+                    <script id="portee_ng_header" type="text/ng-template">
                         <tr>
                             <th ng-repeat="column in columns" ng-show="column.visible" class="text-center" style="display: table-cell;">
                                 {{column.title}}
@@ -182,57 +182,44 @@
                         </tr>
                     </script>
 
-                    <table ng-table="tableParams" template-header="chien_ng_header" class="table table-condensed table-bordered table-striped table-with-tooltip">
-                        <tr ng-repeat="chien in $data">
+                    <table ng-table="tableParams" template-header="portee_ng_header" class="table table-condensed table-bordered table-striped table-with-tooltip">
+                        <tr ng-repeat="portee in $data">
                             <td class="text-center">
-                                <span ng-bind="chien.id"></span>
-                            </td>
-                            <td class="text-center">
-                                <i class="text-primary fa fa-home" ng-show="chien.present == 1"></i>
-                                <i class="text-gray fa fa-home" ng-show="chien.present == 0"></i> &nbsp;&nbsp;&nbsp;
-                                <i class="text-success fa fa-wrench" ng-show="chien.produit == 1"></i>
-                                <i class="text-gray fa fa-wrench" ng-show="chien.produit == 0"></i>
-                            </td>
-                            <td style="width: 20%;">
-                                <b>
-                                    <span ng-bind="chien.nom"></span>&nbsp;
-                                    <span ng-bind="chien.affixe"></span>
-                                </b>
+                                <span ng-bind="portee.numero"></span>
                             </td>
                             <td class="text-center">
-                                <span ng-show="chien.sexe == 'M'">
-                                    <i class="fa fa-mars"></i>
-                                </span>
-                                <span ng-show="chien.sexe == 'F'">
-                                    <i class="fa fa-venus"></i>
-                                </span>
+                                <span ng-bind="portee.race.nom"></span>
                             </td>
                             <td class="text-center">
-                                <span ng-bind="chien.race.nom"></span>
+                                <span ng-bind="toJMA(portee.date_naissance)"></span>
                             </td>
                             <td class="text-center">
-                                <span ng-bind="chien.robe.nom"></span>
+                                <span ng-bind="portee.pere.nom"></span>&nbsp;
+                                <span ng-bind="portee.pere.affixe"></span>
                             </td>
                             <td class="text-center">
-                                <span ng-bind="toJMA(chien.date_naissance)"></span>
+                                <span ng-bind="portee.mere.nom"></span>&nbsp;
+                                <span ng-bind="portee.mere.affixe"></span>
                             </td>
                             <td class="text-center">
-                                <span ng-bind="toJMA(chien.date_deces)"></span>
+                                <span ng-bind="portee.nbr_chiots_viv"></span>
                             </td>
-                            <td style="width: 15%;">
-                                <span ng-bind="chien.client.nom"></span>&nbsp;
-                                <span ng-bind="chien.client.prenom"></span>
+                            <td class="text-center">
+                                <span ng-bind="portee.nbr_males_viv"></span>
                             </td>
-                            <td class=" text-center">
+                            <td class="text-center">
+                                <span ng-bind="portee.nbr_femelles_viv"></span>
+                            </td>
+                            <td class="text-center">
                                 <div class="divButton" style="width:40px;padding-right:5px;">
-                                    <button class="btn btn-default btn-sm" title="Voir les données de ce chien" ng-click="onClickView(chien)">
+                                    <button class="btn btn-default btn-sm" title="Voir les données de cette portée" ng-click="onClickView(portee)">
                                         <span class="glyphicon glyphicon-eye-open"></span>
                                     </button>
                                 </div>
                             </td>
                             <td class="text-center">
                                 <div class="divButton" style="width:40px;padding-right:5px;">
-                                    <button class="btn btn-default btn-sm" title="Modifier ce chien" ng-click="onClickEdit(chien)">
+                                    <button class="btn btn-default btn-sm" title="Modifier cette portée" ng-click="onClickEdit(portee)">
                                         <span class="glyphicon glyphicon-pencil"></span>
                                     </button>
                                 </div>
@@ -242,7 +229,7 @@
                 </div>
                 <div class="box-footer clearfix">
                     <button class="btn btn-info pull-right" ng-click="onClickAdd()">
-                        <i class="fa fa-plus"></i>&nbsp;Ajouter un chien
+                        <i class="fa fa-plus"></i>&nbsp;Ajouter une portée
                     </button>
                 </div>
             </div>

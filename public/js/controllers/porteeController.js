@@ -13,6 +13,70 @@ angular.module('elevageApp').controller('porteeController', ['$scope', '$route',
     $scope.criteriaNaissanceDuAMJ = null;
     $scope.criteriaNaissanceAu = null;
     $scope.criteriaNaissanceAuAMJ = null;
+    $scope.searchResultsTitle = "Résultats de la recherche";
+
+    // colonnes des résultats de la recherche
+    $scope.columns = [{
+            title: 'No',
+            field: '',
+            visible: true,
+            class: ''
+        },
+        {
+            title: 'Race',
+            field: '',
+            visible: true,
+            class: ''
+        },
+        {
+            title: 'Naissance',
+            field: '',
+            visible: true,
+            class: ''
+        },
+        {
+            title: 'Père',
+            field: '',
+            visible: true,
+            class: ''
+        },
+        {
+            title: 'Mère',
+            field: '',
+            visible: true,
+            class: ''
+        },
+        {
+            title: 'Chiots',
+            field: '',
+            visible: true,
+            class: ''
+        },
+        {
+            title: 'Mâles',
+            field: '',
+            visible: true,
+            class: ''
+        },
+        {
+            title: 'Femelles',
+            field: '',
+            visible: true,
+            class: ''
+        },
+        {
+            title: 'Voir',
+            field: '',
+            visible: true,
+            class: ''
+        },
+        {
+            title: 'Editer',
+            field: '',
+            visible: true,
+            class: ''
+        }
+    ];
 
 
     //--------------------------------------------------------------------------
@@ -127,6 +191,29 @@ angular.module('elevageApp').controller('porteeController', ['$scope', '$route',
         $scope.scroll2Top('searchResultsDiv');
 
     };
+
+    // Lister les portées
+    $scope.listPortees = function(portees) {
+        $scope.searchResultsTitle = "Résultats de la recherche (" + portees.length + ")";
+        $scope.portees = portees;
+        $scope.initTablePortees($scope.portees);
+    };
+
+    // initialisation de la table des portées
+    $scope.initTablePortees = function(portees) {
+        $scope.tableParams = new NgTableParams({
+            // PARAMETRES
+            sorting: {
+                date_naissance: "desc"
+            }, // initialiser le tri sur le numero ascendant
+            count: 15 // nbre d elements affiches par defaut
+        }, {
+            // DONNEES
+            counts: [5, 10, 15, 20, 50], // choix d'affichage du nombre d elements par page. tableau vide = absence de choix d elements par page
+            dataset: portees // fournir la liste de donnees
+        });
+    };
+
 
     // Se positionner dans l'écran
     $scope.scroll2Top = function(id) {
