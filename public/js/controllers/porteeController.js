@@ -14,6 +14,17 @@ angular.module('elevageApp').controller('porteeController', ['$scope', '$route',
     $scope.criteriaNaissanceAu = null;
     $scope.criteriaNaissanceAuAMJ = null;
     $scope.searchResultsTitle = "Résultats de la recherche";
+    $scope.action = null;
+    $scope.actionView = 'View';
+    $scope.actionAdd = 'Add';
+    $scope.actionUpdate = 'Update';
+    $scope.actionDelete = 'Delete';
+    $scope.title = null;
+    $scope.titleView = 'Fiche portée n° ';
+    $scope.titleAdd = 'Ajouter une portée';
+    $scope.titleUpdate = 'Modifier une portée';
+    $scope.titleDelete = 'Supprimer une portée';
+
 
     // colonnes des résultats de la recherche
     $scope.columns = [{
@@ -75,6 +86,12 @@ angular.module('elevageApp').controller('porteeController', ['$scope', '$route',
             field: '',
             visible: true,
             class: ''
+        },
+        {
+            title: 'Supprimer',
+            field: '',
+            visible: true,
+            class: ''
         }
     ];
 
@@ -82,6 +99,21 @@ angular.module('elevageApp').controller('porteeController', ['$scope', '$route',
     //--------------------------------------------------------------------------
     // Evènements de la couche UI
     //--------------------------------------------------------------------------
+
+    // initialisation de la table des portées
+    $scope.initTablePortees = function(portees) {
+        $scope.tableParams = new NgTableParams({
+            // PARAMETRES
+            sorting: {
+                date_naissance: "desc"
+            }, // initialiser le tri sur le numero ascendant
+            count: 15 // nbre d elements affiches par defaut
+        }, {
+            // DONNEES
+            counts: [5, 10, 15, 20, 50], // choix d'affichage du nombre d elements par page. tableau vide = absence de choix d elements par page
+            dataset: portees // fournir la liste de donnees
+        });
+    };
 
     // Lister les mères (critères)
     $scope.listMeres = function() {
@@ -147,6 +179,17 @@ angular.module('elevageApp').controller('porteeController', ['$scope', '$route',
         });
     };
 
+    // Lister les portées
+    $scope.listPortees = function(portees) {
+        $scope.searchResultsTitle = "Résultats de la recherche (" + portees.length + ")";
+        $scope.portees = portees;
+        $scope.initTablePortees($scope.portees);
+    };
+
+    // Click sur le bouton 'Ajouter une portée'
+    $scope.onClickAdd = function() {
+
+    };
 
     // Click sur le bouton effacer les critères de recherche
     $scope.onClickClearSearch = function() {
@@ -155,6 +198,16 @@ angular.module('elevageApp').controller('porteeController', ['$scope', '$route',
         $('.meres-select').val('-1').trigger('change');
         $scope.criteriaNaissanceDu = null;
         $scope.criteriaNaissanceAu = null;
+    };
+
+    // Click sur le bouton 'Supprimer la portée'
+    $scope.onClickDelete = function(portee) {
+
+    };
+
+    // Click sur le bouton 'Modifier la portée'
+    $scope.onClickEdit = function(portee) {
+
     };
 
     // Click sur le bouton rechercher des critères de recherche
@@ -183,59 +236,48 @@ angular.module('elevageApp').controller('porteeController', ['$scope', '$route',
 
         .success(function(portees) {
                 $scope.listPortees(portees);
+                $scope.scroll2Top('searchResultsDiv');
             })
             .error(function(error) {
                 console.log("Erreur de la recherche des portées");
             });
 
-        $scope.scroll2Top('searchResultsDiv');
 
     };
 
-    // Lister les portées
-    $scope.listPortees = function(portees) {
-        $scope.searchResultsTitle = "Résultats de la recherche (" + portees.length + ")";
-        $scope.portees = portees;
-        $scope.initTablePortees($scope.portees);
-    };
-
-    // initialisation de la table des portées
-    $scope.initTablePortees = function(portees) {
-        $scope.tableParams = new NgTableParams({
-            // PARAMETRES
-            sorting: {
-                date_naissance: "desc"
-            }, // initialiser le tri sur le numero ascendant
-            count: 15 // nbre d elements affiches par defaut
-        }, {
-            // DONNEES
-            counts: [5, 10, 15, 20, 50], // choix d'affichage du nombre d elements par page. tableau vide = absence de choix d elements par page
-            dataset: portees // fournir la liste de donnees
-        });
+    // Click sur le bouton 'Visualiser la fiche de la portée'
+    $scope.onClickView = function(portee) {
+        $scope.action = $scope.actionView;
+        $scope.title = $scope.titleView +
+            portee.numero +
+            ' : ' +
+            portee.pere.nom + ' et ' +
+            portee.mere.nom + ' (' +
+            $scope.toJMA(portee.date_naissance) + ')';
+        $('#modalVAUD').modal();
     };
 
 
     // Se positionner dans l'écran
     $scope.scroll2Top = function(id) {
-        // Scroll to TitreChien
         var div = $('#' + id);
         $('html,body').animate({
             scrollTop: div.offset().top - 10
         }, 'fast');
     };
 
-    // Transformer une date YYYY-MM-DD en DD/MM/YYYY
-    $scope.toJMA = function(dateAMJ) {
-        if (dateAMJ) {
-            return moment(dateAMJ, 'YYYY-MM-DD').format('DD/MM/YYYY');
-        }
-        return null;
-    };
-
     // Transformer une date DD/MM/YYYY en YYYY-MM-DD
     $scope.toAMJ = function(dateJMA) {
         if (dateJMA) {
             return moment(dateJMA, 'DD/MM/YYYY').format('YYYY-MM-DD');
+        }
+        return null;
+    };
+
+    // Transformer une date YYYY-MM-DD en DD/MM/YYYY
+    $scope.toJMA = function(dateAMJ) {
+        if (dateAMJ) {
+            return moment(dateAMJ, 'YYYY-MM-DD').format('DD/MM/YYYY');
         }
         return null;
     };

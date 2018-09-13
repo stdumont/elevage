@@ -212,7 +212,7 @@
                             </td>
                             <td class="text-center">
                                 <div class="divButton" style="width:40px;padding-right:5px;">
-                                    <button class="btn btn-default btn-sm" title="Voir les données de cette portée" ng-click="onClickView(portee)">
+                                    <button class="btn btn-default btn-sm" title="Voir la fiche de cette portée" ng-click="onClickView(portee)">
                                         <span class="glyphicon glyphicon-eye-open"></span>
                                     </button>
                                 </div>
@@ -224,6 +224,13 @@
                                     </button>
                                 </div>
                             </td>
+                            <td class="text-center">
+                                <div class="divButton" style="width:40px;padding-right:5px;">
+                                    <button class="btn btn-danger btn-sm" title="Supprimer cette portée" ng-click="onClickDelete(portee)">
+                                        <span class="glyphicon glyphicon-trash"></span>
+                                    </button>
+                                </div>
+                            </td>
                         </tr>
                     </table>
                 </div>
@@ -231,6 +238,24 @@
                     <button class="btn btn-info pull-right" ng-click="onClickAdd()">
                         <i class="fa fa-plus"></i>&nbsp;Ajouter une portée
                     </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--                                                                  -->
+    <!-- Modale de visualisation/modification/ajout des données du chien  -->
+    <!--                                                                  -->
+    <div class="modal" role="dialog" id="modalVAUD">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content loadable">
+                <div class="modal-header">
+                    <h3 class="modal-title">
+                        <i class="fa fa-venus-mars text-primary"></i>&nbsp;{{title}}</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="errorsDiv text-danger" ng-show="errorMessage.length > 10"></div>
                 </div>
             </div>
         </div>
